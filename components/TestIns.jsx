@@ -1,8 +1,8 @@
 "use client";
 import React from 'react';
 import{useEffect, useState,useRef} from 'react'
-import {TestButton} from './Buttons'
-import Link from 'next/link'
+// import {TestButton} from './Buttons'
+import Link from 'next/link';
 
 export default function TestIns() {
 const [video, setVideo] = useState(false);    
@@ -48,7 +48,7 @@ useEffect(() => {
                   <li>Permission for access of camera, microphone, entire screen sharing is required.</li>
                   <li>Be in professional attire and avoid distractions.</li>
                   <li>Give a detailed response, providing as much information as you can.</li>
-                  <li>Answer the question with examples and projects you've worked on.</li>
+                  <li>Answer the question with examples and projects you have worked on.</li>
               </ul>
               
           </div>

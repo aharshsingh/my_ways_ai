@@ -16,7 +16,7 @@ export default function InteIns() {
       <div className=" mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-4xl px-6">
        
         <div className="text-center bg-[rgb(22,29,41)]p-4 rounded-lg text-white">
-          <img
+          <image
             src="https://interview.zeko.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FvideoInstruct1.5b43960d.svg&w=256&q=75" // Replace with your image path
             alt="Instruction 1"
             className="h-25 w-25 mx-auto mb-4" // Adjusted size for image
@@ -26,7 +26,7 @@ export default function InteIns() {
 
         {/* Instruction 2 */}
         <div className="text-center bg-[rgb(22,29,41)] p-4 rounded-lg text-white">
-          <img
+          <image
             src="https://interview.zeko.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FvideoInstruct2.724dba41.svg&w=256&q=75" // Replace with your image path
             alt="Instruction 2"
             className="h-25 w-25 mx-auto mb-4" 
@@ -36,7 +36,7 @@ export default function InteIns() {
 
       
         <div className="text-center bg-[rgb(22,29,41)] p-4 rounded-lg text-white">
-          <img
+          <image
             src="https://interview.zeko.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FvideoInstruct3.29af2c81.svg&w=256&q=75" // Replace with your image path
             alt="Instruction 3"
             className="h-25 w-25 mx-auto mb-4" 
@@ -46,7 +46,7 @@ export default function InteIns() {
 
  
         <div className="text-center bg-[rgb(22,29,41)] p-4 rounded-lg text-white">
-          <img
+          <image
             src="https://interview.zeko.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FvideoInstruct4.50439e66.svg&w=256&q=75" // Replace with your image path
             alt="Instruction 4"
             className="h-25 w-25 mx-auto mb-4" 
@@ -56,7 +56,7 @@ export default function InteIns() {
 
         {/* Instruction 5 */}
         <div className="text-center bg-[rgb(22,29,41)] p-4 rounded-lg text-white">
-          <img
+          <image
             src="https://interview.zeko.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FvideoInstruct5.02e436bc.svg&w=256&q=75" // Replace with your image path
             alt="Instruction 5"
             className="h-25 w-25 mx-auto mb-4" 

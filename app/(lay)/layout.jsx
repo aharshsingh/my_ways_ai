@@ -7,7 +7,7 @@ export default function Layout({ children }) {
       <nav className="bg-neutral-200 p-4 sticky top-0 z-10">
         <div className="container mx-auto flex items-center justify-between">
           <div className="text-white text-xl font-bold">
-            <img
+            <image
               src="/logo1.png" 
               alt="Logo"
               className="h-10 w-auto"
@@ -15,7 +15,7 @@ export default function Layout({ children }) {
           </div>
        
           <div>
-            <img
+            <image
               src="/profile.png" 
               alt="Profile"
               className="h-11 w-11 rounded-full border-2 border-black"

@@ -67,7 +67,7 @@ export default function Permissions() {
 
     
       <div className="w-1/2 p-4 flex flex-col justify-center items-center space-y-4 text-white">
-        <h1 className="text-4xl font-semibold mb-4">Ready to Join?</h1>
+        <h1 className="text-2xl font-semibold mb-4">Ready to Join?</h1>
         <p className="text-xl">Make sure your device is well configured.</p>
 
      

@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect, useRef } from "react";
 import questions from "./questions";
 import { useRouter } from "next/navigation";
