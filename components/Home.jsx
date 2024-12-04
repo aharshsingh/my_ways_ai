@@ -28,7 +28,7 @@ export default function Home() {
    
       <div className="w-full md:w-2/5 flex flex-col items-center justify-center text-center border-gray-500 -mt-14">
              
-              <image
+              <img
                 src="/homeImg.png" 
                 alt="AI Interviews"
                 className="w-full h-auto object-cover rounded-lg mb-0" 

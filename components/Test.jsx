@@ -30,13 +30,18 @@ export default function Test() {
 
     useEffect(() => {
         if (isAnswering && videoRef.current) {
-            navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
-                streamRef.current = stream;
-                videoRef.current.srcObject = stream;
+            navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+                .then((stream) => {
+                    streamRef.current = stream;
+                    videoRef.current.srcObject = stream;
 
-                // Start recording the stream
-                startRecording(stream);
-            });
+                    // Start recording the stream
+                    startRecording(stream);
+                })
+                .catch((error) => {
+                    console.error("Error accessing media devices: ", error);
+                    alert("Please grant access to camera and microphone");
+                });
         }
 
         // Clean up when component unmounts or recording ends
