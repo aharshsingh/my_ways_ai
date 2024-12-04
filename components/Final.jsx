@@ -8,7 +8,7 @@ export default function Final() {
         
         <div className="text-center bg-white p-8 rounded-lg shadow-lg">
          
-          <image
+          <img
             src="/tickMark.png" 
             alt="Submission Successful"
             className="w-24 h-24 mx-auto mb-4"
