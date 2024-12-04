@@ -105,7 +105,7 @@ export default function Test() {
                 // Finish the test
                 router.push('/submit');
             }
-        }, 1000); // 2 seconds delay
+        }, 1000); 
     };
 
     if (isLoading) {

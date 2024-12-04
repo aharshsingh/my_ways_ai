@@ -1,4 +1,4 @@
-"use client"
+"use client";
 export default function LoadingScreen() {
     return (
         <div className="bg-black h-screen flex items-center justify-center">

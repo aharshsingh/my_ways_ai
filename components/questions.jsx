@@ -1,3 +1,4 @@
+"use client";
 const questions=[
     {
         "id": 1,
