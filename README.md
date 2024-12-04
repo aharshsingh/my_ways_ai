@@ -1,36 +1,8 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+run cmd **" npm run dev "**
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![Screenshot (173)](https://github.com/user-attachments/assets/07e8cebc-2f6e-4ceb-b4b0-eeaf55aea7ec)
+![Screenshot (180)](https://github.com/user-attachments/assets/832ba4f0-9ae2-468b-b709-8e27a2f1d231)
+![Screenshot (178)](https://github.com/user-attachments/assets/5d18878d-8d3b-4825-8e13-b680b7f2a5b1)
+![Screenshot (177)](https://github.com/user-attachments/assets/ea8b09ee-9436-404f-9bdc-a03a8c221728)
+![Screenshot (176)](https://github.com/user-attachments/assets/6c17413b-7dff-46bc-8946-70858ed139b5)
+![Screenshot (175)](https://github.com/user-attachments/assets/e096d57c-d491-4817-bdcf-f9431073318d)
