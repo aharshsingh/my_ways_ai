@@ -138,8 +138,7 @@ export default function Permissions() {
           <Link
             href={allPermissionsGranted ? "/InterviewIns" : "#"}
             className={`w-full block px-8 py-3 rounded-lg text-center text-xl font-semibold ${
-              allPermissionsGranted
-                ? "bg-purple-700 text-white hover:bg-purple-900"
+              allPermissionsGranted? "bg-purple-700 text-white hover:bg-purple-900"
                 : "bg-gray-500 text-gray-300 cursor-not-allowed"
             }`}
           >

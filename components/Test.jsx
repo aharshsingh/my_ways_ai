@@ -2,18 +2,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import questions from "./questions";
 import { useRouter } from "next/navigation";
-import LoadingScreen from "./LoadingScreen"; // Import the loading screen component
+import LoadingScreen from "./LoadingScreen"; 
 
 export default function Test() {
     const [isAudioPlaying, setIsAudioPlaying] = useState(true);
     const [isAnswering, setIsAnswering] = useState(false);
-    const [isLoading, setIsLoading] = useState(false); // New state for loading
+    const [isLoading, setIsLoading] = useState(false); 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const currentQuestion = questions[currentQuestionIndex];
     const videoRef = useRef(null);
     const streamRef = useRef(null);
     const mediaRecorderRef = useRef(null);
-    const recordedChunks = useRef([]); // Store all recorded chunks
+    const recordedChunks = useRef([]); 
     const totalQuestions = questions.length;
     const router = useRouter();
 
@@ -22,8 +22,8 @@ export default function Test() {
             const audio = new Audio(currentQuestion.audioSrc);
             audio.play();
             audio.onended = () => {
-                setIsAudioPlaying(false); // Stop audio playing
-                setIsAnswering(true); // Start answering phase after audio ends
+                setIsAudioPlaying(false); 
+                setIsAnswering(true); 
             };
         }
     }, [isAudioPlaying, currentQuestionIndex]);
@@ -35,7 +35,7 @@ export default function Test() {
                     streamRef.current = stream;
                     videoRef.current.srcObject = stream;
 
-                    // Start recording the stream
+                    
                     startRecording(stream);
                 })
                 .catch((error) => {
@@ -44,42 +44,34 @@ export default function Test() {
                 });
         }
 
-        // Clean up when component unmounts or recording ends
-        return () => {
-            if (streamRef.current) {
-                streamRef.current.getTracks().forEach((track) => track.stop());
-            }
-            if (mediaRecorderRef.current) {
-                mediaRecorderRef.current.stop();
-            }
-        };
+    
     }, [isAnswering]);
 
     const startRecording = (stream) => {
         const mediaRecorder = new MediaRecorder(stream);
         mediaRecorderRef.current = mediaRecorder;
 
-        // Handle data chunks for both audio and video
+        
         mediaRecorder.ondataavailable = (event) => {
             if (event.data.size > 0) {
-                recordedChunks.current.push(event.data); // Collect chunks
+                recordedChunks.current.push(event.data); 
             }
         };
 
-        // Start recording with a chunk every 1 second
+      
         mediaRecorder.start(1000);
     };
 
     const stopRecording = () => {
         if (mediaRecorderRef.current) {
-            mediaRecorderRef.current.stop(); // Stop recording
+            mediaRecorderRef.current.stop();
         }
     };
 
     const sendMediaToAPI = async () => {
-        const blob = new Blob(recordedChunks.current, { type: "video/webm" }); // Combine all chunks into a single Blob
+        const blob = new Blob(recordedChunks.current, { type: "video/webm" }); 
         const formData = new FormData();
-        formData.append("file", blob, "recorded-video.webm"); // Send as one file
+        formData.append("file", blob, "recorded-video.webm");
 
         try {
             await fetch("https://server-01-w7cr.onrender.com/*", {
@@ -93,36 +85,36 @@ export default function Test() {
     };
 
     const handleNextQuestion = async () => {
-        setIsLoading(true); // Show loading screen
-        stopRecording(); // Stop recording
-        await sendMediaToAPI(); // Send media to API
+        setIsLoading(true); 
+        stopRecording(); 
+        await sendMediaToAPI(); 
 
         setTimeout(() => {
-            setIsLoading(false); // Hide loading screen after delay
+            setIsLoading(false); 
 
             if (currentQuestionIndex < questions.length - 1) {
                 setCurrentQuestionIndex((prev) => prev + 1);
-                setIsAudioPlaying(true); // Reset audio playing state
-                setIsAnswering(false); // Reset answering phase
-                recordedChunks.current = []; // Clear recorded chunks for the next question
+                setIsAudioPlaying(true); 
+                setIsAnswering(false); 
+                recordedChunks.current = []; 
             } else {
-                // Finish the test
+               
                 router.push('/submit');
             }
         }, 1000); 
     };
 
     if (isLoading) {
-        return <LoadingScreen />; // Render loading screen
+        return <LoadingScreen />; 
     }
 
     return (
         <div className="bg-black h-screen flex items-center justify-center">
-            {/* When the question is being asked and the audio is playing */}
+           
             {!isAnswering && (
                 <div className="text-center">
                     <div className="flex justify-center mb-4">
-                        {/* Display animation video while audio plays */}
+                    
                         <video
                             className="w-1/3 h-1/3 object-cover"
                             src="/Animation.mp4"
@@ -138,7 +130,7 @@ export default function Test() {
                 </div>
             )}
 
-            {/* Once the audio finishes and we are answering */}
+          
             {isAnswering && (
                 <div className="answer-section flex flex-col items-center mb-6">
                     <h2 className="center text-2xl text-white font-bold mb-4">

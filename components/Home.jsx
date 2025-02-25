@@ -9,7 +9,7 @@ export default function Home() {
       <div className="pl-20 py-10 border-gray-500 w-full md:w-3/5">
         <div className="mb-6 border-white border-2 rounded-xl w-11/12 text-center bg-violet-100">
           <p className="h-9 leading-snug text-lg pt-1 text-[rgb(87,60,255)]">
-            Make your hiring process Faster, Smarter, and Accurate with Zeko Interview
+            Make your hiring process Faster, Smarter, and Accurate with VocalEdge
           </p>
         </div>
         <div className="space-y-6">
