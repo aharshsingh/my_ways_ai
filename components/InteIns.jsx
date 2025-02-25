@@ -19,7 +19,7 @@ export default function InteIns() {
           <img
             src="https://interview.zeko.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FvideoInstruct1.5b43960d.svg&w=256&q=75" // Replace with your image path
             alt="Instruction 1"
-            className="h-25 w-25 mx-auto mb-4" // Adjusted size for image
+            className="h-25 w-25 mx-auto mb-4" 
           />
           <p className=" text-sm text-white">Do not look off screen & maintain eye contact with the camera.</p>
         </div>
