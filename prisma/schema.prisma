@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId        Int @id @default(autoincrement())
+  name          String
+  email         String @unique
+  password      String
+  attemptedTest Int[]
+
+  // Relations
+  submissions Submission[]  
+  results     Result[]
+}
+
+model Test {
+  testId             Int @id @default(autoincrement())
+  testName           String
+  testDescription    String
+  difficulty         String
+  createdAt          DateTime @default(now())
+  numOfQuestions     Int
+  duration           Int
+  accuracy           Int
+  completeness       Int
+  explanation        Int
+  practicalRelevance Int
+  conciseness        Int
+  score              Int
+
+  // Relations
+  questions    Question[]
+  submissions  Submission[]
+  results      Result[]
+}
+
+model Submission {
+  submissionId Int @id @default(autoincrement())
+  testId       Int
+  userId       Int
+  startedAt    DateTime @default(now())
+  completedAt  DateTime?
+
+  // Relations
+  test   Test   @relation(fields: [testId], references: [testId])
+  user   User   @relation(fields: [userId], references: [userId])
+  answers Answer[]
+}
+
+model Question {
+  questionId   Int    @id @default(autoincrement())
+  testId       Int
+  questionText String
+
+  // Relations
+  test    Test      @relation(fields: [testId], references: [testId])
+  answers Answer[]
+}
+
+model Answer {
+  answerId     Int @id @default(autoincrement())
+  submissionId Int
+  questionId   Int
+  answer       String
+
+  // Relations
+  submission Submission @relation(fields: [submissionId], references: [submissionId], onDelete: Cascade)
+  question   Question   @relation(fields: [questionId], references: [questionId], onDelete: Cascade)
+}
+
+model Result {
+  resultId           Int @id @default(autoincrement())
+  userId             Int
+  testId             Int
+  accuracy           Int
+  completeness       Int
+  explanation        Int
+  practicalRelevance Int
+  conciseness        Int
+  score              Int
+
+  // Relations
+  user User @relation(fields: [userId], references: [userId])
+  test Test @relation(fields: [testId], references: [testId])
+}
