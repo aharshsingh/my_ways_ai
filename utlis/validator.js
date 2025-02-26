@@ -5,3 +5,8 @@ export const userSignUp = Joi.object({
     email:     Joi.string().email().required(),
     password:  Joi.string().required()
 })
+
+export const userLogin = Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().required()
+})
