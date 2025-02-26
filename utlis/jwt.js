@@ -5,10 +5,11 @@ export const createToken = (payload, expiresIn = "5h") => {
     return jwt.sign(payload, SECRET_KEY, { expiresIn });
 };
 
-export const verifyToken = (token) => {
+export const verifyToken = (accessToken) => {
     try {
-        return jwt.verify(token, SECRET_KEY);
+        return jwt.verify(accessToken, SECRET_KEY);
     } catch (error) {
+        console.log(error)
         return null;
     }
 };
