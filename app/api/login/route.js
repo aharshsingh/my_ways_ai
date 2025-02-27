@@ -22,7 +22,7 @@ export async function POST(req){
             return NextResponse.json({ error: "Invalid Password" }, { status: 400 });
         }
         const payload = {userId : userInfo.userId}
-        const accessToken = createToken(payload);
+        const accessToken = await createToken(payload);
         return NextResponse.json({accessToken}, {status: 200}); 
     } catch (error) {
         console.log(error)

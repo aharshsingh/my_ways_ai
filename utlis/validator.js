@@ -7,6 +7,20 @@ export const userSignUp = Joi.object({
 })
 
 export const userLogin = Joi.object({
-    email: Joi.string().email().required(),
+    email:    Joi.string().email().required(),
     password: Joi.string().required()
+})
+
+export const testSchema = Joi.object({
+    testName:          Joi.string().required(),
+    testDescription:   Joi.string().required(),
+    difficulty:        Joi.string().valid("easy", "medium", "hard").required(),
+    numOfQuestions:    Joi.number().required(),
+    duration:          Joi.number().required(),
+    accuracy:          Joi.number().required(),
+    completeness:      Joi.number().required(),
+    explanation:       Joi.number().required(),
+    practicalRelevance:Joi.number().required(),
+    conciseness:       Joi.number().required(),
+    score:             Joi.number().required()
 })
