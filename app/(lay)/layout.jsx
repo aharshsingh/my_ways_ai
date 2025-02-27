@@ -1,25 +1,41 @@
 "use client";
 import React from 'react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
 
 export default function Layout({ children }) {
   return (
     <div>
-      <nav className="bg-neutral-200 p-4 sticky top-0 z-10">
-        <div className="container mx-auto flex items-center justify-between">
+      <nav className="bg-transparent fixed top-0 w-full z-10">
+        <div className="container mx-auto flex items-center justify-center gap-[85%]">
           <div className="text-white text-xl font-bold">
-            <img
+             <img
               src="/logo2.png" 
               alt="Logo"
               className="h-10 w-auto"
-            />
+            /> 
           </div>
        
           <div>
-            <img
-              src="/profile.png" 
-              alt="Profile"
-              className="h-11 w-11 rounded-full border-2 border-black"
-            />
+          <DropdownMenu>
+            <DropdownMenuTrigger className='focus:outline-none'>
+              <img src="/profile.png"  alt="Profile" className="h-11 w-11"/>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="mr-10">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Results</DropdownMenuItem>
+              <DropdownMenuItem className="text-red-700">Logout</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>  
           </div>
         </div>
       </nav>
