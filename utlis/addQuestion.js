@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-const Prisma = new PrismaClient();
+const prisma = new PrismaClient();
 
 export async function addQuestion(testId, questionText){
     try {
-        return await Prisma.question.create({
+        return await prisma.question.create({
             data: {testId, questionText}
         })
     } catch (error) {

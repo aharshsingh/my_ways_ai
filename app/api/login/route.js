@@ -17,9 +17,12 @@ export async function POST(req){
                 email
             }
         })
+        if(!userInfo){
+            return NextResponse.json({"error": "User not exists"}, {status: 404});
+        }
         const match = await bcrypt.compare(password, userInfo.password);
         if(!match){
-            return NextResponse.json({ error: "Invalid Password" }, { status: 400 });
+            return NextResponse.json({ "error": "Invalid Password" }, { status: 401 });
         }
         console.log(userInfo.userId);
         const payload = {userId : userInfo.userId}
