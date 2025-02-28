@@ -5,6 +5,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
+import axios from "axios";
 import {
   IconBrandGoogle
 } from "@tabler/icons-react";
@@ -33,7 +34,7 @@ const [errors, setErrors] = useState({
   confirmPassword: false,
 });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     let newErrors = {
@@ -44,22 +45,39 @@ const [errors, setErrors] = useState({
       confirmPassword: confirmPassword.trim() === "" || confirmPassword !== password,
     };
     setErrors(newErrors);
-    if (newErrors.confirmPassword && confirmPassword.length > 1) {
+    if (newErrors.confirmPassword && confirmPassword.length > 0) {
       toast.error("Passwords do not match!");
     }
     if (Object.values(newErrors).includes(true)) {
       return;
     }
     else{
-      toast.success("Signed up successfully!");
-      setIsOpen(true);
       const fullName = `${firstname} ${lastname}`.trim();
       setName(fullName);
-      const formData = { name, email, password };
-      console.log(formData);
+      try {
+        const response = await axios.post("http://localhost:3000/api/signup", {
+            name,
+            email,
+            password,
+        });
+        console.log(response.status);
+        if (response.status === 200) {
+          toast.success("Signed up successfully!");
+          setIsOpen(true);
+          console.log("Form submitted");
+        }
+    } catch (error) {
+        if (error.response) {
+            if (error.response.status === 400) {
+              toast.error("Check your email and password");
+            } else if (error.response.status === 409) {
+              toast.error("Email already exists");
+            } else {
+              toast.error("Something went wrong. Please try again later.");
+            }
+        }
+      }
     }
-
-    console.log("Form submitted");
 
   };
 

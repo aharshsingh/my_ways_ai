@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { userLogin } from "@/utlis/validator";
 import bcrypt from 'bcrypt';
 import { createToken } from "@/utlis/jwt";
-const Prisma = new PrismaClient();
+const prisma = new PrismaClient();
 
 export async function POST(req){
     try {
@@ -12,7 +12,7 @@ export async function POST(req){
         if(error){
             return NextResponse.json({error}, {status: 400});
         }
-        const userInfo = await Prisma.user.findUnique({
+        const userInfo = await prisma.user.findUnique({
             where: {
                 email
             }
