@@ -1,7 +1,10 @@
+"use Client"
 import React from 'react'
 import { Button } from "@/components/ui/button";
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from "sonner";
+import axios from "axios";
 import {
   Drawer,
   DrawerClose,
@@ -14,8 +17,10 @@ import {
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Link from 'next/link';
 
 export default function LoginDrawer({ isOpen, setIsOpen }) {
+  const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({
@@ -23,7 +28,7 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
       password: false,
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
     
         let newErrors = {
@@ -35,14 +40,43 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
           return;
         }
         else{
-          toast.success("Login Successfull!");
-          setIsOpen(false);
-          const formData = {email, password };
-          console.log(formData);
+          try {
+            const response = await axios.post("http://localhost:3000/api/login", {
+                email,
+                password
+            });
+            if (response.status === 200) {
+              toast.success("Login Successfull!");
+              // <Link href={"/testCluster"}></Link>
+              router.push('/testCluster');
+              setIsOpen(false);
+                // const {accessToken} = response.data;  // Extract the token
+                // if (accessToken) {
+                    // alert("Login Successful");
+                    // handleLoginSuccess(accessToken); // Store the token and navigate
+                } else {
+                    toast.error("Login Failed");
+                }
+            }
+         catch (error) {
+            console.log("Error:", error);
+            if(error.response)
+            {
+                // console.log("Error status:", error.response);
+                if (error.response.status === 404) {
+                  toast.error("User not found");
+                } else if (error.response.status === 400) {
+                    toast.error("Invalid password");
+                 } else {
+                    toast.error("Something went wrong");
+                }
+            }
+          }
         }
-        console.log("Form submitted");
-    
-      };
+       
+        };
+        // console.log("Form submitted");
+      
   return (
     <Drawer open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
       <DrawerContent>

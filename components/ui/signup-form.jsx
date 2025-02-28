@@ -10,7 +10,7 @@ import {
 } from "@tabler/icons-react";
 import { useState } from "react";
 import LoginDrawer from "@/components/loginDrawer/LoginDrawer"
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -62,9 +62,12 @@ const [errors, setErrors] = useState({
     console.log("Form submitted");
 
   };
+
+     
+  
   return (
     (<div 
-    className="h-full w-full mx-auto  p-4 md:p-8 shadow-input bg-white dark:bg-black">
+    className="h-full w-full mx-auto flex items-center justify-center p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <form className="" onSubmit={handleSubmit}>
         <div
           className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
