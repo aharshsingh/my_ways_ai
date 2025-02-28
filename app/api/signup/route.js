@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { userSignUp } from "@/utlis/validator";
 import bcrypt from 'bcrypt';
-const Prisma = new PrismaClient();
+const prisma = new PrismaClient();
 
 export async function POST(req){
     try {
@@ -14,7 +14,7 @@ export async function POST(req){
         }
         const hasedPassword = await bcrypt.hash(password, 10)
         const userInfo = {name, email, password: hasedPassword}
-        const result = await Prisma.user.create({
+        const result = await prisma.user.create({
             data: userInfo
         })
         console.log(result);
