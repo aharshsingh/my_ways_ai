@@ -24,7 +24,7 @@ const [password, setPassword] = useState("");
 const [firstname, setFirstname] = useState("");
 const [lastname, setLastname] = useState("");
 const[confirmPassword, setConfirmPassword] = useState("");
-const[name, setName] = useState("");
+// const[name, setName] = useState("");
 
 const [errors, setErrors] = useState({
   firstname: false,
@@ -53,10 +53,9 @@ const [errors, setErrors] = useState({
     }
     else{
       const fullName = `${firstname} ${lastname}`.trim();
-      setName(fullName);
       try {
         const response = await axios.post("http://localhost:3000/api/signup", {
-            name,
+            name:fullName,
             email,
             password,
         });

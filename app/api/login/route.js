@@ -16,7 +16,7 @@ export async function POST(req){
             where: {
                 email
             }
-        })
+        });
         if(!userInfo){
             return NextResponse.json({"error": "User not exists"}, {status: 404});
         }
@@ -24,13 +24,11 @@ export async function POST(req){
         if(!match){
             return NextResponse.json({ "error": "Invalid Password" }, { status: 401 });
         }
-        console.log(userInfo.userId);
         const payload = {userId : userInfo.userId}
-        console.log(payload);
         const accessToken = await createToken(payload);
         return NextResponse.json({accessToken}, {status: 200}); 
     } catch (error) {
         console.log(error)
-        return NextResponse.json({error: "Internal server error"}, {status: 500})
-    }
+        return NextResponse.json({error: "Internal server error"}, {status: 500})
+    }
 }
