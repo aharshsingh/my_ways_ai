@@ -17,17 +17,18 @@ import {
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Link from 'next/link';
+// import Link from 'next/link';
+import { useAuth } from '@/context/authContext';
 
 export default function LoginDrawer({ isOpen, setIsOpen }) {
   const router = useRouter();
+  const { login }= useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({
       email: false,
       password: false,
     });
-
     const handleSubmit = async (e) => {
         e.preventDefault();
     
@@ -45,15 +46,14 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
                 email,
                 password
             });
+            const authToken = response.data.accessToken;
+            localStorage.setItem("authToken", authToken);
+            // console.log(authToken);
+            login(authToken);
             if (response.status === 200) {
               toast.success("Login Successfull!");
-              // <Link href={"/testCluster"}></Link>
               router.push('/testCluster');
               setIsOpen(false);
-                // const {accessToken} = response.data;  // Extract the token
-                // if (accessToken) {
-                    // alert("Login Successful");
-                    // handleLoginSuccess(accessToken); // Store the token and navigate
                 } else {
                     toast.error("Login Failed");
                 }
