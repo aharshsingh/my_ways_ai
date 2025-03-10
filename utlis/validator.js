@@ -24,3 +24,9 @@ export const testSchema = Joi.object({
     conciseness:       Joi.number().required(),
     score:             Joi.number().required()
 })
+
+export const submissionSchema = Joi.object({
+    testId: Joi.number().required(),
+    userId: Joi.number().required(),
+    startedAt: Joi.date().required()
+})

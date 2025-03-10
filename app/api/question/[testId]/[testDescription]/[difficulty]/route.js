@@ -9,7 +9,6 @@ export async function GET(req,{params}){
       const question = await questionGenerator(testDescription, difficulty);
       await addQuestion(testId, question);
       const audioURL = await TTS(question);
-      console.log(audioURL)
       return NextResponse.json({ audioURL }, { status: 200 });
    } catch (error) {
       console.log(error)
