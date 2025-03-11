@@ -1,7 +1,7 @@
 import Joi from 'joi'
 
 export const userSignUp = Joi.object({
-    name:      Joi.string().required(),
+    userName:  Joi.string().required(),
     email:     Joi.string().email().required(),
     password:  Joi.string().required()
 })
@@ -23,4 +23,10 @@ export const testSchema = Joi.object({
     practicalRelevance:Joi.number().required(),
     conciseness:       Joi.number().required(),
     score:             Joi.number().required()
+})
+
+export const submissionSchema = Joi.object({
+    testId: Joi.number().required(),
+    userId: Joi.number().required(),
+    startedAt: Joi.date().required()
 })
