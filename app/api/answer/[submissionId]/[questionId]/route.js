@@ -16,18 +16,25 @@ export async function POST(req, {params}){
                 answer: "this is temp answer"
             }
         });
-        const {audioURL} = req.body;
+
+        const formData = await req.formData();
+        const audioFile = formData.get("audio");
+        if (!audioFile) {
+            return NextResponse.json({ error: "No audio file provided" }, { status: 400 });
+        }
         const APIKEY = process.env.REVAI_API_KEY;
         const WEBHOOK_URL = process.env.WEBHOOK_URL;
 
-        const response = await axios.post("https://api.rev.ai/speechtotext/v1/jobs", {
-            media_url: audioURL,
-            callback_url: WEBHOOK_URL,
-            metadata: JSON.stringify({ "answerId": res.answerId }) },
+        const revFormData = new FormData();
+        revFormData.append("media", audioFile);
+        revFormData.append("callback_url", WEBHOOK_URL);
+        revFormData.append("metadata", JSON.stringify({ answerId: res.answerId }));
+
+        const response = await axios.post("https://api.rev.ai/speechtotext/v1/jobs", revFormData,
             {
             headers: {
                 Authorization: `Bearer ${APIKEY}`,
-                "Content-Type": "application/json",
+                ...revFormData.getHeaders(),
             }
         });
         const jobId = response.data.id;
