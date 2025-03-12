@@ -1,25 +1,13 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
-
+import Test from '@/lib/models/Test';
+import { connectToDatabase } from "@/lib/mongodb";
 export async function GET(req, {params}){
-    try {
+    try {        
+        await connectToDatabase();
         const { testIdArray }= params;
         let result = [];
         for(let i = 0; i < testIdArray.size(); i++){
-            const response = await prisma.test.findUnique({
-                where: {
-                    testId: testIdArray[i]
-                },
-                select: {
-                    testId: true,
-                    testName: true,
-                    createdAt: true,
-                    numOfQuestions: true,
-                    duration:true,
-                    score: true,    
-                }
-            });
+            const response = await Test.findOne({_id: testIdArray[i]}).select("_id testName createdAt numOfQuestion duration score")
             result.push(response);
         }
         return NextResponse(result, {status: 200})

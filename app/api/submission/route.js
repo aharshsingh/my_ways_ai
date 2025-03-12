@@ -1,22 +1,22 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import { submissionSchema } from "@/utlis/validator";
-const prisma = new PrismaClient();
+import Submission from "@/lib/models/submission";
+import { connectToDatabase } from "@/lib/mongodb";
 
 export async function POST(req){
-    try {
+    try {        
+        await connectToDatabase();
         const {testId, userId, startedAt} = await req.json();
         const {error} = submissionSchema.validate({testId, userId, startedAt});
         if(error){
             return NextResponse.json({"error": "bad request"}, {status: 400});
         }
-        const response = await prisma.submission.create({
-            data: {
-                testId,
-                userId,
-                startedAt: new Date(startedAt)
-            }
+        const submission = new Submission({
+            testId,
+            userId,
+            startedAt: new Date(startedAt)
         });
+        const response = await submission.save();
         return NextResponse.json(response, {status: 200});
     } catch (error) {
         console.log(error)
