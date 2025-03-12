@@ -1,47 +1,20 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import Submission from "@/lib/models/submission";
+import Result from "@/lib/models/Result";
+import Test from "@/lib/models/Test";
+import { connectToDatabase } from "@/lib/mongodb";
 
 export async function GET(req, {params}){
-    try {
+    try {        
+        await connectToDatabase();
         const { testId } = params;
         let result;
-        const submisssionInfo = await prisma.submission.findUnique({
-            where: {
-                testId
-            }
-        });
+        const submisssionInfo = await Submission.findOne({testId});
         if(!submisssionInfo){
             return NextResponse({"error": "Submission not found"}, {status: 404});
         }
-        const resultInfo = await prisma.result.findMany({
-            where: {
-                testId
-            },
-            select: {
-                resultId: true,
-                accuracy: true,
-                completeness: true,
-                explanation: true,
-                practicalRelevance: true,
-                conciseness: true,
-                score: true,
-            }
-        });
-        const testInfo = await prisma.test.findUnique({
-            where: {
-                testId
-            },
-            select: {
-                testName: true,
-                accuracy: true,
-                completeness: true,
-                explanation: true,
-                practicalRelevance: true,
-                conciseness: true,
-                score: true,
-            }
-        })
+        const resultInfo = await Result.find({testId}).select(" resultId accuracy completeness explanation practicalRelevance conciseness score");
+        const testInfo = await Test.findOne({testId}).select("testName accuracy completeness explanation practicalRelevance conciseness score");
         result = {testId, 
                 startedAt: submisssionInfo.startedAt, 
                 completedAt: submisssionInfo.completedAt,

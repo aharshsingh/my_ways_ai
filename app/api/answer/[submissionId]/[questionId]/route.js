@@ -1,21 +1,15 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import axios from 'axios';
-const prisma = new PrismaClient();
+import { connectToDatabase } from "@/lib/mongodb";
+import Answer from "@/lib/models/Answer";
 
 export async function POST(req, {params}){
-    try {
+    try {        
+        await connectToDatabase();
         let {submissionId, questionId} = await params;
-        submissionId = parseInt(submissionId, 10);
-        questionId = parseInt(questionId, 10);
 
-        const res = await prisma.answer.create({
-            data: {
-                submissionId,
-                questionId,
-                answer: "this is temp answer"
-            }
-        });
+        const res = new Answer({ submissionId, questionId, answer: "this is temp answer" });
+        await res.save();
 
         const formData = await req.formData();
         const audioFile = formData.get("audio");
@@ -34,11 +28,10 @@ export async function POST(req, {params}){
             {
             headers: {
                 Authorization: `Bearer ${APIKEY}`,
-                ...revFormData.getHeaders(),
             }
         });
         const jobId = response.data.id;
-        return NextResponse.json({jobId, res}, {status: 200});
+        return NextResponse.json(jobId, res, {status: 200});
     } catch (error) {
         console.log(error)
         return NextResponse.json({"error": "Internal server error"}, {status: 500})

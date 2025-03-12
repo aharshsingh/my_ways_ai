@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import { testSchema } from "@/utlis/validator";
-const Prisma = new PrismaClient();
+import Test from "@/lib/models/Test";
+import { connectToDatabase } from "@/lib/mongodb";
 
 export async function POST(req){
     try {
-        const body = await req.json()
+        await connectToDatabase();
+        const body = await req.json();
         const {error} = testSchema.validate(body);
         if(error){
             return NextResponse.json({error}, {status:400})
@@ -21,9 +22,8 @@ export async function POST(req){
         //     practicalRelevance, 
         //     conciseness, 
         //     score} = testInfo
-        const result = await Prisma.test.create({
-            data: body
-        })
+
+        const result = await new Test(body).save();
         return NextResponse.json(result, {status: 200})
     } catch (error) {
         console.log(error)
