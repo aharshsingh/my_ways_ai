@@ -12,28 +12,25 @@ export default function TestCluster() {
     const [tests, setTests] = useState([]);
     const[isLoading,setIsLoading]=useState(true);
     const { theme } = useTheme()
-    const { token } = useAuth();
+    // const { token } = useAuth();
     const [color, setColor] = useState("#ffffff")
   
-    useEffect(() => {
-      const fetchTests = async () => {
-        if (!token) return;
-          try {
-              const response = await axios.get("http://localhost:3000/api/test",{
-                headers: { Authorization: `Bearer ${token}` },
-              });
-              setTests(response.data);
-          } catch (err) {
-              // setError("Failed to load tests");
-              console.log(err);
-          } 
-      };
-      fetchTests();
-  }, [token]);
+  //   useEffect(() => {
+  //     const fetchTests = async () => {
+  //       if (!token) return;
+  //         try {
+  //             const response = await axios.get("http://localhost:3000/api/test",{
+  //               headers: { Authorization: `Bearer ${token}` },
+  //             });
+  //             setTests(response.data);
+  //         } catch (err) {
+  //             // setError("Failed to load tests");
+  //             console.log(err);
+  //         } 
+  //     };
+  //     fetchTests();
+  // }, [token]);
 
-    useEffect(() => {
-      setColor(theme === "dark" ? "#ffffff" : "#000000")
-    }, [theme])
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -41,7 +38,6 @@ export default function TestCluster() {
         }, 3000);
         return () => clearTimeout(timer);
       }, []);
-
         
   return (
 

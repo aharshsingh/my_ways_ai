@@ -7,7 +7,15 @@ const prisma = new PrismaClient();
 
 export async function POST(req){
     try {
+        try {
+            await prisma.$connect();
+            console.log("PostgreSQL Database connected successfully!");
+        } catch (error) {
+            console.log(error)
+            console.error("PostgreSQL Database connection failed:", error);
+        }
         const {email, password} = await req.json();
+        console.log({email, password})
         const {error} = userLogin.validate({email, password});
         if(error){
             return NextResponse.json({error}, {status: 400});
@@ -17,6 +25,7 @@ export async function POST(req){
                 email
             }
         });
+        console.log(userInfo)
         if(!userInfo){
             return NextResponse.json({"error": "User not exists"}, {status: 404});
         }
@@ -28,7 +37,7 @@ export async function POST(req){
         const accessToken = await createToken(payload);
         return NextResponse.json({accessToken}, {status: 200}); 
     } catch (error) {
-        console.log(error)
+        //console.log(error)
         return NextResponse.json({error: "Internal server error"}, {status: 500})
     }
 }

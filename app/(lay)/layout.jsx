@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import {
   DropdownMenu,
@@ -11,9 +12,10 @@ import {
 
 
 export default function Layout({ children }) {
+   const router = useRouter();
   return (
     <div>
-      <nav className="bg-transparent fixed top-0 w-full z-10">
+      <nav className="bg-black fixed top-0 w-full z-10">
         <div className="container mx-auto flex items-center justify-center gap-[85%]">
           <div className="text-white text-xl font-bold">
              <img
@@ -31,7 +33,7 @@ export default function Layout({ children }) {
             <DropdownMenuContent className="mr-10">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push('/profile')}>Profile</DropdownMenuItem>
               <DropdownMenuItem>Results</DropdownMenuItem>
               <DropdownMenuItem className="text-red-700">Logout</DropdownMenuItem>
             </DropdownMenuContent>

@@ -52,7 +52,7 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
             login(authToken);
             if (response.status === 200) {
               toast.success("Login Successfull!");
-              router.push('/testCluster');
+              // router.push('/testCluster');
               setIsOpen(false);
                 } else {
                     toast.error("Login Failed");
@@ -68,6 +68,7 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
                 } else if (error.response.status === 401) {
                     toast.error("Invalid password");
                  } else {
+                  router.push('/testCluster');
                     toast.error("Something went wrong");
                 }
             }
