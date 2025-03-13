@@ -23,7 +23,7 @@ export async function POST(req, {params}){
         revFormData.append("media", audioFile);
         revFormData.append("callback_url", WEBHOOK_URL);
         revFormData.append("metadata", JSON.stringify({ answerId: res.answerId }));
-
+        console.log("Webhook URL:", WEBHOOK_URL);
         const response = await axios.post("https://api.rev.ai/speechtotext/v1/jobs", revFormData,
             {
             headers: {
@@ -31,7 +31,7 @@ export async function POST(req, {params}){
             }
         });
         const jobId = response.data.id;
-        return NextResponse.json(jobId, res, {status: 200});
+        return NextResponse.json({jobId, res}, {status: 200});
     } catch (error) {
         console.log(error)
         return NextResponse.json({"error": "Internal server error"}, {status: 500})
