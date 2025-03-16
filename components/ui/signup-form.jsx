@@ -45,17 +45,22 @@ const [errors, setErrors] = useState({
       confirmPassword: confirmPassword.trim() === "" || confirmPassword !== password,
     };
     setErrors(newErrors);
-    if (newErrors.confirmPassword && confirmPassword.length > 0) {
-      toast.error("Passwords do not match!");
-    }
+    // if (newErrors.confirmPassword && confirmPassword.length > 0) {
+    //   toast.error("Passwords do not match!");
+    // }
     if (Object.values(newErrors).includes(true)) {
       return;
     }
     else{
       const fullName = `${firstname} ${lastname}`.trim();
+  
       try {
+        // console.log("Firstname:", firstname);
+        // console.log("Lastname:", lastname);
+        // console.log("Full Name:", fullName);
+        // console.log(email);
         const response = await axios.post("http://localhost:3000/api/signup", {
-            name:fullName,
+            userName:fullName,
             email,
             password,
         });
@@ -79,9 +84,7 @@ const [errors, setErrors] = useState({
     }
 
   };
-
-     
-  
+ 
   return (
     (<div 
     className="h-full w-full mx-auto flex items-center justify-center p-4 md:p-8 shadow-input bg-white dark:bg-black">
@@ -140,7 +143,7 @@ const [errors, setErrors] = useState({
           </div>
         </div>
       </form>
-      {isOpen && <LoginDrawer isOpen={isOpen} setIsOpen={setIsOpen} />}
+      {isOpen && <LoginDrawer isOpen={isOpen} setIsOpen={setIsOpen} /> }
      
     </div>)
   );
