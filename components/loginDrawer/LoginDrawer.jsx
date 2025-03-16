@@ -22,7 +22,7 @@ import { useAuth } from '@/context/authContext';
 
 export default function LoginDrawer({ isOpen, setIsOpen }) {
   const router = useRouter();
-  const { login }= useAuth();
+  // const { login }= useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({
@@ -47,12 +47,13 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
                 password
             });
             const authToken = response.data.accessToken;
+            // const userId=response.data._id;
             localStorage.setItem("authToken", authToken);
             // console.log(authToken);
-            login(authToken);
+            // login(authToken);
             if (response.status === 200) {
               toast.success("Login Successfull!");
-              // router.push('/testCluster');
+              router.push('/testCluster');
               setIsOpen(false);
                 } else {
                     toast.error("Login Failed");
@@ -68,7 +69,6 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
                 } else if (error.response.status === 401) {
                     toast.error("Invalid password");
                  } else {
-                  router.push('/testCluster');
                     toast.error("Something went wrong");
                 }
             }

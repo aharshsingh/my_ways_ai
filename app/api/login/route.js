@@ -26,7 +26,7 @@ export async function POST(req){
         const accessToken = await createToken(payload);
         return NextResponse.json({accessToken}, {status: 200}); 
     } catch (error) {
-        //console.log(error)
+        console.log(error)
         return NextResponse.json({error: "Internal server error"}, {status: 500})
     }
 }
