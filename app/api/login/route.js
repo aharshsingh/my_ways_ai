@@ -9,6 +9,7 @@ export async function POST(req){
     try {
         await connectToDatabase();
         const {email, password} = await req.json();
+        console.log({email, password})
         const {error} = userLogin.validate({email, password});
         if(error){
             return NextResponse.json({error}, {status: 400});
