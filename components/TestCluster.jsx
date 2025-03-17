@@ -24,6 +24,7 @@ import { useMemo, useState } from "react"
 
 export default function TestCluster() {
     const [tests, setTests] = useState([]);
+    const [userTests, setuserTests] = useState([]);
     const[isLoading,setIsLoading]=useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [sortColumn, setSortColumn] = useState("title");
@@ -108,23 +109,36 @@ export default function TestCluster() {
 };
 
   
-    useEffect(() => {
-      const fetchTests = async () => {
-        const token = localStorage.getItem("authToken");
-        if (!token) return;
-          try {
-              const response = await axios.get("http://localhost:3000/api/test",{
-                headers: { Authorization: `Bearer ${token}` },
-              });
-              setTests(response.data);
-              setIsLoading(false);
-          } catch (err) {
-              // setError("Failed to load tests");
-              console.log(err);
-          } 
-      };
-      const userId=localStorage.getItem("userId");
-  }, []);
+  //   useEffect(async() => {
+  //     const token = localStorage.getItem("authToken");
+  //       if (!token) return;
+  //         try {
+  //             const response = await axios.get("http://localhost:3000/api/test",{
+  //               headers: { Authorization: `Bearer ${token}` },
+  //             });
+  //             setTests(response.data);
+  //             setIsLoading(false);
+  //         } catch (err) {
+  //             // setError("Failed to load tests");
+  //             console.log(err);
+  //         } 
+  // }, []);
+//   useEffect(async() => {
+//     const token = localStorage.getItem("authToken");
+//     const userId = localStorage.getItem("userId");
+//     if (!token) return;
+//       try {
+//           const response = await axios.get("http://localhost:3000/api/test",{
+//             headers: { Authorization: `Bearer ${token}` },
+//           });
+//           setTests(response.data);
+          
+//           setIsLoading(false);
+//       } catch (err) {
+//           // setError("Failed to load tests");
+//           console.log(err);
+//       } 
+// }, []);
 
 
     useEffect(() => {
