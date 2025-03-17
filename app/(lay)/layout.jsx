@@ -20,9 +20,10 @@ export default function Layout({ children }) {
         <div className="container mx-auto flex items-center justify-between">
           <div className="text-white text-xl font-bold">
              <img
+             onClick={() => router.push('/')}
               src="/appLogo3.png" 
               alt="Logo"
-              className="h-10 w-auto"
+              className="h-10 w-auto cursor-pointer"
             /> 
           </div>
        

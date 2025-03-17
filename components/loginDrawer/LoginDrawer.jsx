@@ -47,13 +47,15 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
                 password
             });
             const authToken = response.data.accessToken;
-            // const userId=response.data._id;
+            const userId=response.data.userId;
+            localStorage.setItem("userId",userId);
             localStorage.setItem("authToken", authToken);
             // console.log(authToken);
             // login(authToken);
             if (response.status === 200) {
               toast.success("Login Successfull!");
-              router.push('/testCluster');
+              // router.push('/testCluster');
+              router.push('/admin');
               setIsOpen(false);
                 } else {
                     toast.error("Login Failed");

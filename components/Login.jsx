@@ -9,7 +9,17 @@ export default function SignupFormDemo() {
             <div className="h-full w-[50%] flex items-center justify-center">
               <SignupForm />
             </div>
-            <div className="h-full border-2 w-[50%] bg-[#F4F4F4]">
+            <div className="h-full w-[50%] bg-[#F4F4F4] overflow-hidden">
+            <div className="w-full max-w-lg mx-auto ">
+            <video 
+                autoPlay 
+                loop 
+                muted 
+                className="w-full max-w-lg"
+              >
+                <source src="/Signup.mp4" type="video/mp4" />
+              </video>
+            </div>
             </div>
         </div>
     </div>
