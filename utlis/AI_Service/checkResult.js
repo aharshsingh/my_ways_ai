@@ -18,10 +18,16 @@ export async function checkResult(question, answer, test) {
                                                 "conciseness": <score>,
                                                 "totalScore": <sum_of_all_scores>
                                             }`},
-                { role: "user", content: `this is question ${question} and this is answer ${answer} and this is test json ${JSON.stringify(test)}`}
+                { role: "user", content: `this is question ${question} and this is answer ${answer} and this is test json ${JSON.stringify(test)}. Give only the json nothing else not even a single word like this {
+                                            "accuracy": 3,
+                                            "completeness": 3,
+                                            "explanation": 1.5,
+                                            "practicalRelevance": 0.8,
+                                            "conciseness": 1,
+                                            "totalScore": 9.3
+                                            }`}
             ]
         });
-        console.log("this is ai talking")
         console.log('Chat:', chatResponse.choices[0].message.content);   
         return chatResponse.choices[0].message.content
     } catch (error) {
