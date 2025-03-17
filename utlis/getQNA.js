@@ -1,16 +1,19 @@
 import Answer from "@/lib/models/Answer";
 import Question from "@/lib/models/Question";
 
-export async function getQNA(answerIdArray){
+export async function getQNA(answerIdArray) {
     try {
         let qna = [];
-        answerIdArray.forEach(async (answerId) => {
-            const Answer = await Answer.findOne({_id: answerId}).select("questionId, answer");
-            const question = await Question.findOne({_id: Answer.questionId}).select("questionText");
-            qna.push({ question, answer: Answer.answer });
-        });
+
+        for (const answerId of answerIdArray) {
+            const ans = await Answer.findOne({ _id: answerId });
+            if (!ans) continue; // Skip if answer not found
+            const question = await Question.findOne({ _id: ans.questionId }).select("questionText");
+            qna.push({ question: question?.questionText, answer: ans.answer });
+        }
         return qna;
     } catch (error) {
-        console.log(error);
+        console.error("Error in getQNA:", error);
+        return [];
     }
 }
