@@ -20,7 +20,9 @@ export async function calculateResult(){
         const answerIdArray = submission.answerId;
         const qna = await getQNA(answerIdArray);
         for (const item of qna) {
-            const score = JSON.parse(await checkResult(item.question, item.answer, test));
+            const response = await checkResult(item.question, item.answer, test);
+            console.log("Response from checkResult:", response);
+            const score = JSON.parse(response);
             totalScore.push(score);
         }
         totalScore.forEach((item) =>{
@@ -30,11 +32,11 @@ export async function calculateResult(){
             practicalRelevance += item.practicalRelevance;
             conciseness += item.conciseness;
         });
+        
         let score = accuracy+completeness+explanation+practicalRelevance+conciseness;
         result = {...result, userId: submission.userId, submissionId: submission._id, testId: submission.testId, accuracy, completeness, explanation, practicalRelevance, conciseness, score}
         const res = new Result(result);
         const response = await res.save();      
-        console.log(response);  
         return response;
     }
 }
