@@ -7,7 +7,7 @@ export async function getQNA(answerIdArray) {
 
         for (const answerId of answerIdArray) {
             const ans = await Answer.findOne({ _id: answerId });
-            if (!ans) continue; // Skip if answer not found
+            if (!ans) continue;
             const question = await Question.findOne({ _id: ans.questionId }).select("questionText");
             qna.push({ question: question?.questionText, answer: ans.answer });
         }
