@@ -21,8 +21,11 @@ export async function calculateResult(){
         const qna = await getQNA(answerIdArray);
         for (const item of qna) {
             const response = await checkResult(item.question, item.answer, test);
-            console.log("Response from checkResult:", response);
-            const score = JSON.parse(response);
+            const cleanedResponse = response.trim();
+            const validJson = cleanedResponse.replace(/^.*?({.*}).*?$/, "$1");
+            // console.log(validJson)
+            const score = JSON.parse(validJson);
+            // console.log(score)
             totalScore.push(score);
         }
         totalScore.forEach((item) =>{

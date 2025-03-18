@@ -3,7 +3,7 @@ import { connectToDatabase } from "@/lib/mongodb";
 import Submission from "@/lib/models/submission";
 
 export async function GET(req,{params}){
-    await connectToDatabase;
+    await connectToDatabase();
     let userResult;
     const {testId} = params;
     if(!testId){
