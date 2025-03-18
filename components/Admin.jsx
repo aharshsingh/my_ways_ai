@@ -59,7 +59,7 @@ import {
 
   return (
     <>
-    <div className="h-[40rem] w-full bg-black flex flex-col items-center justify-between overflow-hidden">
+    <div className="h-screen w-full bg-black flex flex-col items-center justify-between overflow-hidden">
     <div className='flex justify-center items-center max-w-full'>
     <Dock className='items-end pb-3'>
       {data.map((item, idx) => (
