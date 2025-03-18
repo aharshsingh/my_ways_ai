@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import { auth } from "@/lib/middleware/auth"; 
 
 export function middleware(req) {

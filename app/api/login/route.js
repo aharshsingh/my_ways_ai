@@ -22,9 +22,9 @@ export async function POST(req){
         if(!match){
             return NextResponse.json({ "error": "Invalid Password" }, { status: 401 });
         }
-        const payload = { userId: userInfo._id };
+        const payload = { userId: userInfo._id, role: userInfo_role };
         const accessToken = await createToken(payload);
-        return NextResponse.json({accessToken, userId: userInfo._id}, {status: 200}); 
+        return NextResponse.json({accessToken, userId: userInfo._id, role: userInfo_role}, {status: 200}); 
     } catch (error) {
         console.log(error)
         return NextResponse.json({error: "Internal server error"}, {status: 500})
