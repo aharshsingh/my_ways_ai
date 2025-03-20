@@ -17,7 +17,7 @@ export default function Layout({ children }) {
   return (
     <div>
       <nav className="bg-black fixed top-0 border-2 border-blue-900 w-screen z-10">
-        <div className="flex items-center justify-between border-2 border-red-700 w-screen">
+        <div className="flex items-center justify-between w-screen">
           <div className="text-white text-xl font-bold">
              <img
              onClick={() => router.push('/')}
