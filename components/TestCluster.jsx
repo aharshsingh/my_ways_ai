@@ -90,7 +90,7 @@ useEffect(() => {
 }, []);
  
   return (
-<div>
+    <div>
     
     {isLoading ? (<div className="mx-auto my-16 w-full max-w-6xl rounded border">
       <div className="flex flex-wrap items-center justify-between gap-4 border-b p-4 md:py-2">
@@ -197,7 +197,7 @@ useEffect(() => {
       </TableHeader>
       <TableBody>
         {sortedTests.map((test) => (
-          <TableRow key={test.id}>
+            <TableRow key={test.id || test.testName}>
             <TableCell className="font-medium">{test.testName}</TableCell>
             <TableCell className="flex flex-wrap gap-1">
               {test.keyWord.map((keyword, index) => (
