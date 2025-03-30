@@ -57,7 +57,7 @@ export function Iinput(
     }
   return (
     (<div
-      className="group  flex items-stretch rounded-md text-2xl font-semibold ring ring-zinc-200 transition-[box-shadow] focus-within:ring-2 focus-within:ring-blue-500 dark:ring-zinc-800">
+      className="group  flex items-stretch rounded-md text-xl font-semibold ring ring-zinc-200 transition-[box-shadow] focus-within:ring-2 focus-within:ring-blue-500 dark:ring-zinc-800">
       <button
         aria-hidden
         tabIndex={-1}

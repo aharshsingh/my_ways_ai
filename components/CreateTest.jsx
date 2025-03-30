@@ -58,15 +58,15 @@ export default function CreateTest() {
 
   return (
     <div className="flex-grow h-screen bg-black ">
-     <div className='flex items-center justify-center overflow-hidden w-full h-[8%]'>
+     <div className='flex items-center justify-center overflow-hidden border-2 w-full h-[8%]'>
      <img
             src="/appLogo3.png" 
             alt="Logo"
             className="h-14 w-auto overflow-hidden"
           /> 
      </div>
-     <div className='flex w-full  p-4 h-auto bg-black'>
-      <div className='flex flex-col justify-center gap-10 items-center w-[35%] '>
+     <div className='flex w-full  p-4 border-4 border-red-900 h-auto bg-black'>
+      <div className='flex flex-col justify-center border-2 gap-10 items-center w-[35%] '>
         <div className='w-full flex flex-col justify-center items-center gap-5'>
             <div className="group relative w-[70%] ">
                 <label
@@ -91,55 +91,54 @@ export default function CreateTest() {
 
         <div className='testMark flex flex-col gap-5 items-center justify-center w-full'>
     
-            <div className='flex w-[90%] items-center justify-center gap-5 '>
-              <h1 className='text-white flex justify-center items-center text-2xl w-[50%] border-2 p-2 rounded-xl bg-black'>Accuracy</h1>
+            <div className='flex w-[90%] items-center justify-center gap-5'>
+              <h1 className='text-white flex justify-center items-center text-xl w-[50%] border-2 p-2 rounded-xl bg-black'>Accuracy</h1>
               <div className="text-white space-y-2 flex flex-col items-center justify-center">
               <Iinput value={accuracyMark} onChange={setAccuracyMark} min={0} max={10} />
               </div>
             </div>
 
             <div className='flex w-[90%] items-center justify-center gap-5 '>
-              <h1 className='text-white flex justify-center items-center text-2xl w-[50%] border-2 p-2 rounded-xl bg-black'>Completeness</h1>
+              <h1 className='text-white flex justify-center items-center text-xl w-[50%] border-2 p-2 rounded-xl bg-black'>Completeness</h1>
               <div className="text-white space-y-2 flex flex-col items-center justify-center">
               <Iinput value={completenessMark} onChange={setCompletenesseMark} min={0} max={10} />
               </div>
             </div>
 
             <div className='flex w-[90%] items-center justify-center gap-5 '>
-              <h1 className='text-white flex justify-center items-center text-2xl w-[50%] border-2 p-2 rounded-xl bg-black'>Explanation</h1>
+              <h1 className='text-white flex justify-center items-center text-xl w-[50%] border-2 p-2 rounded-xl bg-black'>Explanation</h1>
               <div className="text-white space-y-2 flex flex-col items-center justify-center">
               <Iinput value={explainationMark} onChange={setExplainationMark} min={0} max={10} />
               </div>
             </div>
 
             <div className='flex w-[90%] items-center justify-center gap-5 '>
-              <h1 className='text-white flex justify-center items-center text-2xl w-[50%] border-2 p-2 rounded-xl bg-black  whitespace-nowrap overflow-hidden text-ellipsis text-center'>Practical Relevance</h1>
+              <h1 className='text-white flex justify-center items-center text-xl w-[50%] border-2 p-2 rounded-xl bg-black  whitespace-nowrap overflow-hidden text-ellipsis text-center'>Practical Relevance</h1>
               <div className="text-white space-y-2 flex flex-col items-center justify-center">
               <Iinput value={practicalRelevanceMark} onChange={setPracticalRelevanceMark} min={0} max={10} />
               </div>
             </div>
 
             <div className='flex w-[90%] items-center justify-center gap-5 '>
-              <h1 className='text-white flex justify-center items-center text-2xl w-[50%] border-2 p-2 rounded-xl bg-black'>Conciseness</h1>
+              <h1 className='text-white flex justify-center items-center text-xl w-[50%] border-2 p-2 rounded-xl bg-black'>Conciseness</h1>
               <div className="text-white space-y-2 flex flex-col items-center justify-center">
               <Iinput value={concisenessMark} onChange={setConcisenessMark} min={0} max={10} />
               </div>
             </div>
 
-            <div className='flex w-[90%] items-center justify-center gap-10'>
-            <h1 className='text-white flex justify-center items-center text-4xl w-[50%] p-2 rounded-xl bg-black'>Total Marks</h1>
-            <div className="text-white   flex flex-col items-center justify-center">
+            <div className='flex w-[90%] items-center justify-center gap-5'>
+            <h1 className='text-white flex justify-center items-center text-3xl w-[50%] p-2 border-2 rounded-xl bg-black'>Total Marks</h1>
+            <div className="text-white space-y-2 border- flex flex-col items-center justify-center">
               <NumberTicker
                 value={totalMark}
-                className="whitespace-pre-wrap text-7xl font-medium tracking-tighter text-white dark:text-white"
+                className="whitespace-pre-wrap text-5xl font-medium border-2 w-[6rem] flex items-center justify-center rounded-xl tracking-tighter text-white dark:text-white"
               />
             </div>
             </div>
-          
-           
+        
         </div>
       </div>
-      <div className=' gap-10 flex flex-col items-center  w-[65%]'>
+      <div className=' gap-10 flex flex-col border-2 items-center  w-[65%]'>
         <div className=" w-[70%] h-[50%]">
           <Label htmlFor={id}>Textarea with error</Label>
           <Textarea
