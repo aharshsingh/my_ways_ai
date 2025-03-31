@@ -36,7 +36,7 @@ export default function Layout({ children }) {
       icon: (
         <Component className='h-full w-full text-neutral-600 dark:text-neutral-300' />
       ),
-      link: '/createTest',
+      link: '/allTests',
     },
     {
       title: 'Results',
@@ -54,12 +54,11 @@ export default function Layout({ children }) {
     },
 
   ];
-  
-   
+
   return (
-    <div className="flex">
-        <div className='flex items-center w-[12rem] bg-black'>
-          <Dock className=' flex items-center justify-center p-4'>
+    <div className="flex ">
+        <div className='flex flex-1 items-center w-[10%] bg-black'>
+          <Dock className=' flex flex-10 items-center justify-center p-4'>
             {data.map((item, idx) => (
               <DockItem
                 key={idx}
@@ -73,7 +72,9 @@ export default function Layout({ children }) {
           </Dock>
         </div>
       {/* Main Content */}
-      <main>{children}</main>
+      <main className="w-[91.5%] h-screen">
+        {children}
+      </main>
     </div>
   );
 }
