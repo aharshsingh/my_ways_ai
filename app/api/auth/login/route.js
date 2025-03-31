@@ -18,13 +18,14 @@ export async function POST(req){
         if(!userInfo){
             return NextResponse.json({"error": "User not exists"}, {status: 404});
         }
+        console.log(userInfo)
         const match = await bcrypt.compare(password, userInfo.password);
         if(!match){
             return NextResponse.json({ "error": "Invalid Password" }, { status: 401 });
         }
-        const payload = { userId: userInfo._id, role: userInfo_role };
+        const payload = { userId: userInfo._id, role: userInfo.role };
         const accessToken = await createToken(payload);
-        return NextResponse.json({accessToken, userId: userInfo._id, role: userInfo_role}, {status: 200}); 
+        return NextResponse.json({accessToken, userId: userInfo._id, role: userInfo.role}, {status: 200}); 
     } catch (error) {
         console.log(error)
         return NextResponse.json({error: "Internal server error"}, {status: 500})

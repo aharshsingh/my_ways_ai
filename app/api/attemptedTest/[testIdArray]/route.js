@@ -7,7 +7,7 @@ export async function GET(req, {params}){
         const { testIdArray }= params;
         let result = [];
         for(let i = 0; i < testIdArray.size(); i++){
-            const response = await Test.findOne({_id: testIdArray[i]}).select("_id testName createdAt numOfQuestion duration score")
+            const response = await Test.findOne({_id: testIdArray[i]}).select("_id testName createdAt numOfQuestion duration score");
             result.push(response);
         }
         return NextResponse(result, {status: 200})

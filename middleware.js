@@ -5,9 +5,5 @@ export function middleware(req) {
 }
 
 export const config = {
-    matcher: [
-        "/api/test",
-        "/api/user",
-        "/api/addTest"
-    ],
+    matcher: [],
 };
