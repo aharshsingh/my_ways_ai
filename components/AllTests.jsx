@@ -175,21 +175,21 @@ useEffect(() => {
              </div>
            </div>
          </div>) :
-         <div className="mx-auto my-2 z-30 overflow-auto w-[90%] bg-white max-w-6xl rounded border">
-         <div className="flex flex-wrap items-center justify-between gap-4 border-b p-4 md:py-2">
-           <h1 className="text-xl font-bold">All Tests</h1>
+         <div className="mx-auto my-2 z-30 overflow-auto w-[90%] bg-black max-w-6xl rounded border" style={{ borderColor: "#5A5A5A" }}>
+         <div className="flex flex-wrap items-center justify-between gap-4  p-4 md:py-2" >
+           <h1 className="text-xl text-white font-bold">All Tests</h1>
            <Input
              placeholder="Search tests..."
              value={searchTerm}
              onChange={(e) => setSearchTerm(e.target.value)}
-             className="md:w-96"
+             className="md:w-96 bg-[#121212] border-2 border-white text-white"  style={{ borderColor: "#5A5A5A" }}
            />
          </div>
-         <Table>
+         <Table className="border-2" style={{ borderColor: "#5A5A5A" }}>
            <TableHeader>
-           <TableRow>
+           <TableRow className="border-2"  style={{ borderColor: "#5A5A5A" }}>
                <TableHead
-                 className="cursor-pointer"
+                 className="cursor-pointer "
                  onClick={() => handleSort("testName")}
                >
                  Test Name
@@ -254,11 +254,11 @@ useEffect(() => {
            </TableHeader>
            <TableBody>
              {sortedTests.map((test) => (
-                 <TableRow key={test.id || test.testName}>
+                 <TableRow className=" text-[#B8B8B8] border-2"  style={{ borderColor: "#5A5A5A" }} key={test.id || test.testName}>
                  <TableCell className="font-medium">{test.testName}</TableCell>
                  <TableCell className="flex flex-wrap gap-1">
                    {test.keyWord.map((keyword, index) => (
-                     <Badge variant="outline" key={index}>
+                     <Badge variant="outline" className={"text-white"} key={index}>
                        {keyword}
                      </Badge>
                    ))}
