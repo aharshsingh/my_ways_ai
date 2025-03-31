@@ -15,14 +15,15 @@ export const testSchema = Joi.object({
     testName:          Joi.string().required(),
     testDescription:   Joi.string().required(),
     difficulty:        Joi.string().valid("easy", "medium", "hard").required(),
-    numOfQuestion:    Joi.number().required(),
+    numOfQuestion:     Joi.number().required(),
     duration:          Joi.number().required(),
     accuracy:          Joi.number().required(),
     completeness:      Joi.number().required(),
     explanation:       Joi.number().required(),
     practicalRelevance:Joi.number().required(),
     conciseness:       Joi.number().required(),
-    score:             Joi.number().required()
+    score:             Joi.number().required(),
+    keyWord:           Joi.array().items(Joi.string()).optional()
 })
 
 export const submissionSchema = Joi.object({
