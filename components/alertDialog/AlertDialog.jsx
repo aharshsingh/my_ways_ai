@@ -11,14 +11,13 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger,
   } from "@/components/ui/alert-dialog";
-  import { Button, buttonVariants } from "@/components/ui/button";
+  import { buttonVariants } from "@/components/ui/button";
   import { Trash2 } from "lucide-react";
 
 const deleteTest=async(testId)=>{
   try {
-    const response = await axios.delete(`http://localhost:3000/api/deleteTest/${testId}`)
+    const response = await axios.delete(`http://localhost:3000/api/admin/deletedTest/${testId}`)
     if(response.status === 200)
     {
       toast.success("Test Deleted Successfully");
@@ -26,10 +25,10 @@ const deleteTest=async(testId)=>{
     }
   } catch (error) {
     console.log(error.message);
-    toast.error("Test could not be Deleted")
+    toast.error("Couldn't delete Test! Try again")
   }
 }
-export default function AlertDialogBox({ testId,isOpen, setIsOpen }) {
+export default function AlertDialogBox({ testId,isOpen, setIsOpen,setTest }) {
 return (
   <>
   <Toaster richColors position="top-center" />
@@ -56,7 +55,7 @@ return (
             onClick={() => deleteTest(testId)}
             className={buttonVariants({ variant: "destructive" })}
           >
-            Continue
+            Delete Test
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

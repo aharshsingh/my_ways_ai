@@ -116,8 +116,8 @@ useEffect(() => {
      
            <div className="w-full">
              {/* Table Header Skeleton */}
-             <div className="grid grid-cols-7 gap-2 border-b p-4">
-               {Array(7).fill("").map((_, index) => (
+             <div className="grid grid-cols-7 gap-5 border-b p-4">
+               {Array(9).fill("").map((_, index) => (
                  <Skeleton key={index} className="h-6 w-24" />
                ))}
              </div>
@@ -134,7 +134,7 @@ useEffect(() => {
              </div>
            </div>
          </div>) :
-         <div className="mx-auto my-2 z-30 overflow-auto w-[90%]  max-w-6xl rounded border" >
+         <div className="mx-auto  my-2 z-30 overflow-auto w-[100%]  max-w-6xl rounded border-2" >
          <div className="flex flex-wrap items-center justify-between gap-4  p-4 md:py-2" >
            <h1 className="text-xl  font-bold">All Tests</h1>
            <Input
@@ -180,17 +180,17 @@ useEffect(() => {
                  Duration
                </TableHead>
                <TableHead
-                 className="cursor-pointer"
+                 className="cursor-pointer text-nowrap"
                >
                  Max Score
                </TableHead>
                <TableHead
-                 className="cursor-pointer"
+                 className="cursor-pointer text-nowrap"
                >
                  Users Attempted
                </TableHead>
                <TableHead
-                 className="cursor-pointer"
+                 className="cursor-pointer text-nowrap"
                  onClick={() => handleSort("createdAt")}
                >
                  Published on
@@ -252,10 +252,11 @@ useEffect(() => {
                        month: "2-digit",
                        year: "numeric",
                      })}
+
                  </TableCell>
                  <TableCell className="flex gap-1 items-center justify-center">
-                 <Badge variant="outline" className={userAttemptedTests.includes(test.id)  ? "bg-green-100 text-green-800" : "bg-blue-100 text-blue-800 cursor-pointer "}>
-                 {userAttemptedTests.includes(test.id) ? "Publsih" : "Publsihed"}
+                 <Badge variant="outline" className={test.isPublished  ? "bg-green-100 text-green-800" : "bg-blue-100 text-blue-800 cursor-pointer text-nowrap"}>
+                 {test.isPublished ? "Publsihed" : "Not Publsihed"}
                      </Badge>
                  </TableCell>
                  <TableCell className="gap-2">
@@ -267,7 +268,7 @@ useEffect(() => {
              ))}
            </TableBody>
          </Table>
-         {isAlertOpen && <AlertDialogBox testId={delTestId} isOpen={isAlertOpen} setIsOpen={setIsAlertOpen} />}
+         {isAlertOpen && <AlertDialogBox setTests={setTests} testId={delTestId} isOpen={isAlertOpen} setIsOpen={setIsAlertOpen} />}
           {isOpen && <MarksBreakupDialog isOpen={isOpen} setIsOpen={setIsOpen} marksBreakup={marksBreakup} /> }
        </div>}
        </div>

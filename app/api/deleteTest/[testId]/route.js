@@ -6,7 +6,6 @@ export async function DELETE(req, {params}){
     try {
         await connectToDatabase();
         const { testId } = params;
-        console.log(testId);
         if(!testId){
             return NextResponse.json({error: "TestId not recieved!"}, {status: 404});
         }
