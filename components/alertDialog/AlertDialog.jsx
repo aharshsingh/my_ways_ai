@@ -1,4 +1,7 @@
 import React from 'react'
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
+import axios from "axios";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -13,8 +16,23 @@ import {
   import { Button, buttonVariants } from "@/components/ui/button";
   import { Trash2 } from "lucide-react";
 
-export default function AlertDialogBox({ isOpen, setIsOpen }) {
+const deleteTest=async(testId)=>{
+  try {
+    const response = await axios.delete(`http://localhost:3000/api/deleteTest/${testId}`)
+    if(response.status === 200)
+    {
+      toast.success("Test Deleted Successfully");
+      return
+    }
+  } catch (error) {
+    console.log(error.message);
+    toast.error("Test could not be Deleted")
+  }
+}
+export default function AlertDialogBox({ testId,isOpen, setIsOpen }) {
 return (
+  <>
+  <Toaster richColors position="top-center" />
     <AlertDialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
       <AlertDialogContent>
         <AlertDialogHeader className="mb-4 items-center gap-2 md:flex-row md:items-start md:gap-4">
@@ -35,6 +53,7 @@ return (
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
+            onClick={() => deleteTest(testId)}
             className={buttonVariants({ variant: "destructive" })}
           >
             Continue
@@ -42,5 +61,6 @@ return (
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
+    </>
   );
 }

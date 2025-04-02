@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-// import { Label } from "@/components/ui/label";
-// import { Input } from "@/components/ui/input";
+
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
@@ -11,11 +10,9 @@ import {
 } from "@tabler/icons-react";
 import { useState } from "react";
 import LoginDrawer from "@/components/loginDrawer/LoginDrawer"
-// import { Button } from "@/components/ui/button";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
 
 export function SignupForm() {
 const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +21,6 @@ const [password, setPassword] = useState("");
 const [firstname, setFirstname] = useState("");
 const [lastname, setLastname] = useState("");
 const[confirmPassword, setConfirmPassword] = useState("");
-// const[name, setName] = useState("");
 
 const [errors, setErrors] = useState({
   firstname: false,
@@ -36,7 +32,6 @@ const [errors, setErrors] = useState({
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-
     let newErrors = {
       firstname: firstname.trim() === "",
       lastname: lastname.trim() === "",
@@ -45,9 +40,6 @@ const [errors, setErrors] = useState({
       confirmPassword: confirmPassword.trim() === "" || confirmPassword !== password,
     };
     setErrors(newErrors);
-    // if (newErrors.confirmPassword && confirmPassword.length > 0) {
-    //   toast.error("Passwords do not match!");
-    // }
     if (Object.values(newErrors).includes(true)) {
       return;
     }
@@ -55,10 +47,6 @@ const [errors, setErrors] = useState({
       const fullName = `${firstname} ${lastname}`.trim();
   
       try {
-        // console.log("Firstname:", firstname);
-        // console.log("Lastname:", lastname);
-        // console.log("Full Name:", fullName);
-        // console.log(email);
         const response = await axios.post("http://localhost:3000/api/signup", {
             userName:fullName,
             email,

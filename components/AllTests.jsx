@@ -3,6 +3,8 @@ import React, { useEffect } from 'react'
 import { Skeleton } from "@/components/ui/skeleton"
 // import { useState } from "react"
 import axios from "axios";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight} from "@fortawesome/free-solid-svg-icons";
 // import { useState, useMemo } from "react";
@@ -11,7 +13,6 @@ import AlertDialogBox from './alertDialog/AlertDialog';
 import { Trash2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-
 
 import { Input } from "@/components/ui/input"
 import {
@@ -24,12 +25,11 @@ import {
 } from "@/components/ui/table"
 import { useMemo, useState } from "react"
 
-
-
 export default function AllTests() {
     const [tests, setTests] = useState([]);
     const [userAttemptedTests, setUserAttemptedTests] = useState([]);
     const [userTests, setuserTests] = useState([]);
+    const [delTestId,setDelTestId]=useState();
     const [isLoading,setIsLoading]=useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [sortColumn, setSortColumn] = useState("title");
@@ -39,11 +39,9 @@ export default function AllTests() {
     const [marksBreakup, setMarksBreakup] = useState({});
     
   const filteredTests = useMemo(() => {
-    return tests.filter((test) =>
-      test.testName.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [tests, searchTerm]);
-
+    return tests.filter((test) => 
+      test.testName.toLowerCase().includes(searchTerm.toLowerCase()));
+   },[tests, searchTerm]);
   const sortedTests = useMemo(() => {
     return [...filteredTests].sort((a, b) => {
       if (a[sortColumn] < b[sortColumn]) return sortDirection === "asc" ? -1 : 1;
@@ -51,6 +49,7 @@ export default function AllTests() {
       return 0;
     });
   }, [filteredTests, sortColumn, sortDirection]);
+
 
   const handleSort = (column) => {
     if (sortColumn === column) {
@@ -62,6 +61,10 @@ export default function AllTests() {
 };
 
   
+const handleDelete=(testId)=>{
+  setDelTestId(testId);
+  setIsAlertOpen(true)
+}
 useEffect(() => {
   const token = localStorage.getItem("authToken");
     if (!token) return;
@@ -92,64 +95,20 @@ useEffect(() => {
 
   fetchAttemptedTests();
 
-  // const usersTests=userAttemptedTests.filter((test)=>{tests.})
-
-}, []);
-      const tags = [
-        {
-          name: "React",
-          bookmarks: 1234,
-          description: "A JavaScript library for building user interfaces",
-          relatedTags: ["JavaScript", "Frontend", "UI"],
-        },
-        {
-          name: "Node.js",
-          bookmarks: 2345,
-          description:
-            "A JavaScript runtime built on Chrome's V8 JavaScript engine",
-          relatedTags: ["JavaScript", "Backend", "Server"],
-        },
-        {
-          name: "Python",
-          bookmarks: 3456,
-          description:
-            "A high-level programming language known for its readability and versatility",
-          relatedTags: ["Programming", "Data Science", "Machine Learning"],
-        },
-        {
-          name: "Vue.js",
-          bookmarks: 1567,
-          description:
-            "A progressive JavaScript framework for building user interfaces",
-          relatedTags: ["JavaScript", "Frontend", "UI"],
-        },
-        {
-          name: "Ruby on Rails",
-          bookmarks: 2678,
-          description: "A server-side web application framework written in Ruby",
-          relatedTags: ["Ruby", "Backend", "Web Development"],
-        },
-        {
-          name: "Angular",
-          bookmarks: 3789,
-          description:
-            "A TypeScript-based web application framework for building single-page applications",
-          relatedTags: ["TypeScript", "Frontend", "SPA"],
-        },
-      ]
-      
-      
+},[]);
   return (
-    <div className='flex flex-col h-screen items-center bg-black '>
-      <div className='flex items-center justify-center overflow-hidden w-full h-[8%]'>
+    <div className='flex flex-col h-screen items-center '>
+      <div className='flex items-center justify-between p-4 w-full h-12 mt-2'>
+        <h1 className='text-4xl font-bold'>Admin Portal</h1>
      <img
-            src="/appLogo3.png" 
-            alt="Logo"
-            className="h-14 w-auto overflow-hidden"
-          /> 
+          src="/appLogo3.png" 
+          alt="Logo"
+          className="h-14 w-auto overflow-hidden"
+        /> 
      </div>
+    <Toaster richColors position="top-center" />
      <div className=' w-full h-full flex flex-col items-center justify-center'>
-     {isLoading ? (<div className="mx-auto my-2 bg-white w-full z-20 max-w-6xl rounded border">
+     {isLoading ? (<div className="mx-auto my-2 w-full z-20 max-w-6xl rounded border">
            <div className="flex flex-wrap items-center justify-between gap-4 border-b p-4 md:py-2">
              <Skeleton className="h-6 w-40" /> {/* Test Cluster Title */}
              <Skeleton className="h-10 w-96" /> {/* Search Input */}
@@ -175,19 +134,19 @@ useEffect(() => {
              </div>
            </div>
          </div>) :
-         <div className="mx-auto my-2 z-30 overflow-auto w-[90%] bg-black max-w-6xl rounded border" style={{ borderColor: "#5A5A5A" }}>
+         <div className="mx-auto my-2 z-30 overflow-auto w-[90%]  max-w-6xl rounded border" >
          <div className="flex flex-wrap items-center justify-between gap-4  p-4 md:py-2" >
-           <h1 className="text-xl text-white font-bold">All Tests</h1>
+           <h1 className="text-xl  font-bold">All Tests</h1>
            <Input
              placeholder="Search tests..."
              value={searchTerm}
              onChange={(e) => setSearchTerm(e.target.value)}
-             className="md:w-96 bg-[#121212] border-2 border-white text-white"  style={{ borderColor: "#5A5A5A" }}
+             className="md:w-96  border-2 " 
            />
          </div>
-         <Table className="border-2" style={{ borderColor: "#5A5A5A" }}>
+         <Table>
            <TableHeader>
-           <TableRow className="border-2"  style={{ borderColor: "#5A5A5A" }}>
+           <TableRow>
                <TableHead
                  className="cursor-pointer "
                  onClick={() => handleSort("testName")}
@@ -254,11 +213,11 @@ useEffect(() => {
            </TableHeader>
            <TableBody>
              {sortedTests.map((test) => (
-                 <TableRow className=" text-[#B8B8B8] border-2"  style={{ borderColor: "#5A5A5A" }} key={test.id || test.testName}>
+                 <TableRow key={test.id || test.testName}>
                  <TableCell className="font-medium">{test.testName}</TableCell>
                  <TableCell className="flex flex-wrap gap-1">
                    {test.keyWord.map((keyword, index) => (
-                     <Badge variant="outline" className={"text-white"} key={index}>
+                     <Badge variant="outline" key={index}>
                        {keyword}
                      </Badge>
                    ))}
@@ -296,19 +255,19 @@ useEffect(() => {
                  </TableCell>
                  <TableCell className="flex gap-1 items-center justify-center">
                  <Badge variant="outline" className={userAttemptedTests.includes(test.id)  ? "bg-green-100 text-green-800" : "bg-blue-100 text-blue-800 cursor-pointer "}>
-                 {userAttemptedTests.includes(test.id) ? "Publsihed" : "Publsih"}
+                 {userAttemptedTests.includes(test.id) ? "Publsih" : "Publsihed"}
                      </Badge>
                  </TableCell>
                  <TableCell className="gap-2">
                      <Button variant="ghost" size="icon">
-                       <Trash2 onClick={() => setIsAlertOpen(true)} className="size-3.5" />
+                       <Trash2 onClick={() => handleDelete(test._id)} className="size-3.5" />
                      </Button>
                   </TableCell>
                </TableRow>
              ))}
            </TableBody>
          </Table>
-         {isAlertOpen && <AlertDialogBox isOpen={isAlertOpen} setIsOpen={setIsAlertOpen} />}
+         {isAlertOpen && <AlertDialogBox testId={delTestId} isOpen={isAlertOpen} setIsOpen={setIsAlertOpen} />}
           {isOpen && <MarksBreakupDialog isOpen={isOpen} setIsOpen={setIsOpen} marksBreakup={marksBreakup} /> }
        </div>}
        </div>

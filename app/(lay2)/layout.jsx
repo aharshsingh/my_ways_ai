@@ -57,8 +57,8 @@ export default function Layout({ children }) {
 
   return (
     <div className="flex ">
-        <div className='flex flex-1 items-center w-[10%] bg-black'>
-          <Dock className=' flex flex-10 items-center justify-center p-4'>
+        <div className='flex flex-1 items-center w-[10%] bg-white'>
+          <Dock className=' flex flex-10 border-2 items-center justify-center p-4'>
             {data.map((item, idx) => (
               <DockItem
                 key={idx}
