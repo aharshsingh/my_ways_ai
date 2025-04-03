@@ -42,23 +42,31 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
         }
         else{
           try {
-            const response = await axios.post("http://localhost:3000/api/login", {
+            const response = await axios.post("http://localhost:3000/api/auth/login", {
                 email,
                 password
             });
             const authToken = response.data.accessToken;
             const userId=response.data.userId;
+            const userType=response.data.role;
             localStorage.setItem("userId",userId);
             localStorage.setItem("authToken", authToken);
-            // console.log(authToken);
-            // login(authToken);
-            if (response.status === 200) {
-              toast.success("Login Successfull!");
-              // router.push('/testCluster');
-              router.push('/admin');
-              setIsOpen(false);
-                } else {
-                    toast.error("Login Failed");
+            if (response.status === 200) 
+              {
+                toast.success("Login Successfull!");
+                setIsOpen(false);
+                if(userType === "admin")
+                {
+                  router.push('/admin');
+                }
+                else if(userType === "user")
+                {
+                  router.push('/testCluster');
+                }
+              }
+            else 
+                {
+                  toast.error("Login Failed");
                 }
             }
          catch (error) {

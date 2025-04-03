@@ -65,22 +65,39 @@ const handleDelete=(testId)=>{
   setDelTestId(testId);
   setIsAlertOpen(true)
 }
+
+const handlePublishTest=async(testId)=>{
+  try {
+    const response = await axios.patch(`http://localhost:3000/api/admin/publishTest/${testId}`)
+    if(response.status === 200)
+    {
+      toast.success("Test Published")
+      fetchTests();
+      return
+    }
+  } catch (error) {
+      toast.error("Couldn't Publsih test! Try again")
+      return
+  }
+}
+
+
+const fetchTests = async (token) => {
+  try {
+    const response1 = await axios.get("http://localhost:3000/api/test", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    setTests(response1.data);
+    setIsLoading(false);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 useEffect(() => {
   const token = localStorage.getItem("authToken");
     if (!token) return;
-  const fetchTests = async () => {
-    try {
-      const response1 = await axios.get("http://localhost:3000/api/test", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setTests(response1.data);
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  fetchTests();
-
+  fetchTests(token);
 
   const fetchAttemptedTests = async () => {
     try {
@@ -255,9 +272,9 @@ useEffect(() => {
 
                  </TableCell>
                  <TableCell className="flex gap-1 items-center justify-center">
-                 <Badge variant="outline" className={test.isPublished  ? "bg-green-100 text-green-800" : "bg-blue-100 text-blue-800 cursor-pointer text-nowrap"}>
-                 {test.isPublished ? "Publsihed" : "Not Publsihed"}
-                     </Badge>
+                 <Badge variant="outline" onClick={!test.isPublished ? ()=>handlePublishTest(test._id) : undefined } className={test.isPublished  ? "bg-green-100 text-green-800" : "bg-blue-100 text-blue-800 cursor-pointer text-nowrap"}>
+                 {test.isPublished ? "Publsihed" : "Publsih"}
+                 </Badge>
                  </TableCell>
                  <TableCell className="gap-2">
                      <Button variant="ghost" size="icon">
@@ -268,7 +285,7 @@ useEffect(() => {
              ))}
            </TableBody>
          </Table>
-         {isAlertOpen && <AlertDialogBox setTests={setTests} testId={delTestId} isOpen={isAlertOpen} setIsOpen={setIsAlertOpen} />}
+         {isAlertOpen && <AlertDialogBox fetchTests={fetchTests} testId={delTestId} isOpen={isAlertOpen} setIsOpen={setIsAlertOpen} />}
           {isOpen && <MarksBreakupDialog isOpen={isOpen} setIsOpen={setIsOpen} marksBreakup={marksBreakup} /> }
        </div>}
        </div>
