@@ -57,23 +57,17 @@ export function Iinput(
     }
   return (
     (<div
-      className="group  flex items-stretch rounded-md text-xl font-semibold ring ring-zinc-200 transition-[box-shadow] focus-within:ring-2 focus-within:ring-blue-500 dark:ring-zinc-800">
-      <button
-        aria-hidden
-        tabIndex={-1}
-        className="flex items-center pl-[.5em] pr-[.325em]"
-        disabled={min != null && value <= min}
-        onPointerDown={handlePointerDown(-1)}>
-        <Minus className="size-4" absoluteStrokeWidth strokeWidth={3.5} />
-      </button>
+      className="group h-min flex items-stretch rounded-md text-2xl border  font-semibold  ring-zinc-200 transition-[box-shadow] focus-within:ring-2 focus-within:ring-blue-500 dark:ring-zinc-800">
+    
       <Toaster richColors position="top-center" />
       <div
         className="relative grid items-center justify-items-center text-center [grid-template-areas:'overlap'] *:[grid-area:overlap]">
         <input
-          ref={inputRef}
+          // ref={inputRef}
           className={clsx(
             showCaret ? "caret-primary" : "caret-transparent",
             "spin-hide w-[1.5em] bg-transparent py-2 text-center font-[inherit] text-transparent outline-none",
+            "cursor-not-allowed"
           )}
           style={{
             appearance: "textfield",
@@ -100,14 +94,7 @@ export function Iinput(
           className="pointer-events-none"
           willChange />
       </div>
-      <button
-        aria-hidden
-        tabIndex={-1}
-        className="flex items-center pl-[.325em] pr-[.5em]"
-        disabled={max != null && value >= max}
-        onPointerDown={handlePointerDown(1)}>
-        <Plus className="size-4" absoluteStrokeWidth strokeWidth={3.5} />
-      </button>
+ 
     </div>)
   );
 }
