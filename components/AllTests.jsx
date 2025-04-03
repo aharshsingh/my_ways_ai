@@ -76,7 +76,7 @@ const handlePublishTest=async(testId)=>{
       return
     }
   } catch (error) {
-      toast.error("Couldn't Publsih test! Try again")
+      toast.error("Couldn't Publish test! Try again")
       return
   }
 }
@@ -124,7 +124,7 @@ useEffect(() => {
         /> 
      </div>
     <Toaster richColors position="top-center" />
-     <div className=' w-full h-full flex flex-col items-center justify-center'>
+     <div className=' w-full h-full flex flex-col items-center mt-2 '>
      {isLoading ? (<div className="mx-auto my-2 w-full z-20 max-w-6xl rounded border">
            <div className="flex flex-wrap items-center justify-between gap-4 border-b p-4 md:py-2">
              <Skeleton className="h-6 w-40" /> {/* Test Cluster Title */}
@@ -151,7 +151,7 @@ useEffect(() => {
              </div>
            </div>
          </div>) :
-         <div className="mx-auto  my-2 z-30 overflow-auto w-[100%]  max-w-6xl rounded border-2" >
+         <div className="mx-auto  my-2 z-30 overflow-auto w-[100%]  max-w-6xl rounded border" >
          <div className="flex flex-wrap items-center justify-between gap-4  p-4 md:py-2" >
            <h1 className="text-xl  font-bold">All Tests</h1>
            <Input
@@ -230,15 +230,25 @@ useEffect(() => {
            </TableHeader>
            <TableBody>
              {sortedTests.map((test) => (
-                 <TableRow key={test.id || test.testName}>
+                 <TableRow key={test._id || test.testName}>
                  <TableCell className="font-medium">{test.testName}</TableCell>
                  <TableCell className="flex flex-wrap gap-1">
-                   {test.keyWord.map((keyword, index) => (
-                     <Badge variant="outline" key={index}>
-                       {keyword}
-                     </Badge>
-                   ))}
-                 </TableCell>
+                    {test.keyWord.map((keyword, index) => {
+                      // Define color schemes based on index or keyword
+                      const colorClass =
+                        index % 3 === 0
+                          ? "bg-blue-100 text-blue-800"
+                          : index % 3 === 1
+                          ? "bg-green-100 text-green-800"
+                          : "bg-purple-100 text-purple-800";
+                    
+                      return (
+                        <Badge variant="outline" key={index} className={colorClass}>
+                          {keyword}
+                        </Badge>
+                      );
+                    })}
+                  </TableCell>
                  {/* <TableCell>{bookmark.description}</TableCell> */}
                  <TableCell >
                     <Badge variant="outline" className={

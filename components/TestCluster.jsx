@@ -63,7 +63,8 @@ useEffect(() => {
       const response1 = await axios.get("http://localhost:3000/api/test", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setTests(response1.data);
+      const publishedTest = response1.data.filter((test)=>test.isPublished === true);
+      setTests(publishedTest);
       setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -84,9 +85,6 @@ useEffect(() => {
   };
 
   fetchAttemptedTests();
-
-  // const usersTests=userAttemptedTests.filter((test)=>{tests.})
-
 }, []);
  
   return (
@@ -199,13 +197,23 @@ useEffect(() => {
         {sortedTests.map((test) => (
             <TableRow key={test.id || test.testName}>
             <TableCell className="font-medium">{test.testName}</TableCell>
-            <TableCell className="flex flex-wrap gap-1">
-              {test.keyWord.map((keyword, index) => (
-                <Badge variant="outline" key={index}>
-                  {keyword}
-                </Badge>
-              ))}
-            </TableCell>
+              <TableCell className="flex flex-wrap gap-1">
+                {test.keyWord.map((keyword, index) => {
+                  // Define color schemes based on index or keyword
+                  const colorClass =
+                    index % 3 === 0
+                      ? "bg-blue-100 text-blue-800"
+                      : index % 3 === 1
+                      ? "bg-green-100 text-green-800"
+                      : "bg-purple-100 text-purple-800";
+                
+                  return (
+                    <Badge variant="outline" key={index} className={colorClass}>
+                      {keyword}
+                    </Badge>
+                  );
+                })}
+              </TableCell>
             {/* <TableCell>{bookmark.description}</TableCell> */}
             <TableCell>{test.duration}</TableCell>
             <TableCell>{test.score}</TableCell>
