@@ -118,7 +118,7 @@ useEffect(() => {
       <div className='flex items-center justify-between p-4 w-full h-12 mt-2'>
         <h1 className='text-4xl font-bold'>Admin Portal</h1>
      <img
-          src="/appLogo3.png" 
+          // src="/appLogo3.png" 
           alt="Logo"
           className="h-14 w-auto overflow-hidden"
         /> 

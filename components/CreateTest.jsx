@@ -16,25 +16,24 @@ import { Button } from "@/components/ui/button";
 import { AnimatedSubscribeButton } from "@/components/magicui/animated-subscribe-button";
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
-import { Description } from '@radix-ui/react-dialog';
-
 export default function CreateTest() {
 
-const handleCreateTest= async(testInfo,marks,difficulty)=>{
+const handleCreateTest= async(testInfo,marks,difficulty,tag)=>{
+  console.log(testInfo,marks,difficulty,tag);
   try {
     const response = await axios.post("http://localhost:3000/api/admin/addTest",{
       testName: testInfo.testName,
       testDescription: testInfo.description,
       difficulty:difficulty,
-      numOfQuestion:testInfo.noOfQuestion,
-      duraton:testInfo.duration,
+      numOfQuestion:testInfo.numOfQuestion,
+      duration:testInfo.duration,
       accuracy: marks.accuracyMark,
       completeness:marks.completenessMark,
       explanation:marks.explainationMark,
       practicalRelevance: marks.practicalRelevanceMark,
       conciseness: marks.concisenessMark,
       score:marks.totalMark,
-      keyWords:tag
+      keyWord:tag
   })
   if(response.status === 200)
   {
@@ -54,7 +53,7 @@ const [difficulty,setDifficulty]=useState();
 const [testInfo,setTestInfo]=useState({
   testName: '',
   description:'',
-  noOfQuestions: 0,
+  numOfQuestion: 0,
   duration: 0,
 })
 const [marks, setMarks] = useState({
@@ -67,6 +66,7 @@ const [marks, setMarks] = useState({
 });
 
 const handleTestInfoChange = (key,value)=>{
+  console.log(`Updating ${key} with`, value, typeof value);
   setTestInfo((prevInfo)=>({
     ...prevInfo,
     [key]:value,
@@ -266,7 +266,7 @@ const handleKeyDown = (e) => {
                       className="origin-start absolute top-1/2 block -translate-y-1/2 cursor-text p-3 text-muted-foreground/70 transition-all group-focus-within:pointer-events-none group-focus-within:top-0 group-focus-within:cursor-default group-focus-within:text-xs group-focus-within:font-medium group-focus-within:text-foreground has-[+input:not(:placeholder-shown)]:pointer-events-none has-[+input:not(:placeholder-shown)]:top-0 has-[+input:not(:placeholder-shown)]:cursor-default has-[+input:not(:placeholder-shown)]:text-xs has-[+input:not(:placeholder-shown)]:font-medium has-[+input:not(:placeholder-shown)]:text-foreground">
                       <span className="inline-flex bg-background px-2">Test Name</span>
                     </label>
-                    <Input id="testName"  type="email" placeholder="" onChange={(e)=>handleTestInfoChange("testName",(e.target.value))} />
+                    <Input id="testName"  type="string" placeholder="" onChange={(e)=>handleTestInfoChange("testName",(e.target.value))} />
                 </div>
              <div className='flex gap-5 w-[55%]'>
                 <div className="group relative  ">
@@ -275,7 +275,7 @@ const handleKeyDown = (e) => {
                       className="origin-start absolute top-1/2 block -translate-y-1/2 cursor-text p-3 text-muted-foreground/70 transition-all group-focus-within:pointer-events-none group-focus-within:top-0 group-focus-within:cursor-default group-focus-within:text-xs group-focus-within:font-medium group-focus-within:text-foreground has-[+input:not(:placeholder-shown)]:pointer-events-none has-[+input:not(:placeholder-shown)]:top-0 has-[+input:not(:placeholder-shown)]:cursor-default has-[+input:not(:placeholder-shown)]:text-xs has-[+input:not(:placeholder-shown)]:font-medium has-[+input:not(:placeholder-shown)]:text-foreground">
                       <span className="inline-flex bg-background px-2">Test Duration(min)</span>
                     </label>
-                    <Input id="Duration" type="number" onChange={(e)=>handleTestInfoChange("duration" ,(e.target.value))} placeholder="" />
+                    <Input id="Duration" type="number"   onChange={(e) => handleTestInfoChange("duration",Number(e.target.value))} placeholder="" />
                 </div>
                 <div className="group relative w-[70%] ">
                     <label
@@ -283,7 +283,7 @@ const handleKeyDown = (e) => {
                       className="origin-start absolute top-1/2 block -translate-y-1/2 cursor-text p-3 text-muted-foreground/70 transition-all group-focus-within:pointer-events-none group-focus-within:top-0 group-focus-within:cursor-default group-focus-within:text-xs group-focus-within:font-medium group-focus-within:text-foreground has-[+input:not(:placeholder-shown)]:pointer-events-none has-[+input:not(:placeholder-shown)]:top-0 has-[+input:not(:placeholder-shown)]:cursor-default has-[+input:not(:placeholder-shown)]:text-xs has-[+input:not(:placeholder-shown)]:font-medium has-[+input:not(:placeholder-shown)]:text-foreground">
                       <span className="inline-flex bg-background px-2">No of Questions</span>
                     </label>
-                    <Input id="Questions" type="number" onChange={(e)=> handleTestInfoChange("noOfQuestions",(e.target.value))} placeholder="" />
+                    <Input id="Questions" type="number"   onChange={(e) => handleTestInfoChange("numOfQuestion",Number(e.target.value))} placeholder="" />
                 </div>
               </div>
               <div className="justify-center items-center w-[50%] gap-4 flex p-3">
@@ -295,10 +295,10 @@ const handleKeyDown = (e) => {
                     max={2}
                     step={1}
                     aria-label="Difficulty Selector"
-                    onValueChange={(value) =>{setDifficulty(["Easy", "Medium", "Hard"][value[0]])}}
+                    onValueChange={(value) =>{setDifficulty(["easy", "medium", "hard"][value[0]])}}
                   />
                   <div className="mt-3 flex w-full items-center justify-between px-2.5 text-xs font-medium">
-                    {["Easy", "Medium", "Hard"].map((label, i) => {
+                    {["easy", "medium", "hard"].map((label, i) => {
                       const colors = ["bg-green-300 text-green-900", "bg-orange-300 text-orange-900", "bg-red-300 text-red-900"];
                       return (
                         <span key={i} className={`flex flex-col w-15 rounded-xl p-2 items-center ${colors[i]}`}>
@@ -314,7 +314,7 @@ const handleKeyDown = (e) => {
           <Label htmlFor="textArea" className="text-xl">Test Description</Label>
           <Textarea
             id="textArea"
-            onValueChange ={(e)=>{handleTestInfoChange("description",(e.target.value))}}
+            onChange ={(e)=>{handleTestInfoChange("description",(e.target.value))}}
             className="border-destructive/80 h-[70%] mt-2 text-md text-destructive text-black focus-visible:border-destructive/80 focus-visible:ring-destructive/20"
             placeholder="Enter Detailed description of test"
             defaultValue=""
@@ -381,7 +381,7 @@ const handleKeyDown = (e) => {
     </div>
 
     <div className='buttons w-[55%] p-5 flex justify-between items-center gap-5'>
-    <AnimatedSubscribeButton onClick={()=>{handleCreateTest(testInfo,marks,difficulty)} } className="w-fit-content">
+    <AnimatedSubscribeButton onClick={()=>{handleCreateTest(testInfo,marks,difficulty,tag)} } className="w-fit-content">
       <span className="group inline-flex items-center">
         Create Test
         <ChevronRightIcon className="ml-1 size-4 transition-transform duration-300 group-hover:translate-x-1" />
