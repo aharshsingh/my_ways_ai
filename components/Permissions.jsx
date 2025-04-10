@@ -2,6 +2,8 @@
 import React, { useState, useRef } from "react";
 import Link from "next/link";
 import { PlayIcon, CameraIcon, MicrophoneIcon, ComputerDesktopIcon } from "@heroicons/react/24/outline";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 export default function Permissions() {
   const [video, setVideo] = useState(false);
@@ -18,7 +20,7 @@ export default function Permissions() {
       }
       setVideo(true);
     } catch (error) {
-      alert("Please grant access to camera");
+      toast.error("Please grant access to camera");
       console.log(error);
     }
   };
@@ -28,7 +30,7 @@ export default function Permissions() {
       const mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
       setAudio(true);
     } catch (error) {
-      alert("Please grant access to microphone");
+      toast.error("Please grant access to microphone");
       console.log(error);
     }
   };
@@ -43,9 +45,9 @@ export default function Permissions() {
     try {
       const screenShare = await navigator.mediaDevices.getDisplayMedia({ video: true });
       setScreenShare(true);
-      alert("Screen Share Started");
+      toast.success("Screen Share Started");
     } catch (error) {
-      alert("Screen Sharing is not Available");
+      toast.error("Screen Sharing is not Available");
       console.log(error);
     }
   };
@@ -61,7 +63,7 @@ export default function Permissions() {
           autoPlay
           playsInline
           muted
-          className="w-full h-auto object-cover border-white border-2 rounded-3xl"
+          className="w-full h-auto object-cover border-white border-2 rounded-3xl  -scale-x-100"
         />
       </div>
 
@@ -97,7 +99,7 @@ export default function Permissions() {
             />
           </div>
         </div>
-
+    <Toaster richColors position="top-center" />
    
         <div className="w-11/12 p-4 rounded-lg shadow-md flex items-center space-x-4 border border-white">
           <MicrophoneIcon className="w-8 h-8 text-white" />
@@ -136,7 +138,7 @@ export default function Permissions() {
 
         <div className="w-11/12 p-2 items-center">
           <Link
-            href={allPermissionsGranted ? "/InterviewIns" : "#"}
+            href={allPermissionsGranted ? " /interviewIns " : "#"}
             className={`w-full block px-8 py-3 rounded-lg text-center text-xl font-semibold ${
               allPermissionsGranted? "bg-purple-700 text-white hover:bg-purple-900"
                 : "bg-gray-500 text-gray-300 cursor-not-allowed"

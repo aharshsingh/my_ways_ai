@@ -5,8 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight} from "@fortawesome/free-solid-svg-icons";
-// import { useState, useMemo } from "react";
-// import { Pencil, Trash2 } from "lucide-react";
+import { useRouter } from 'next/navigation';
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 
@@ -23,6 +22,7 @@ import { useMemo, useState } from "react"
 
 
 export default function TestCluster() {
+    const router = useRouter();
     const [tests, setTests] = useState([]);
     const [userAttemptedTests, setUserAttemptedTests] = useState([]);
     const [userTests, setuserTests] = useState([]);
@@ -86,6 +86,12 @@ useEffect(() => {
 
   fetchAttemptedTests();
 }, []);
+
+const handleTestClick=(testId)=>{
+  localStorage.setItem("testId",testId);
+  console.log(`Handle test clicked and test ID is ${testId} `);
+  router.push('/testins');
+}
  
   return (
     <div>
@@ -195,7 +201,7 @@ useEffect(() => {
       </TableHeader>
       <TableBody>
         {sortedTests.map((test) => (
-            <TableRow key={test.id || test.testName}>
+            <TableRow key={test._id}>
             <TableCell className="font-medium">{test.testName}</TableCell>
               <TableCell className="flex flex-wrap gap-1">
                 {test.keyWord.map((keyword, index) => {
@@ -215,7 +221,7 @@ useEffect(() => {
                 })}
               </TableCell>
             {/* <TableCell>{bookmark.description}</TableCell> */}
-            <TableCell>{test.duration}</TableCell>
+            <TableCell>{test.duration} min</TableCell>
             <TableCell>{test.score}</TableCell>
             <TableCell>
               {new Date(test.createdAt).toLocaleDateString("en-GB", {
@@ -229,7 +235,7 @@ useEffect(() => {
             {userAttemptedTests.includes(test.id) ? "Attempted" : "Not Attempted"}
                 </Badge>
             </TableCell>
-            <TableCell className="hover:underline cursor-pointer">  
+            <TableCell onClick={()=>handleTestClick(test._id)} className="hover:underline cursor-pointer">  
               Take Test <FontAwesomeIcon icon={faArrowRight} />
             </TableCell>
           </TableRow>

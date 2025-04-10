@@ -22,6 +22,7 @@ export default function CreateTest() {
 
 const [isCreated, setIsCreated] = useState(false);
 const [isPublished, setIsPublished] = useState(false);
+const[testId,setTestId]= useState();
 const [difficulty,setDifficulty]=useState("easy");
 const [isLoading, setIsLoading] = useState(false);
 const [isPublishing, setIsPublishing] = useState(false);
@@ -42,80 +43,102 @@ const [marks, setMarks] = useState({
 
 
 const handleCreateTest= async(testInfo,marks,difficulty,tag)=>{
-  setIsLoading(true);
+  if(isCreated)
+  {
+    toast.success("Test Already Created")
+    return
+  }
   console.log(testInfo,marks,difficulty,tag);
   const isAnyMarkZero = Object.values(marks).some(mark => mark === 0);
   if (testInfo.testName === '') {
     toast.error("Test Name is missing");
     return;
   }
-  if (testInfo.description === '') {
+  else if (testInfo.description === '') {
     toast.error("Test Description is missing");
     return;
   }
-  if (testInfo.duration <= 0) {
+  else if (testInfo.duration <= 0) {
     toast.error("Test Duration is missing");
     return;
   }
-  if (testInfo.numOfQuestion <= 0) {
+  else if (testInfo.numOfQuestion <= 0) {
     toast.error("No. of questions is missing");
     return;
   }
-  if (isAnyMarkZero) {
+  else if (isAnyMarkZero) {
     toast.error("Marks are missing");
     return;
   }
-  if (tag.length === 0) {
+  else if (tag.length === 0) {
     toast.error("You must add at least one tag");
     return;
   }
-      try {
-        const response = await axios.post("http://localhost:3000/api/admin/addTest",{
-          testName: testInfo.testName,
-          testDescription: testInfo.description,
-          difficulty:difficulty,
-          numOfQuestion:testInfo.numOfQuestion,
-          duration:testInfo.duration,
-          accuracy: marks.accuracyMark,
-          completeness:marks.completenessMark,
-          explanation:marks.explainationMark,
-          practicalRelevance: marks.practicalRelevanceMark,
-          conciseness: marks.concisenessMark,
-          score:marks.totalMark,
-          keyWord:tag
-      })
-      if(response.status === 200)
-      {
-        setTimeout(()=>{
-          setIsCreated(true);
-          setIsLoading(false);
-           toast.success("Test Created Successfully");
-           return
-        },3000)
-       
-      }
-      } catch (error) {
-        setIsCreated(false);
-        toast.error("Something went wrong! Try again")
-        console.log(error);
-        return
-      }
+   else{
+   
+    try {
+      setIsLoading(true);
+      const response = await axios.post("http://localhost:3000/api/admin/addTest",{
+        testName: testInfo.testName,
+        testDescription: testInfo.description,
+        difficulty:difficulty,
+        numOfQuestion:testInfo.numOfQuestion,
+        duration:testInfo.duration,
+        accuracy: marks.accuracyMark,
+        completeness:marks.completenessMark,
+        explanation:marks.explainationMark,
+        practicalRelevance: marks.practicalRelevanceMark,
+        conciseness: marks.concisenessMark,
+        score:marks.totalMark,
+        keyWord:tag
+    })
+    if(response.status === 200)
+    {
+      setTestId(response.data._id);
+      setTimeout(()=>{
+        setIsCreated(true);
+        setIsLoading(false);
+         toast.success("Test Created Successfully");
+         return
+      },3000)
+     
+    }
+    } catch (error) {
+      setIsCreated(false);
+      setIsLoading(false);
+      toast.error("Something went wrong! Try again")
+      console.log(error);
+      return
+    }
+   }  
 
 } 
 
-const handlePublishTest =()=>{
-  if(!isPublished)
+const handlePublishTest =async(testId)=>{
+  if(isPublished)
   {
-    toast.error("You must create test before Publishing")
+    toast.success("Test Alredy Published");
+    return
   }
-  {
-    setTimeout(()=>{
-      setIsPublished(true);
-      setIsPublishing(false);
-       toast.success("Test Created Successfully");
+  try {
+    setIsPublishing(true);
+     const response = await axios.patch(`http://localhost:3000/api/admin/publishTest/${testId}`)
+     if(response.status === 200)
+     {
+
+      setTimeout(()=>{
+        setIsPublished(true);
+        setIsPublishing(false);
+        toast.success("Test Published")
+         return
+      },3000)
+     }
+   } catch (error) {
+       toast.error("Couldn't Publish test! Try again")
        return
-    },3000)
-  }
+   }
+   
+  
 }
 const handleTestInfoChange = (key,value)=>{
   console.log(`Updating ${key} with`, value, typeof value);
@@ -442,14 +465,14 @@ const handleKeyDown = (e) => {
       </span>
     </Button>
 
-    <Button onClick={()=>{handlePublishTest()}} disabled={!isCreated}
+    <Button onClick={()=>{handlePublishTest(testId)}} disabled={!isCreated}
      className={`w-fit-content ${
     isCreated
       ? 'cursor-pointer'
       : 'bg-gray-300 cursor-not-allowed'
   }`}>
     <span className="group inline-flex items-center">
-        Publish Test
+       {isPublished ? "Test Published" : " Publish Test"}
         <ChevronRightIcon className="ml-1 size-4 transition-transform duration-300 group-hover:translate-x-1" />
       </span>
     </Button>

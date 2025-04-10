@@ -283,7 +283,7 @@ useEffect(() => {
                  </TableCell>
                  <TableCell className="flex gap-1 items-center justify-center">
                  <Badge variant="outline" onClick={!test.isPublished ? ()=>handlePublishTest(test._id) : undefined } className={test.isPublished  ? "bg-green-100 text-green-800" : "bg-blue-100 text-blue-800 cursor-pointer text-nowrap"}>
-                 {test.isPublished ? "Publsihed" : "Publsih"}
+                 {test.isPublished ? "Published" : "Publish"}
                  </Badge>
                  </TableCell>
                  <TableCell className="gap-2">
