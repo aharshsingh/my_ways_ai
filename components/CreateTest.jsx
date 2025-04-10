@@ -16,40 +16,15 @@ import { Button } from "@/components/ui/button";
 import { AnimatedSubscribeButton } from "@/components/magicui/animated-subscribe-button";
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
+import { Loader } from "@/components/ui/loader"
+
 export default function CreateTest() {
 
-const handleCreateTest= async(testInfo,marks,difficulty,tag)=>{
-  console.log(testInfo,marks,difficulty,tag);
-  try {
-    const response = await axios.post("http://localhost:3000/api/admin/addTest",{
-      testName: testInfo.testName,
-      testDescription: testInfo.description,
-      difficulty:difficulty,
-      numOfQuestion:testInfo.numOfQuestion,
-      duration:testInfo.duration,
-      accuracy: marks.accuracyMark,
-      completeness:marks.completenessMark,
-      explanation:marks.explainationMark,
-      practicalRelevance: marks.practicalRelevanceMark,
-      conciseness: marks.concisenessMark,
-      score:marks.totalMark,
-      keyWord:tag
-  })
-  if(response.status === 200)
-  {
-      toast.success("Test Created Successfullt");
-      return
-  }
-  } catch (error) {
-    toast.error("Something went wrong! Try again")
-    console.log(error);
-    return
-  }
- 
-} 
-
-
-const [difficulty,setDifficulty]=useState();
+const [isCreated, setIsCreated] = useState(false);
+const [isPublished, setIsPublished] = useState(false);
+const [difficulty,setDifficulty]=useState("easy");
+const [isLoading, setIsLoading] = useState(false);
+const [isPublishing, setIsPublishing] = useState(false);
 const [testInfo,setTestInfo]=useState({
   testName: '',
   description:'',
@@ -65,6 +40,83 @@ const [marks, setMarks] = useState({
   explainationMark: 0,
 });
 
+
+const handleCreateTest= async(testInfo,marks,difficulty,tag)=>{
+  setIsLoading(true);
+  console.log(testInfo,marks,difficulty,tag);
+  const isAnyMarkZero = Object.values(marks).some(mark => mark === 0);
+  if (testInfo.testName === '') {
+    toast.error("Test Name is missing");
+    return;
+  }
+  if (testInfo.description === '') {
+    toast.error("Test Description is missing");
+    return;
+  }
+  if (testInfo.duration <= 0) {
+    toast.error("Test Duration is missing");
+    return;
+  }
+  if (testInfo.numOfQuestion <= 0) {
+    toast.error("No. of questions is missing");
+    return;
+  }
+  if (isAnyMarkZero) {
+    toast.error("Marks are missing");
+    return;
+  }
+  if (tag.length === 0) {
+    toast.error("You must add at least one tag");
+    return;
+  }
+      try {
+        const response = await axios.post("http://localhost:3000/api/admin/addTest",{
+          testName: testInfo.testName,
+          testDescription: testInfo.description,
+          difficulty:difficulty,
+          numOfQuestion:testInfo.numOfQuestion,
+          duration:testInfo.duration,
+          accuracy: marks.accuracyMark,
+          completeness:marks.completenessMark,
+          explanation:marks.explainationMark,
+          practicalRelevance: marks.practicalRelevanceMark,
+          conciseness: marks.concisenessMark,
+          score:marks.totalMark,
+          keyWord:tag
+      })
+      if(response.status === 200)
+      {
+        setTimeout(()=>{
+          setIsCreated(true);
+          setIsLoading(false);
+           toast.success("Test Created Successfully");
+           return
+        },3000)
+       
+      }
+      } catch (error) {
+        setIsCreated(false);
+        toast.error("Something went wrong! Try again")
+        console.log(error);
+        return
+      }
+
+} 
+
+const handlePublishTest =()=>{
+  if(!isPublished)
+  {
+    toast.error("You must create test before Publishing")
+  }
+  {
+    setTimeout(()=>{
+      setIsPublished(true);
+      setIsPublishing(false);
+       toast.success("Test Created Successfully");
+       return
+    },3000)
+  }
+}
 const handleTestInfoChange = (key,value)=>{
   console.log(`Updating ${key} with`, value, typeof value);
   setTestInfo((prevInfo)=>({
@@ -101,7 +153,7 @@ const { tags, addTag, removeTag, removeLastTag, hasReachedMax  } = useTags({
   setTags(extractedTagNames);
   }
 });
-// console.log(tag);
+
 
 const handleKeyDown = (e) => {
   if (e.key === "Backspace" && !inputValue) {
@@ -123,7 +175,9 @@ const handleKeyDown = (e) => {
 
 // console.log(inputValue);
   return (
-    <div className="flex-grow h-scree ">
+    <>
+    <div className={`${isLoading ? 'opacity-50 pointer-events-none blur-sm' : ''}`}>
+    <div className="flex-grow ">
       <div className='flex items-center justify-between p-4 w-full h-10 mt-2'>
         <h1 className='text-2xl font-bold'>Admin Portal</h1>
      <img
@@ -381,30 +435,41 @@ const handleKeyDown = (e) => {
     </div>
 
     <div className='buttons w-[55%] p-5 flex justify-between items-center gap-5'>
-    <AnimatedSubscribeButton onClick={()=>{handleCreateTest(testInfo,marks,difficulty,tag)} } className="w-fit-content">
+    <Button onClick={()=>{handleCreateTest(testInfo,marks,difficulty,tag)} } className="w-fit-content">
       <span className="group inline-flex items-center">
-        Create Test
-        <ChevronRightIcon className="ml-1 size-4 transition-transform duration-300 group-hover:translate-x-1" />
+        {isCreated ? "Test Created" : "Create Test"}
+        <ChevronRightIcon className="ml-1 size-4 transition-transform duration-300 group-hover:translate-x-1" />   
       </span>
-      <span className="group inline-flex items-center">
-        <CheckIcon className="mr-2 size-4" />
-        Test Created
-      </span>
-    </AnimatedSubscribeButton>
+    </Button>
 
-    <AnimatedSubscribeButton disabled className="w-fit-content">
-      <span className="group inline-flex items-center">
+    <Button onClick={()=>{handlePublishTest()}} disabled={!isCreated}
+     className={`w-fit-content ${
+    isCreated
+      ? 'cursor-pointer'
+      : 'bg-gray-300 cursor-not-allowed'
+  }`}>
+    <span className="group inline-flex items-center">
         Publish Test
         <ChevronRightIcon className="ml-1 size-4 transition-transform duration-300 group-hover:translate-x-1" />
       </span>
-      <span className="group inline-flex items-center">
-        <CheckIcon className="mr-2 size-4" />
-        Test Published
-      </span>
-    </AnimatedSubscribeButton>
+    </Button>
     </div>
       </div>
      </div>
     </div>
+    </div>
+       {isLoading && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/80">
+         <Loader variant="circular" />
+          <p className="mt-4 text-lg font-semibold text-gray-700">Creating Test...</p>
+        </div>
+      )}
+      {isPublishing && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/80">
+         <Loader variant="circular" />
+          <p className="mt-4 text-lg font-semibold text-gray-700">Publishing Test...</p>
+        </div>
+      )}
+    </>
   )
 }
