@@ -24,7 +24,7 @@ export function NotFoundPage() {
                 Look like you're lost
               </h3>
               <p className="mb-6 text-black sm:mb-5">
-                The page you are looking for is not available!
+              <p>The page you&apos;re looking for doesn&apos;t exist.</p>
               </p>
               <Link href={"/"}>
               <Button
