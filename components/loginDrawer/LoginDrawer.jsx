@@ -42,7 +42,7 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
         }
         else{
           try {
-            const response = await axios.post("http://localhost:3000/api/auth/login", {
+            const response = await axios.post("https://intervu-ai-beige.vercel.app/api/auth/login", {
                 email,
                 password
             });
