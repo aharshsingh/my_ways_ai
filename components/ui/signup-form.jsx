@@ -46,8 +46,8 @@ const [errors, setErrors] = useState({
       const fullName = `${firstname} ${lastname}`.trim();
       try {
         setIsLoading(true);
-        // const response = await axios.post("https://intervu-ai-beige.vercel.app/api/auth/signup", {
-          const response = await axios.post("http://localhost:3000/api/auth/signup", {
+        const response = await axios.post("https://intervu-ai-beige.vercel.app/api/auth/signup", {
+          // const response = await axios.post("http://localhost:3000/api/auth/signup", {
             userName:fullName,
             email,
             password,
