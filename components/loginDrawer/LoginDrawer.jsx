@@ -1,28 +1,28 @@
 "use Client"
 import React from 'react'
 import { Button } from "@/components/ui/button";
+import { LoaderCircle } from "lucide-react";
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from "sonner";
 import axios from "axios";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 // import Link from 'next/link';
 import { useAuth } from '@/context/authContext';
+import { set } from 'mongoose';
 
 export default function LoginDrawer({ isOpen, setIsOpen }) {
   const router = useRouter();
-  // const { login }= useAuth();
+    const [isLoading, setIsLoading] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({
@@ -42,7 +42,9 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
         }
         else{
           try {
-            const response = await axios.post("https://intervu-ai-beige.vercel.app/api/auth/login", {
+            setIsLoading(true);
+            // const response = await axios.post("https://intervu-ai-beige.vercel.app/api/auth/login", {
+              const response = await axios.post("http://localhost:3000/api/auth/login", {
                 email,
                 password
             });
@@ -53,6 +55,7 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
             localStorage.setItem("authToken", authToken);
             if (response.status === 200) 
               {
+                setIsLoading(false);
                 toast.success("Login Successfull!");
                 setIsOpen(false);
                 if(userType === "admin")
@@ -67,13 +70,13 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
             else 
                 {
                   toast.error("Login Failed");
+                  setIsLoading(false);
                 }
             }
          catch (error) {
             console.log("Error:", error);
             if(error.response)
             {
-                // console.log("Error status:", error.response);
                 if (error.response.status === 404) {
                   toast.error("User not found");
                 } else if (error.response.status === 401) {
@@ -81,12 +84,12 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
                  } else {
                     toast.error("Something went wrong");
                 }
+                return   setIsLoading(false);
             }
           }
         }
        
         };
-        // console.log("Form submitted");
       
   return (
     <Drawer open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
@@ -109,7 +112,15 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
             </div>
           </form>
           <DrawerFooter>
-            <Button type="submit" onClick={handleSubmit}>Login</Button>
+            <Button type="submit" onClick={handleSubmit}>
+            {isLoading ? (
+                <span className="flex items-center justify-center gap-2">
+                  Logging in <LoaderCircle className="animate-spin" size={16} strokeWidth={2} aria-hidden="true" />
+                </span>
+              ) : (
+                "Login"
+              )}
+            </Button>
             <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
               Cancel
             </Button>

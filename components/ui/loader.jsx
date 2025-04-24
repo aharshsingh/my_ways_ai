@@ -311,7 +311,7 @@ export function TextBlinkLoader({
 export function TextShimmerLoader({
   text = "Thinking",
   className,
-  size = "md"
+  size = "md",
 }) {
   const textSizes = {
     sm: "text-xs",

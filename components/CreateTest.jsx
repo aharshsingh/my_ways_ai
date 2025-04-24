@@ -13,10 +13,9 @@ import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTags } from "@/components/hooks/use-tags";
 import { Button } from "@/components/ui/button";
-import { AnimatedSubscribeButton } from "@/components/magicui/animated-subscribe-button";
-import { CheckIcon, ChevronRightIcon } from "lucide-react";
+import {ChevronRightIcon } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
-import { Loader } from "@/components/ui/loader"
+import { Loader } from "@/components/ui/loader";
 
 export default function CreateTest() {
 
