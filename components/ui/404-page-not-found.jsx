@@ -20,7 +20,7 @@ export function NotFoundPage() {
 
             <div className="mt-[-50px]">
               <h3 className="text-2xl text-black sm:text-3xl font-bold mb-4">
-                Look like you're lost
+              Look like you&apos;re lost
               </h3>
               <div className="mb-6 text-black sm:mb-5">
                 <p>The page you&apos;re looking for doesn&apos;t exist.</p>
