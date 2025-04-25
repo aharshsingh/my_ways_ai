@@ -1,14 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import { SparklesCore } from "@/components/ui/sparkles"
+import { Analytics } from '@vercel/analytics/next';
 import {
     Activity,
     Component,
     HomeIcon,
-    Mail,
     Package,
     ScrollText,
-    SunMoon,
   } from 'lucide-react';
   
   import { Dock, DockIcon, DockItem, DockLabel } from '@/components/ui/dockAdmin';
@@ -74,6 +72,7 @@ export default function Layout({ children }) {
       {/* Main Content */}
       <main className="w-[91.5%] h-screen">
         {children}
+        <Analytics />
       </main>
     </div>
   );

@@ -87,7 +87,7 @@ export default function Test() {
     const handleNextQuestion = async () => {
         setIsLoading(true); 
         stopRecording(); 
-        await sendMediaToAPI(); 
+        // await sendMediaToAPI(); 
 
         setTimeout(() => {
             setIsLoading(false); 
@@ -96,7 +96,7 @@ export default function Test() {
                 setCurrentQuestionIndex((prev) => prev + 1);
                 setIsAudioPlaying(true); 
                 setIsAnswering(false); 
-                recordedChunks.current = []; 
+                // recordedChunks.current = []; 
             } else {
                
                 router.push('/submit');

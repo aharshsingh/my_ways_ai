@@ -138,7 +138,11 @@ export default function Permissions() {
 
         <div className="w-11/12 p-2 items-center">
           <Link
+<<<<<<< HEAD
             href={allPermissionsGranted ? "/interviewIns" : "#"}
+=======
+            href={allPermissionsGranted ? "/instructions" : "#"}
+>>>>>>> 3c5474244bbe94d6baf3db31cb8fd39efeeb3ee8
             className={`w-full block px-8 py-3 rounded-lg text-center text-xl font-semibold ${
               allPermissionsGranted? "bg-purple-700 text-white hover:bg-purple-900"
                 : "bg-gray-500 text-gray-300 cursor-not-allowed"

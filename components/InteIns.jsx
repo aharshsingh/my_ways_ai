@@ -68,7 +68,7 @@ export default function InteIns() {
       </div>
       <p className=' mt-7 text-green-500'>Stay focused and do your best!.</p>
    
-      <button onClick={handelClick} className="mt-3 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-lg font-semibold">
+      <button onClick={handelClick} className="mt-3 px-6 py-3 bg-[#7E22CE] text-white rounded-lg text-lg font-semibold">
         I Understand, start the interview
       </button>
     </div>

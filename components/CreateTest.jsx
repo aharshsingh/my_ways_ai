@@ -13,10 +13,9 @@ import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTags } from "@/components/hooks/use-tags";
 import { Button } from "@/components/ui/button";
-import { AnimatedSubscribeButton } from "@/components/magicui/animated-subscribe-button";
-import { CheckIcon, ChevronRightIcon } from "lucide-react";
+import {ChevronRightIcon } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
-import { Loader } from "@/components/ui/loader"
+import { Loader } from "@/components/ui/loader";
 
 export default function CreateTest() {
 
@@ -78,7 +77,7 @@ const handleCreateTest= async(testInfo,marks,difficulty,tag)=>{
    
     try {
       setIsLoading(true);
-      const response = await axios.post("http://localhost:3000/api/admin/addTest",{
+      const response = await axios.post("https://intervu-ai-beige.vercel.app/api/admin/addTest",{
         testName: testInfo.testName,
         testDescription: testInfo.description,
         difficulty:difficulty,
@@ -122,7 +121,7 @@ const handlePublishTest =async(testId)=>{
   }
   try {
     setIsPublishing(true);
-     const response = await axios.patch(`http://localhost:3000/api/admin/publishTest/${testId}`)
+     const response = await axios.patch(`https://intervu-ai-beige.vercel.app/api/admin/publishTest/${testId}`)
      if(response.status === 200)
      {
 
