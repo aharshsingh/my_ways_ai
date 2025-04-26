@@ -9,8 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { useState } from 'react'
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 export default function MarksBreakupDialog({ isOpen, setIsOpen , marksBreakup}) {
 
@@ -62,7 +60,7 @@ export default function MarksBreakupDialog({ isOpen, setIsOpen , marksBreakup}) 
 
               <div className="flex w-[60%] justify-between items-center gap-5">
                 <Label htmlFor="name" className="text-right text-lg gap-4">
-                  Consiceness :
+                Practical Relevance :
                 </Label>
                 <Label htmlFor="name" className="text-right text-md">
                   {marksBreakup.consiceness}

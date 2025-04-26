@@ -21,6 +21,7 @@ const deleteTest=async(fetchTests,testId)=>{
     if(response.status === 200)
     {
       toast.success("Test Deleted Successfully");
+      setIsOpen(false);
       fetchTests();
       return
     }

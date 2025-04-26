@@ -57,7 +57,6 @@ const [errors, setErrors] = useState({
           setIsLoading(false);
           toast.success("Signed up successfully!");
           setIsOpen(true);
-          console.log("Form submitted");
         }
     } catch (error) {
       setIsLoading(false);                       
@@ -81,24 +80,24 @@ const [errors, setErrors] = useState({
           className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer>
             <Label htmlFor="firstname">First name</Label>
-            <Input id="firstname" placeholder="Tyler" type="text" className={errors.firstname ? "border-red-500" : ""} value={firstname} onChange={(e)=>setFirstname(e.target.value)}/>
+            <Input id="firstname" placeholder="Tyler" type="text" className={`${errors.firstname ? "border-red-500" : ""} text-md`} value={firstname} onChange={(e)=>setFirstname(e.target.value)}/>
           </LabelInputContainer>
           <LabelInputContainer>
             <Label htmlFor="lastname">Last name</Label>
-            <Input id="lastname" placeholder="Durden" type="text" value={lastname}  className={errors.lastname ? "border-red-500" : ""} onChange={(e)=>setLastname(e.target.value)} />
+            <Input id="lastname" placeholder="Durden" type="text" value={lastname}  className={`${errors.lastname ? "border-red-500" : ""} text-md`} onChange={(e)=>setLastname(e.target.value)} />
           </LabelInputContainer>
         </div>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" value={email} className={errors.email ? "border-red-500" : ""} onChange={(e)=>setEmail(e.target.value)} />
+          <Input id="email" placeholder="projectmayhem@fc.com" type="email" value={email} className={`${errors.email ? "border-red-500" : ""} text-md `}  onChange={(e)=>setEmail(e.target.value)} />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" value={password}  className={errors.password ? "border-red-500" : ""} onChange={(e)=>setPassword(e.target.value)} />
+          <Input id="password" placeholder="••••••••" type="password" value={password}  className={`${errors.password ? "border-red-500" : ""} text-md `} onChange={(e)=>setPassword(e.target.value)} />
         </LabelInputContainer>
         <LabelInputContainer className="mb-8">
           <Label htmlFor="confirmpassword">confirm password</Label>
-          <Input id="confirmpassword" placeholder="••••••••" type="confirmpassword" value={confirmPassword}  className={errors.confirmPassword ? "border-red-500" : ""} onChange={(e)=>setConfirmPassword(e.target.value)} />
+          <Input id="confirmpassword" placeholder="••••••••" type="confirmpassword" value={confirmPassword}  className={`${errors.confirmPassword ? "border-red-500" : ""} text-md `} onChange={(e)=>setConfirmPassword(e.target.value)} />
         </LabelInputContainer>
 
         <button

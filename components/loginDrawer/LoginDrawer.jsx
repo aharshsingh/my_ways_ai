@@ -43,8 +43,8 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
         else{
           try {
             setIsLoading(true);
-            const response = await axios.post("https://intervu-ai-beige.vercel.app/api/auth/login", {
-              // const response = await axios.post("http://localhost:3000/api/auth/login", {
+            // const response = await axios.post("https://intervu-ai-beige.vercel.app/api/auth/login", {
+              const response = await axios.post("http://localhost:3000/api/auth/login", {
                 email,
                 password
             });
@@ -104,11 +104,11 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
           <form className="grid gap-4 p-4" >
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
-              <Input required id="email" type="email" autoComplete="username" placeholder="team@mynaui.com" value={email} className={errors.email ? "border-red-500" : ""} onChange={(e)=>setEmail(e.target.value)} />
+              <Input required id="email" type="email" autoComplete="username" placeholder="team@mynaui.com" value={email} className={`${errors.email ? "border-red-500" : ""} text-md `} onChange={(e)=>setEmail(e.target.value)} />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
-              <Input required id="password" type="password" placeholder="••••••••••" autoComplete="current-password" value={password} className={errors.password ? "border-red-500" : ""} onChange={(e)=>setPassword(e.target.value)}  />
+              <Input required id="password" type="password" placeholder="••••••••••" autoComplete="current-password" value={password} className={`${errors.password ? "border-red-500" : ""} text-md `} onChange={(e)=>setPassword(e.target.value)}  />
             </div>
           </form>
           <DrawerFooter>

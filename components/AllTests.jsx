@@ -1,19 +1,14 @@
 "use client"
 import React, { useEffect } from 'react'
 import { Skeleton } from "@/components/ui/skeleton"
-// import { useState } from "react"
 import axios from "axios";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight} from "@fortawesome/free-solid-svg-icons";
-// import { useState, useMemo } from "react";
 import MarksBreakupDialog from './marksBreakupDialog/MarksBreakupDialog';
 import AlertDialogBox from './alertDialog/AlertDialog';
 import { Trash2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-
 import { Input } from "@/components/ui/input"
 import {
   Table,
@@ -35,6 +30,7 @@ export default function AllTests() {
     const [sortColumn, setSortColumn] = useState("title");
     const [sortDirection, setSortDirection] = useState("asc");
     const [isOpen, setIsOpen] = useState(false);
+    // const [isAlertOpen, setIsAlertOpen] = useState(false);
     const [isAlertOpen, setIsAlertOpen] = useState(false);
     const [marksBreakup, setMarksBreakup] = useState({});
     
@@ -62,13 +58,14 @@ export default function AllTests() {
 
   
 const handleDelete=(testId)=>{
+  setIsAlertOpen(true);
   setDelTestId(testId);
-  setIsAlertOpen(true)
 }
 
 const handlePublishTest=async(testId)=>{
   try {
-    const response = await axios.patch(`https://intervu-ai-beige.vercel.app/api/admin/publishTest/${testId}`)
+    // const response = await axios.patch(`https://intervu-ai-beige.vercel.app/api/admin/publishTest/${testId}`)
+    const response = await axios.patch(`http://localhost:3000/api/admin/publishTest/${testId}`)
     if(response.status === 200)
     {
       toast.success("Test Published")
@@ -83,8 +80,10 @@ const handlePublishTest=async(testId)=>{
 
 
 const fetchTests = async (token) => {
+  //Logic to get no of uswers attepmpted test i will comapre each test id wiht the array of tests attemtpted and then for each will increment the number of users attempted by 1
   try {
-    const response1 = await axios.get("https://intervu-ai-beige.vercel.app/api/test", {
+    // const response1 = await axios.get("https://intervu-ai-beige.vercel.app/api/test", {
+      const response1 = await axios.get("http://localhost:3000/api/test", {
       headers: { Authorization: `Bearer ${token}` },
     });
     setTests(response1.data);
@@ -101,9 +100,11 @@ useEffect(() => {
 
   const fetchAttemptedTests = async () => {
     try {
-      const response2 = await axios.patch("https://intervu-ai-beige.vercel.app/api/user",{
-        headers: { Authorization: `Bearer ${token}` },
+      // const response2 = await axios.patch("https://intervu-ai-beige.vercel.app/api/user",{
+        const response2 = await axios.patch("http://localhost:3000/api/userAttemptedTest",{
+        headers: { Authorization: `Bearer ${token}`},
       });
+      console.log(response2.data.attemptedTest);  
       setUserAttemptedTests(response2.data.attemptedTest);
     } catch (err) {
       console.log(err);
@@ -111,7 +112,6 @@ useEffect(() => {
   };
 
   fetchAttemptedTests();
-
 },[]);
   return (
     <div className='flex flex-col h-screen items-center '>
@@ -287,8 +287,8 @@ useEffect(() => {
                  </Badge>
                  </TableCell>
                  <TableCell className="gap-2">
-                     <Button variant="ghost" size="icon">
-                       <Trash2 onClick={() => handleDelete(test._id)} className="size-3.5" />
+                     <Button variant="ghost" size="icon" onClick={() => handleDelete(test._id)}>
+                       <Trash2  className="size-3.5" />
                      </Button>
                   </TableCell>
                </TableRow>

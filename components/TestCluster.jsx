@@ -60,7 +60,8 @@ useEffect(() => {
     if (!token) return;
   const fetchTests = async () => {
     try {
-      const response1 = await axios.get("https://intervu-ai-beige.vercel.app/api/test", {
+      // const response1 = await axios.get("https://intervu-ai-beige.vercel.app/api/test", {
+        const response1 = await axios.get("http://localhost:3000/api/test", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const publishedTest = response1.data.filter((test)=>test.isPublished === true);
@@ -75,7 +76,8 @@ useEffect(() => {
 
   const fetchAttemptedTests = async () => {
     try {
-      const response2 = await axios.patch("https://intervu-ai-beige.vercel.app/api/user",{
+      // const response2 = await axios.patch("https://intervu-ai-beige.vercel.app/api/user",{
+        const response2 = await axios.patch("http://localhost:3000/api/user",{
         headers: { Authorization: `Bearer ${token}` },
       });
       setUserAttemptedTests(response2.data.attemptedTest);

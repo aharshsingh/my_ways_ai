@@ -44,7 +44,7 @@ const [marks, setMarks] = useState({
 const handleCreateTest= async(testInfo,marks,difficulty,tag)=>{
   if(isCreated)
   {
-    toast.success("Test Already Created")
+    toast("Test Already Created")
     return
   }
   console.log(testInfo,marks,difficulty,tag);
@@ -77,7 +77,8 @@ const handleCreateTest= async(testInfo,marks,difficulty,tag)=>{
    
     try {
       setIsLoading(true);
-      const response = await axios.post("https://intervu-ai-beige.vercel.app/api/admin/addTest",{
+      // const response = await axios.post("https://intervu-ai-beige.vercel.app/api/admin/addTest",{
+        const response = await axios.post("http://localhost:3000/api/admin/addTest",{
         testName: testInfo.testName,
         testDescription: testInfo.description,
         difficulty:difficulty,
@@ -94,12 +95,11 @@ const handleCreateTest= async(testInfo,marks,difficulty,tag)=>{
     if(response.status === 200)
     {
       setTestId(response.data._id);
-      setTimeout(()=>{
         setIsCreated(true);
         setIsLoading(false);
          toast.success("Test Created Successfully");
          return
-      },3000)
+   
      
     }
     } catch (error) {
@@ -116,21 +116,20 @@ const handleCreateTest= async(testInfo,marks,difficulty,tag)=>{
 const handlePublishTest =async(testId)=>{
   if(isPublished)
   {
-    toast.success("Test Alredy Published");
+    toast("Test Alredy Published");
     return
   }
   try {
     setIsPublishing(true);
-     const response = await axios.patch(`https://intervu-ai-beige.vercel.app/api/admin/publishTest/${testId}`)
+    //  const response = await axios.patch(`https://intervu-ai-beige.vercel.app/api/admin/publishTest/${testId}`)
+    const response = await axios.patch(`http://localhost:3000/api/admin/publishTest/${testId}`)
      if(response.status === 200)
      {
-
-      setTimeout(()=>{
         setIsPublished(true);
         setIsPublishing(false);
         toast.success("Test Published")
          return
-      },3000)
+
      }
    } catch (error) {
        toast.error("Couldn't Publish test! Try again")

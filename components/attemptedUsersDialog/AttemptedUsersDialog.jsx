@@ -1,11 +1,19 @@
-"use client"
 import React, { useEffect } from 'react'
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton"
 import axios from "axios";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
-import AttemptedUsersDialog from './attemptedUsersDialog/AttemptedUsersDialog';
-import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import {
   Table,
@@ -17,15 +25,14 @@ import {
 } from "@/components/ui/table"
 import { useMemo, useState } from "react"
 
-export default function Results() {
+
+export default function AttemptedUsersDialog({isOpen,setIsOpen,testname,marksBreakup}) {
     const [tests, setTests] = useState([]);
     const [isLoading,setIsLoading]=useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [sortColumn, setSortColumn] = useState("title");
-    const[testName,setTestName]=useState("");
     const [sortDirection, setSortDirection] = useState("asc");
-    const [isOpen, setIsOpen] = useState(false);
-    const [marksBreakup, setMarksBreakup] = useState({});
+    
   const filteredTests = useMemo(() => {
     return tests.filter((test) => 
       test.testName.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -67,18 +74,15 @@ useEffect(() => {
   fetchTests();
 },[]);
   return (
-    <div className='flex flex-col h-screen items-center '>
-      <div className='flex items-center justify-between p-4 w-full h-12 mt-2'>
-        <h1 className='text-4xl font-bold'>Admin Portal</h1>
-     <img
-          // src="/appLogo3.png" 
-          alt="Logo"
-          className="h-14 w-auto overflow-hidden"
-        /> 
-     </div>
-    <Toaster richColors position="top-center" />
-     <div className=' w-full h-full flex flex-col items-center mt-2 '>
-     {isLoading ? (<div className="mx-auto my-2 w-full z-20 max-w-6xl rounded border">
+ <Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open) }>
+      <DialogContent className="flex flex-col gap-0 p-0 sm:max-h-[min(640px,80vh)] w-200 border-red-900 border-2">
+        <DialogHeader className="contents space-y-0 text-left">
+          <DialogTitle className="border-b border-border px-6 py-4">
+          Users who attempted {testname}
+          </DialogTitle>
+          <div className="overflow-y-auto w-[100%] ">
+            <DialogDescription asChild>
+            {isLoading ? (<div className="mx-auto my-2 w-full z-20 max-w-6xl rounded border">
            <div className="flex flex-wrap items-center justify-between gap-4 border-b p-4 md:py-2">
              <Skeleton className="h-6 w-40" /> {/* Test Cluster Title */}
              <Skeleton className="h-10 w-96" /> {/* Search Input */}
@@ -109,7 +113,7 @@ useEffect(() => {
            <h1 className="text-3xl  font-bold">Results</h1>
            <h1 className="text-md  font-semibold">{"(Click on the Test to get users who attempted Test)"}</h1>
            <Input
-             placeholder="Search tests..."
+             placeholder="Search User..."
              value={searchTerm}
              onChange={(e) => setSearchTerm(e.target.value)}
              className="md:w-96  border-2 " 
@@ -122,7 +126,7 @@ useEffect(() => {
                  className="cursor-pointer "
                  onClick={() => handleSort("testName")}
                >
-                 Test Name
+                 Username
                  {sortColumn === "testName" && (
                    <span className="ml-1">
                      {sortDirection === "asc" ? "\u2191" : "\u2193"}
@@ -133,7 +137,7 @@ useEffect(() => {
                  className="cursor-pointer"
                  onClick={() => handleSort("keyWord")}
                >
-                 Topics
+                 User Email
                  {sortColumn === "keyWord" && (
                    <span className="ml-1">
                      {sortDirection === "asc" ? "\u2191" : "\u2193"}
@@ -143,28 +147,33 @@ useEffect(() => {
                <TableHead
                  className="cursor-pointer"
                >
-                 Difficulty
+               Completeness({marksBreakup.completeness})
                </TableHead>
                <TableHead
                  className="cursor-pointer"
                >
-                 Duration
+                 Explaination({marksBreakup.explaination})
                </TableHead>
                <TableHead
                  className="cursor-pointer text-nowrap"
                >
-                Total Score
+                Practical Relevance({marksBreakup.practicalRelevance})
                </TableHead>
                <TableHead
                  className="cursor-pointer text-nowrap"
                >
-                 Users Attempted
+            Practical Relevance({marksBreakup.consiceness})
+               </TableHead>
+               <TableHead
+                 className="cursor-pointer text-nowrap"
+               >
+                Total ({marksBreakup.total})
                </TableHead>
                <TableHead
                  className="cursor-pointer text-nowrap"
                  onClick={() => handleSort("createdAt")}
                >
-                 Created on
+                Completed at
                  {sortColumn === "createdAt" && (
                    <span className="ml-1">
                      {sortDirection === "asc" ? "\u2191" : "\u2193"}
@@ -176,47 +185,13 @@ useEffect(() => {
            <TableBody>
              {sortedTests.map((test) => (
                  <TableRow key={test._id} onClick={() => {
-                  setMarksBreakup({
-                    accuracy:test.accuracy,
-                    completeness:test.completeness,
-                    explaination:test.explanation,
-                    practicalRelevance:test.practicalRelevance,
-                    consiceness:test.conciseness,
-                    total:test.score});
                   setTestName(test.testName);
                   setIsOpen(true);
                 }} className="cursor-pointer">
                  <TableCell className="font-medium">{test.testName}</TableCell>
-                 <TableCell className="flex flex-wrap gap-1">
-                    {test.keyWord.map((keyword, index) => {
-      
-                      const colorClass =
-                        index % 3 === 0
-                          ? "bg-blue-100 text-blue-800"
-                          : index % 3 === 1
-                          ? "bg-green-100 text-green-800"
-                          : "bg-purple-100 text-purple-800";
-                    
-                      return (
-                        <Badge variant="outline" key={index} className={colorClass}>
-                          {keyword}
-                        </Badge>
-                      );
-                    })}
-                  </TableCell>
+              
                  {/* <TableCell>{bookmark.description}</TableCell> */}
-                 <TableCell >
-                    <Badge variant="outline" className={
-                    test.difficulty === "hard"
-                      ? "bg-red-100 text-red-800"
-                      : test.difficulty === "medium"
-                      ? "bg-orange-100 text-orange-800"
-                      : "bg-green-100 text-green-800"
-                  }> {test.difficulty}</Badge>
-                  </TableCell>
-                 <TableCell>{test.duration} min</TableCell>
                  <TableCell  >{test.score}</TableCell>
-                 <TableCell>{test.score}</TableCell>
                  <TableCell>
                    {new Date(test.createdAt).toLocaleDateString("en-GB", {
                        day: "2-digit",
@@ -229,9 +204,17 @@ useEffect(() => {
              ))}
            </TableBody>
          </Table>
-          {isOpen && <AttemptedUsersDialog isOpen={isOpen} setIsOpen={setIsOpen} testname={testName} marksBreakup={marksBreakup} /> }
        </div>}
-       </div>
-       </div>
-  )
+            </DialogDescription>
+            <DialogFooter className="px-6 pb-6 sm:justify-start">
+              <DialogClose asChild>
+                <Button type="button">Okay</Button>
+              </DialogClose>
+            </DialogFooter>
+          </div>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+  );
 }
+
