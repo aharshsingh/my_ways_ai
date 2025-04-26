@@ -21,7 +21,6 @@ export async function POST(req){
         const result = await userInfo.save();
         return NextResponse.json({result}, {status: 200});
     } catch (error) {
-        console.log(error)
         return NextResponse.json({error: "Internal server error"}, {status: 500});
     }
 }
