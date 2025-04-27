@@ -213,7 +213,7 @@ useEffect(() => {
                   </TableCell>
                   <TableCell>{user.accuracy}</TableCell>
                   <TableCell>{user.completeness}</TableCell>
-                  <TableCell>{user.explaination}</TableCell>
+                  <TableCell>{user.explanation}</TableCell>
                   <TableCell>{user.practicalRelevance}</TableCell>
                   <TableCell>{user.conciseness}</TableCell>
                   <TableCell>{user.score}</TableCell>
