@@ -23,6 +23,7 @@ export default function Results() {
     const [searchTerm, setSearchTerm] = useState("");
     const [sortColumn, setSortColumn] = useState("title");
     const[testName,setTestName]=useState("");
+    const[testId,setTestId]=useState("");
     const [sortDirection, setSortDirection] = useState("asc");
     const [isOpen, setIsOpen] = useState(false);
     const [marksBreakup, setMarksBreakup] = useState({});
@@ -49,13 +50,11 @@ export default function Results() {
 };
 
 const fetchTests = async (token) => {
-  //Logic to get no of uswers attepmpted test i will comapre each test id wiht the array of tests attemtpted and then for each will increment the number of users attempted by 1
   try {
     // const response1 = await axios.get("https://intervu-ai-beige.vercel.app/api/test", {
       const response1 = await axios.get("http://localhost:3000/api/test", {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log("Abc");
     console.log(response1.data);
     setTests(response1.data);
     setIsLoading(false);
@@ -184,6 +183,7 @@ useEffect(() => {
                     consiceness:test.conciseness,
                     total:test.score});
                   setTestName(test.testName);
+                  setTestId(test._id);
                   setIsOpen(true);
                 }} className="cursor-pointer">
                  <TableCell className="font-medium">{test.testName}</TableCell>
@@ -216,7 +216,7 @@ useEffect(() => {
                   </TableCell>
                  <TableCell>{test.duration} min</TableCell>
                  <TableCell  >{test.score}</TableCell>
-                 <TableCell>{test.score}</TableCell>
+                 <TableCell>{test.totalAttempts}</TableCell>
                  <TableCell>
                    {new Date(test.createdAt).toLocaleDateString("en-GB", {
                        day: "2-digit",
@@ -229,7 +229,7 @@ useEffect(() => {
              ))}
            </TableBody>
          </Table>
-          {isOpen && <AttemptedUsersDialog isOpen={isOpen} setIsOpen={setIsOpen} testname={testName} marksBreakup={marksBreakup} /> }
+          {isOpen && <AttemptedUsersDialog testId={testId} isOpen={isOpen} setIsOpen={setIsOpen} testname={testName} marksBreakup={marksBreakup} /> }
        </div>}
        </div>
        </div>

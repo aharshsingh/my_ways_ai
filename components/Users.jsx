@@ -171,15 +171,7 @@ export default function Users() {
                      {user.email}
                   </TableCell>
                  <TableCell > {10}</TableCell>
-                 <TableCell>{user.duration} min</TableCell>
-                 <TableCell>
-                   {new Date(user.createdAt).toLocaleDateString("en-GB", {
-                       day: "2-digit",
-                       month: "2-digit",
-                       year: "numeric",
-                     })}
-
-                 </TableCell>
+                 <TableCell>{user.totalTest}</TableCell>
                  <TableCell>
                    {new Date(user.createdAt).toLocaleDateString("en-GB", {
                        day: "2-digit",
@@ -192,12 +184,15 @@ export default function Users() {
                      <Button variant="ghost" size="icon" onClick={() => handleDelete(user._id)}>
                        <Trash2  className="size-3.5" />
                      </Button>
+                     <Button variant="ghost" size="icon" onClick={() => handleDelete(user._id)}>
+                       <Trash2  className="size-3.5" />
+                     </Button>
                   </TableCell>
                </TableRow>
              ))}
            </TableBody>
          </Table>
-          {isOpen && <AttemptedUsersDialog isOpen={isOpen} setIsOpen={setIsOpen} testname={testName} marksBreakup={marksBreakup} /> }
+          {/* {isOpen && <AttemptedUsersDialog  isOpen={isOpen} setIsOpen={setIsOpen} testname={testName} marksBreakup={marksBreakup} /> } */}
        </div>}
        </div>
        </div>

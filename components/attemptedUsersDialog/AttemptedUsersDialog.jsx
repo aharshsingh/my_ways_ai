@@ -4,11 +4,9 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton"
 import axios from "axios";
@@ -24,24 +22,24 @@ import {
 import { useMemo, useState } from "react"
 
 
-export default function AttemptedUsersDialog({isOpen,setIsOpen,testname,marksBreakup}) {
-    const [tests, setTests] = useState([]);
+export default function AttemptedUsersDialog({isOpen,setIsOpen,testname,marksBreakup,testId}) {
+    const [users, setUsers] = useState([]);
     const [isLoading,setIsLoading]=useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [sortColumn, setSortColumn] = useState("title");
     const [sortDirection, setSortDirection] = useState("asc");
     
-  const filteredTests = useMemo(() => {
-    return tests.filter((test) => 
-      test.testName.toLowerCase().includes(searchTerm.toLowerCase()));
-   },[tests, searchTerm]);
-  const sortedTests = useMemo(() => {
-    return [...filteredTests].sort((a, b) => {
+  const filteredUsers = useMemo(() => {
+    return users.filter((user) => 
+      user.userName.toLowerCase().includes(searchTerm.toLowerCase()));
+   },[users, searchTerm]);
+  const sortedUsers = useMemo(() => {
+    return [...filteredUsers].sort((a, b) => {
       if (a[sortColumn] < b[sortColumn]) return sortDirection === "asc" ? -1 : 1;
       if (a[sortColumn] > b[sortColumn]) return sortDirection === "asc" ? 1 : -1;
       return 0;
     });
-  }, [filteredTests, sortColumn, sortDirection]);
+  }, [filteredUsers, sortColumn, sortDirection]);
 
 
   const handleSort = (column) => {
@@ -53,23 +51,22 @@ export default function AttemptedUsersDialog({isOpen,setIsOpen,testname,marksBre
     }
 };
 
-const fetchTests = async (token) => {
+const fetchUsers = async (token) => {
   //Logic to get no of uswers attepmpted test i will comapre each test id wiht the array of tests attemtpted and then for each will increment the number of users attempted by 1
   try {
-    // const response1 = await axios.get("https://intervu-ai-beige.vercel.app/api/test", {
-      const response1 = await axios.get("http://localhost:3000/api/test", {
+    // const response1 = await axios.get(`https://intervu-ai-beige.vercel.app/api/admin/getResult/${testId}`, {
+      const response1 = await axios.get(`http://localhost:3000/api/admin/getResult/${testId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log("Abc");
     console.log(response1.data);
-    setTests(response1.data);
+    setUsers(response1.data);
     setIsLoading(false);
   } catch (err) {
     console.log(err);
   }
 };
 useEffect(() => {
-  fetchTests();
+  fetchUsers();
 },[]);
   return (
  <Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
@@ -105,7 +102,7 @@ useEffect(() => {
              </div>
            </div>
          </div>) :
-         <div className="mx-auto  my-2 z-30 overflow-auto w-[100%]  max-w-6xl rounded border" >
+         <div className="mx-auto  my-2 z-30 overflow-auto w-[100%]  max-w-7xl rounded border" >
          <div className="flex flex-wrap items-center justify-between gap-4  p-4 md:py-2" >
            <Input
              placeholder="Search User..."
@@ -164,6 +161,11 @@ useEffect(() => {
                <TableHead
                  className="cursor-pointer"
                >
+               Accuracy({marksBreakup.accuracy})
+               </TableHead>
+               <TableHead
+                 className="cursor-pointer"
+               >
                Completeness({marksBreakup.completeness})
                </TableHead>
                <TableHead
@@ -179,7 +181,7 @@ useEffect(() => {
                <TableHead
                  className="cursor-pointer text-nowrap"
                >
-            Conciseness(mm: {marksBreakup.consiceness})
+            Conciseness({marksBreakup.consiceness})
                </TableHead>
                <TableHead
                  className="cursor-pointer text-nowrap"
@@ -190,26 +192,41 @@ useEffect(() => {
              </TableRow>
            </TableHeader>
            <TableBody>
-             {sortedTests.map((test) => (
-                 <TableRow key={test._id} onClick={() => {
-                  setTestName(test.testName);
-                  setIsOpen(true);
-                }} className="cursor-pointer">
-                 <TableCell className="font-medium">{test.testName}</TableCell>
-              
-                 {/* <TableCell>{bookmark.description}</TableCell> */}
-                 <TableCell  >{test.score}</TableCell>
-                 <TableCell>
-                   {new Date(test.createdAt).toLocaleDateString("en-GB", {
-                       day: "2-digit",
-                       month: "2-digit",
-                       year: "numeric",
-                     })}
-
-                 </TableCell>
-               </TableRow>
-             ))}
-           </TableBody>
+            {sortedUsers.length > 0 ? (
+              sortedUsers.map((user) => (
+                <TableRow key={user._id}>
+                  <TableCell className="font-medium">{user.userName}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>
+                    {new Date(user.startedAt).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    })}
+                  </TableCell>
+                  <TableCell>
+                    {new Date(user.completedAt).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    })}
+                  </TableCell>
+                  <TableCell>{user.accuracy}</TableCell>
+                  <TableCell>{user.completeness}</TableCell>
+                  <TableCell>{user.explaination}</TableCell>
+                  <TableCell>{user.practicalRelevance}</TableCell>
+                  <TableCell>{user.conciseness}</TableCell>
+                  <TableCell>{user.score}</TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={10} className="text-center py-6 text-lg">
+                  No user attempted this test.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
          </Table>
        </div>}
           
