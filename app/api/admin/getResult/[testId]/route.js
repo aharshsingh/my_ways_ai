@@ -7,20 +7,24 @@ import Result from "@/lib/models/Result";
 export async function GET(req, {params}){
     try {
         await connectToDatabase();
-        const { testId } = params;
+        const { testId } = await params;
         let data = [];
         const results = await Result.find({testId});
-        const submissions = await Submission.find({testId});
-        const users = await User.find({testId : {$in: attemptedTest}}).select("_id, userName");
+        console.log(results)
+        const submissions = await Submission.find({testId});4
+        console.log(submissions)
+        const users = await User.find({"attemptedTest.testId": testId}).select("_id");
+        console.log(users)
         users.forEach((user)=>{
             let userResult = {};
-            const index = results.findIndex(item => item._id === user._id);
-            userResult = {...userResult, score: results[index].score};
-            index = submissions.findIndex(user._id);
-            userResult = {...userResult, startedAt: submissions[index].startedAt, completedAt: submissions[index].completedAt};
+            let index = results.findIndex(result => result.userId.toString() === user._id.toString());
+            userResult = {...userResult, ...results[index]._doc};
+            console.log(userResult)
+            index = submissions.findIndex(submission => submission.userId.toString() === user._id.toString());
+            userResult = {...userResult, startedAt:submissions[index].startedAt , completedAt:submissions[index].completedAt, email: user.email, userId: user._id, userName: user.userName};
+            console.log("this is " + toString(userResult))
             data.push(userResult);
         })
-        console.log(results);
         return NextResponse.json(data, {status: 200});
     } catch (error) {
         console.log(error)
