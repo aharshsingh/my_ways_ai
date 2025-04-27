@@ -98,7 +98,7 @@ const handleTestClick=(testId)=>{
   return (
     <div>
     
-    {isLoading ? (<div className="mx-auto my-16 w-full max-w-6xl rounded border">
+    {isLoading ? (<div className="mx-auto my-16 w-[95%]   max-w-8xl  rounded border">
       <div className="flex flex-wrap items-center justify-between gap-4 border-b p-4 md:py-2">
         <Skeleton className="h-6 w-40" /> {/* Test Cluster Title */}
         <Skeleton className="h-10 w-96" /> {/* Search Input */}
@@ -124,7 +124,7 @@ const handleTestClick=(testId)=>{
         </div>
       </div>
     </div>) :
-    <div className="mx-auto my-16 w-full max-w-6xl rounded border">
+    <div className="mx-auto my-16 w-[95%] max-w-8xl rounded border">
     <div className="flex flex-wrap items-center justify-between gap-4 border-b p-4 md:py-2">
       <h1 className="text-xl font-bold text-[#5862b2]">Test Cluster</h1>
       <Input

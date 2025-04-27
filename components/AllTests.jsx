@@ -56,7 +56,6 @@ export default function AllTests() {
     }
 };
 
-  
 const handleDelete=(testId)=>{
   setIsAlertOpen(true);
   setDelTestId(testId);
@@ -116,16 +115,17 @@ useEffect(() => {
   return (
     <div className='flex flex-col h-screen items-center '>
       <div className='flex items-center justify-between p-4 w-full h-12 mt-2'>
-        <h1 className='text-4xl font-bold'>Admin Portal</h1>
+        <h1 className='text-3xl font-bold text-[#5862b2]'>Admin Portal</h1>
+        <h1 className="text-3xl  font-bold text-[#606dd3]">All Tests</h1>
      <img
-          // src="/appLogo3.png" 
+          src="/intervuLogo2.png" 
           alt="Logo"
-          className="h-14 w-auto overflow-hidden"
+          className="h-8 w-auto overflow-hidden"
         /> 
      </div>
     <Toaster richColors position="top-center" />
      <div className=' w-full h-full flex flex-col items-center mt-2 '>
-     {isLoading ? (<div className="mx-auto my-2 w-full z-20 max-w-6xl rounded border">
+     {isLoading ? (<div className="mx-auto my-2z-20 w-[95%] max-w-8xl rounded border">
            <div className="flex flex-wrap items-center justify-between gap-4 border-b p-4 md:py-2">
              <Skeleton className="h-6 w-40" /> {/* Test Cluster Title */}
              <Skeleton className="h-10 w-96" /> {/* Search Input */}
@@ -151,9 +151,8 @@ useEffect(() => {
              </div>
            </div>
          </div>) :
-         <div className="mx-auto  my-2 z-30 overflow-auto w-[100%]  max-w-6xl rounded border" >
+         <div className="mx-auto  my-2 z-30 overflow-auto w-[95%]   max-w-8xl  rounded border" >
          <div className="flex flex-wrap items-center justify-between gap-4  p-4 md:py-2" >
-           <h1 className="text-xl  font-bold">All Tests</h1>
            <Input
              placeholder="Search tests..."
              value={searchTerm}

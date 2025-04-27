@@ -12,8 +12,6 @@ import {
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton"
 import axios from "axios";
-import { Toaster } from "@/components/ui/sonner";
-import { toast } from "sonner";
 import { Input } from "@/components/ui/input"
 import {
   Table,
@@ -74,11 +72,11 @@ useEffect(() => {
   fetchTests();
 },[]);
   return (
- <Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open) }>
-      <DialogContent className="flex flex-col gap-0 p-0 sm:max-h-[min(640px,80vh)] w-200 border-red-900 border-2">
+ <Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
+      <DialogContent className="flex flex-col gap-0 p-0 sm:max-h-[min(640px,80vh)] w-[100%] sm:max-w-7xl ">
         <DialogHeader className="contents space-y-0 text-left">
-          <DialogTitle className="border-b border-border px-6 py-4">
-          Users who attempted {testname}
+          <DialogTitle className="border-b border-border text-2xl text-center px-6 py-4 text-[#606dd3]">
+          Users who attempted for {testname}
           </DialogTitle>
           <div className="overflow-y-auto w-full ">
             {isLoading ? (<div className="mx-auto my-2 w-full z-20 max-w-6xl rounded border">
@@ -109,8 +107,6 @@ useEffect(() => {
          </div>) :
          <div className="mx-auto  my-2 z-30 overflow-auto w-[100%]  max-w-6xl rounded border" >
          <div className="flex flex-wrap items-center justify-between gap-4  p-4 md:py-2" >
-           <h1 className="text-3xl  font-bold">Results</h1>
-           <h1 className="text-md  font-semibold">{"(Click on the Test to get users who attempted Test)"}</h1>
            <Input
              placeholder="Search User..."
              value={searchTerm}
@@ -133,11 +129,33 @@ useEffect(() => {
                  )}
                </TableHead>
                <TableHead
-                 className="cursor-pointer"
+                 className="cursor-pointer text-nowrap"
                  onClick={() => handleSort("keyWord")}
                >
                  User Email
                  {sortColumn === "keyWord" && (
+                   <span className="ml-1">
+                     {sortDirection === "asc" ? "\u2191" : "\u2193"}
+                   </span>
+                 )}
+               </TableHead>
+               <TableHead
+                 className="cursor-pointer text-nowrap"
+                 onClick={() => handleSort("createdAt")}
+               >
+                Started at
+                 {sortColumn === "createdAt" && (
+                   <span className="ml-1">
+                     {sortDirection === "asc" ? "\u2191" : "\u2193"}
+                   </span>
+                 )}
+               </TableHead>
+               <TableHead
+                 className="cursor-pointer text-nowrap"
+                 onClick={() => handleSort("createdAt")}
+               >
+                Completed at
+                 {sortColumn === "createdAt" && (
                    <span className="ml-1">
                      {sortDirection === "asc" ? "\u2191" : "\u2193"}
                    </span>
@@ -161,24 +179,14 @@ useEffect(() => {
                <TableHead
                  className="cursor-pointer text-nowrap"
                >
-            Practical Relevance({marksBreakup.consiceness})
+            Conciseness(mm: {marksBreakup.consiceness})
                </TableHead>
                <TableHead
                  className="cursor-pointer text-nowrap"
                >
                 Total ({marksBreakup.total})
                </TableHead>
-               <TableHead
-                 className="cursor-pointer text-nowrap"
-                 onClick={() => handleSort("createdAt")}
-               >
-                Completed at
-                 {sortColumn === "createdAt" && (
-                   <span className="ml-1">
-                     {sortDirection === "asc" ? "\u2191" : "\u2193"}
-                   </span>
-                 )}
-               </TableHead>
+              
              </TableRow>
            </TableHeader>
            <TableBody>
@@ -205,9 +213,9 @@ useEffect(() => {
          </Table>
        </div>}
           
-            <DialogFooter className="px-6 pb-6 sm:justify-start">
+            <DialogFooter className="px-6 pb-6 sm:justify-end mr-9">
               <DialogClose asChild>
-                <Button className="bg-[#5862b2]" type="button">Okay</Button>
+                <Button className="bg-[#5862b2]" type="button">Close</Button>
               </DialogClose>
             </DialogFooter>
           </div>

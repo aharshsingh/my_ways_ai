@@ -11,11 +11,10 @@ export default function SignupFormDemo() {
             <div className="w-full h-full  mx-auto ">
             <video 
                 autoPlay 
-                loop 
                 muted 
                 className="w-full h-full"
               >
-                <source src="/Signup.mp4" type="video/mp4" />
+                <source src="/intervusignup.mp4" type="video/mp4" />
               </video>
             </div>
             </div>

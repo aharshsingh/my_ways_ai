@@ -41,14 +41,14 @@ export default function Layout({ children }) {
       icon: (
         <Activity className='h-full w-full text-neutral-600 dark:text-neutral-300' />
       ),
-      link: '/',
+      link: '/results',
     },
     {
       title: 'Users',
       icon: (
         <ScrollText className='h-full w-full text-neutral-600 dark:text-neutral-300' />
       ),
-      link: '/createTest',
+      link: '/users',
     },
 
   ];

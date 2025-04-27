@@ -200,18 +200,18 @@ const handleKeyDown = (e) => {
     <div className={`${isLoading ? 'opacity-50 pointer-events-none blur-sm' : ''}`}>
     <div className="flex-grow ">
       <div className='flex items-center justify-between p-4 w-full h-10 mt-2'>
-        <h1 className='text-4xl font-bold text-[#5862b2]'>Admin Portal</h1>
+        <h1 className='text-3xl font-bold text-[#5862b2]'>Admin Portal</h1>
      <img
-            // src="/appLogo3.png" 
+            src="/intervuLogo2.png" 
             alt="Logo"
-            className="h-14 w-auto overflow-hidden"
+            className="h-8 w-auto overflow-hidden"
           /> 
      </div>
      <div className='flex w-full mt-2 p-4 h-auto'>
             <Toaster richColors position="top-center" />
       <div className='flex flex-col justify-center gap-5 items-center w-[35%] '>
       {/* <Label className="text-2xl">Marks Breakup</Label> */}
-          <div className='flex flex-col w-[90%] items-center justify-center gap-5 '>
+      <div className='flex flex-col w-[90%] items-center justify-center '>
 
             <div className="w-[90%]  gap-4 flex justify-center items-center p-3 border-b-2"> 
               <div className='flex flex-col w-full '>
@@ -278,7 +278,7 @@ const handleKeyDown = (e) => {
 
                <div className="justify-center items-center w-[90%] gap-4 flex p-3 border-b-2">
                <div className='flex flex-col w-full'>
-                 <Label className="text-lg">Conciseness</Label>
+                 <Label className="text-lg ">Conciseness</Label>
                    <Slider className="mt-7"  defaultValue={[0]} max={max}  onValueChange={(value)=> handleMarksChange("concisenessMark", value[0])}  aria-label="Slider with ticks" />
                    <span
                      className="mt-3 flex w-full items-center justify-between gap-1 px-2.5 text-xs font-medium text-muted-foreground"
@@ -323,7 +323,7 @@ const handleKeyDown = (e) => {
             </div>
 
             <div className='flex w-[90%] items-center justify-center gap-5'>
-            <h1 className='flex justify-center items-center text-3xl w-[50%] p-2  rounded-xl '>Total Marks</h1>
+            <h1 className='flex justify-center items-center text-3xl text-[#606dd3] w-[50%] p-2 font-semibold rounded-xl '>Total Marks</h1>
             <div className=" space-y-2 border- flex flex-col items-center justify-center">
               <NumberTicker
                 value={marks.totalMark}
@@ -363,7 +363,7 @@ const handleKeyDown = (e) => {
               </div>
               <div className="justify-center items-center w-[50%] gap-4 flex p-3">
                 <div className="flex flex-col w-full">
-                  <Label className="text-xl">Difficulty</Label>
+                  <Label className="text-xl ">Difficulty</Label>
                   <Slider
                     className="mt-7"
                     defaultValue={[0]}
@@ -385,7 +385,7 @@ const handleKeyDown = (e) => {
                 </div>
               </div>
             </div>
-        <div className=" w-[70%] h-[30%]">
+       <div className=" w-[60%] h-[30%]">
           <Label htmlFor="textArea" className="text-xl">Test Description</Label>
           <Textarea
             id="textArea"
@@ -401,7 +401,7 @@ const handleKeyDown = (e) => {
 
       <div className="  w-[100%] flex flex-col justify-center items-center space-y-4">
       <div className="space-y-2 flex w-[100%] items-center justify-center gap-5">
-        <label className="font-medium text-xl">Tags</label>
+        <label className="font-medium text-xl ">Tags</label>
         <div className="rounded-lg border w-[55%] border-input bg-background p-1 ">
           <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (

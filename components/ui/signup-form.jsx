@@ -46,8 +46,8 @@ const [errors, setErrors] = useState({
       const fullName = `${firstname} ${lastname}`.trim();
       try {
         setIsLoading(true);
-        const response = await axios.post("https://intervu-ai-beige.vercel.app/api/auth/signup", {
-          // const response = await axios.post("http://localhost:3000/api/auth/signup", {
+        // const response = await axios.post("https://intervu-ai-beige.vercel.app/api/auth/signup", {
+          const response = await axios.post("http://localhost:3000/api/auth/signup", {
             userName:fullName,
             email,
             password,
@@ -66,6 +66,7 @@ const [errors, setErrors] = useState({
               return toast.error("Email already exists");
             } else {
               return toast.error("Something went wrong. Please try again later.");
+
             }  
       }
     }
@@ -74,7 +75,8 @@ const [errors, setErrors] = useState({
  
   return (
     (<div 
-    className="h-full w-full mx-auto flex items-center justify-center p-4 md:p-8 shadow-input bg-white dark:bg-black">
+    className="h-full w-full mx-auto flex flex-col items-center gap-10 justify-center p-4 md:p-8 shadow-input bg-white dark:bg-black">
+      <h1 className="text-3xl font-semibold text-[#5862b2]">intervu.ai</h1>
       <form className="" onSubmit={handleSubmit}>
         <div
           className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">

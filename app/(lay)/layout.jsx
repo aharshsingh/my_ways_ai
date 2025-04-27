@@ -16,14 +16,14 @@ export default function Layout({ children }) {
    const router = useRouter();
   return (
     <div>
-      <nav className="bg-[#5762b2] border-b fixed top-0 w-screen z-10">
+      <nav className="bg-[#EEEFF1] border-b fixed top-0 w-screen z-10">
         <div className="flex items-center justify-between w-screen">
-          <div className="text-white text-xl font-bold">
+          <div className="text-white text-xl p-5 flex items-center justify-center h-10 font-bold ">
              <img
              onClick={() => router.push('/')}
-              src="/appLogo3.png" 
+              src="/intervuLogo2.png" 
               alt="Logo"
-              className="h-10 w-auto cursor-pointer"
+              className="h-8 w-auto cursor-pointer"
             /> 
           </div>
        
@@ -31,7 +31,7 @@ export default function Layout({ children }) {
           <DropdownMenu>
             <DropdownMenuTrigger className='focus:outline-none'>
               {/* <img src="/profile.png"  alt="Profile" className="h-11 w-11"/> */}
-              <span><FontAwesomeIcon className='text-white h-5 w-6 mr-5' icon={faUser}/> </span>
+              <span><FontAwesomeIcon className='text-[#5862b2] h-6 w-6 mr-5' icon={faUser}/> </span>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="mr-10">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
