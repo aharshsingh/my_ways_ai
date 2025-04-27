@@ -55,26 +55,26 @@ export default function Permissions() {
   const allPermissionsGranted = video && audio && screenShare && canHear;
 
   return (
-    <div className="flex border-none border-gray-400 bg-[rgb(22,29,41)] min-h-screen">
+    <div className="flex border-none border-[#9ea5dc]  min-h-screen">
     
-      <div className="w-1/2 p-4 flex justify-center items-center border-none border-white">
+      <div className="w-1/2 p-4 flex justify-center items-center border-none border-[#9ea5dc]">
         <video
           ref={videoRef}
           autoPlay
           playsInline
           muted
-          className="w-full h-auto object-cover border-white border-2 rounded-3xl  -scale-x-100"
+          className="w-full h-auto object-cover border-[#9ea5dc] border-2 rounded-3xl  -scale-x-100"
         />
       </div>
 
     
-      <div className="w-1/2 p-4 flex flex-col justify-center items-center space-y-4 text-white">
-        <h1 className="text-2xl font-semibold mb-4">Ready to Join?</h1>
+      <div className="w-1/2 p-4 flex flex-col justify-center items-center space-y-4 text-[#09090c">
+        <h1 className="text-4xl font-semibold mb-4">Ready to Join?</h1>
         <p className="text-xl">Make sure your device is well configured.</p>
 
      
-        <div className="w-11/12 p-4 rounded-lg shadow-md flex items-center space-x-4 border border-white">
-          <CameraIcon className="w-8 h-8 text-white" />
+        <div className="w-11/12 p-4 rounded-lg shadow-md flex items-center space-x-4 border border-[#9ea5dc]">
+          <CameraIcon className="w-8 h-8 text-[#5f6cd3] " />
           <div className="flex items-center space-x-2 w-full justify-between">
             <span>Allow Camera</span>
             <input
@@ -87,8 +87,8 @@ export default function Permissions() {
         </div>
 
   
-        <div className="w-11/12 p-4 rounded-lg shadow-md flex items-center space-x-4 border border-white">
-          <MicrophoneIcon className="w-8 h-8 text-white" />
+        <div className="w-11/12 p-4 rounded-lg shadow-md flex items-center space-x-4 border border-[#9ea5dc]">
+          <MicrophoneIcon className="w-8 h-8 text-[#5f6cd3] " />
           <div className="flex items-center space-x-2 w-full justify-between">
             <span>Allow Microphone</span>
             <input
@@ -101,20 +101,20 @@ export default function Permissions() {
         </div>
     <Toaster richColors position="top-center" />
    
-        <div className="w-11/12 p-4 rounded-lg shadow-md flex items-center space-x-4 border border-white">
-          <MicrophoneIcon className="w-8 h-8 text-white" />
+        <div className="w-11/12 p-4 rounded-lg shadow-md flex items-center space-x-4 border border-[#9ea5dc]">
+          <MicrophoneIcon className="w-8 h-8 text-[#5f6cd3] " />
           <div className="flex items-center space-x-2 w-full justify-between">
             <span>Check Speaker</span>
             <div className="flex items-center space-x-2">
               <div
                 onClick={handleAudioPlay}
-                className="pl-3 px-1 py-3 text-white rounded-full hover:bg-purple-500 cursor-pointer flex items-center"
+              className="pl-3 px-1 py-3 text-[#5f6cd3]  rounded-full  cursor-pointer flex items-center"
               >
-                <PlayIcon className="w-6 h-6 text-white mr-2" />
+                <PlayIcon className="w-6 h-6 text-[#5f6cd3]  mr-2" />
               </div>
               <input
                 type="checkbox"
-                className="w-8 h-8 ml-auto"
+                className="w-8 h-8 ml-auto bg-[#9ea5dc]/20 checked:bg-[#9ea5dc]"
                 disabled={!canHear}
               />
             </div>
@@ -122,15 +122,15 @@ export default function Permissions() {
         </div>
 
        
-        <div className="w-11/12 p-4 rounded-lg shadow-md flex items-center space-x-4 border border-white">
-          <ComputerDesktopIcon className="w-8 h-8 text-white" />
+        <div className="w-11/12 p-4 rounded-lg shadow-md flex items-center space-x-4 border border-[#9ea5dc]">
+          <ComputerDesktopIcon className="w-8 h-8 text-[#5f6cd3] " />
           <div className="flex items-center space-x-2 w-full justify-between">
             <span>Enable Screen Share</span>
             <input
               type="checkbox"
               checked={screenShare}
               onChange={screenSharing}
-              className="w-8 h-8 ml-auto"
+              className="w-8 h-8 ml-auto bg-[#9ea5dc]/20 checked:bg-[#9ea5dc]"
             />
           </div>
         </div>
@@ -138,14 +138,10 @@ export default function Permissions() {
 
         <div className="w-11/12 p-2 items-center">
           <Link
-<<<<<<< HEAD
-            href={allPermissionsGranted ? "/interviewIns" : "#"}
-=======
             href={allPermissionsGranted ? "/instructions" : "#"}
->>>>>>> 3c5474244bbe94d6baf3db31cb8fd39efeeb3ee8
             className={`w-full block px-8 py-3 rounded-lg text-center text-xl font-semibold ${
-              allPermissionsGranted? "bg-purple-700 text-white hover:bg-purple-900"
-                : "bg-gray-500 text-gray-300 cursor-not-allowed"
+              allPermissionsGranted? "bg-[#5762b2] text-white "
+                : "bg-[#9ea5dc] text-gray-300 cursor-not-allowed"
             }`}
           >
             Start Interview

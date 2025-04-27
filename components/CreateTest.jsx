@@ -200,7 +200,7 @@ const handleKeyDown = (e) => {
     <div className={`${isLoading ? 'opacity-50 pointer-events-none blur-sm' : ''}`}>
     <div className="flex-grow ">
       <div className='flex items-center justify-between p-4 w-full h-10 mt-2'>
-        <h1 className='text-2xl font-bold'>Admin Portal</h1>
+        <h1 className='text-4xl font-bold text-[#5862b2]'>Admin Portal</h1>
      <img
             // src="/appLogo3.png" 
             alt="Logo"
@@ -210,12 +210,12 @@ const handleKeyDown = (e) => {
      <div className='flex w-full mt-2 p-4 h-auto'>
             <Toaster richColors position="top-center" />
       <div className='flex flex-col justify-center gap-5 items-center w-[35%] '>
-      <Label className="text-2xl">Marks Breakup</Label>
+      {/* <Label className="text-2xl">Marks Breakup</Label> */}
           <div className='flex flex-col w-[90%] items-center justify-center gap-5 '>
 
             <div className="w-[90%]  gap-4 flex justify-center items-center p-3 border-b-2"> 
               <div className='flex flex-col w-full '>
-                 <Label className="text-xl">Accuracy</Label>
+                 <Label className="text-lg">Accuracy</Label>
                    <Slider className="mt-7"  defaultValue={[0]} max={max}  onValueChange={(value)=> handleMarksChange("accuracyMark", value[0])} aria-label="Slider with ticks" />
                    <span
                      className="mt-3 flex w-full items-center justify-between gap-1 px-2.5 text-xs font-medium text-muted-foreground"
@@ -236,7 +236,7 @@ const handleKeyDown = (e) => {
 
                <div className="justify-center items-center w-[90%] gap-4 flex p-3 border-b-2">
                  <div className='flex flex-col w-full '>
-                 <Label className="text-xl">Completeness</Label>
+                 <Label className="text-lg">Completeness</Label>
                    <Slider className="mt-7" defaultValue={[0]} max={max}  onValueChange={(value)=> handleMarksChange("completenessMark", value[0])}  aria-label="Slider with ticks" />
                    <span
                      className="mt-3 flex w-full items-center justify-between gap-1 px-2.5 text-xs font-medium text-muted-foreground"
@@ -257,7 +257,7 @@ const handleKeyDown = (e) => {
 
                <div className="justify-center items-center w-[90%] gap-4 flex p-3 border-b-2">
                <div className='flex flex-col w-full'>
-                 <Label className="text-xl">Explaination</Label>
+                 <Label className="text-lg">Explaination</Label>
                    <Slider className="mt-7" defaultValue={[0]} max={max}  onValueChange={(value)=> handleMarksChange("explainationMark", value[0])}  aria-label="Slider with ticks" />
                    <span
                      className="mt-3 flex w-full items-center justify-between gap-1 px-2.5 text-xs font-medium text-muted-foreground"
@@ -278,7 +278,7 @@ const handleKeyDown = (e) => {
 
                <div className="justify-center items-center w-[90%] gap-4 flex p-3 border-b-2">
                <div className='flex flex-col w-full'>
-                 <Label className="text-xl">Conciseness</Label>
+                 <Label className="text-lg">Conciseness</Label>
                    <Slider className="mt-7"  defaultValue={[0]} max={max}  onValueChange={(value)=> handleMarksChange("concisenessMark", value[0])}  aria-label="Slider with ticks" />
                    <span
                      className="mt-3 flex w-full items-center justify-between gap-1 px-2.5 text-xs font-medium text-muted-foreground"
@@ -300,7 +300,7 @@ const handleKeyDown = (e) => {
 
                <div className="justify-center items-center w-[90%] gap-4 flex p-3 border-b-2">
                <div className='flex flex-col w-full'>
-                 <Label className="text-xl">Practical Relevance</Label>
+                 <Label className="text-lg">Practical Relevance</Label>
                    <Slider className="mt-7"  defaultValue={[0]} max={max}  onValueChange={(value)=> handleMarksChange("practicalRelevanceMark", value[0])} aria-label="Slider with ticks" />
                    <span
                      className="mt-3 flex w-full items-center justify-between gap-1 px-2.5 text-xs font-medium text-muted-foreground"
@@ -456,7 +456,7 @@ const handleKeyDown = (e) => {
     </div>
 
     <div className='buttons w-[55%] p-5 flex justify-between items-center gap-5'>
-    <Button onClick={()=>{handleCreateTest(testInfo,marks,difficulty,tag)} } className="w-fit-content">
+    <Button onClick={()=>{handleCreateTest(testInfo,marks,difficulty,tag)} } className="w-fit-content bg-[#5862b2] hover:bg-[#5862b2]">
       <span className="group inline-flex items-center">
         {isCreated ? "Test Created" : "Create Test"}
         <ChevronRightIcon className="ml-1 size-4 transition-transform duration-300 group-hover:translate-x-1" />   
@@ -464,7 +464,7 @@ const handleKeyDown = (e) => {
     </Button>
 
     <Button onClick={()=>{handlePublishTest(testId)}} disabled={!isCreated}
-     className={`w-fit-content ${
+     className={`w-fit-content bg-[#5862b2] hover:bg-[#5862b2] ${
     isCreated
       ? 'cursor-pointer'
       : 'bg-gray-300 cursor-not-allowed'

@@ -6,8 +6,8 @@ import Link from 'next/link';
 
 export default function TestIns() {
     return (
-    <div className='flex h-screen bg-gray-50 w-[100%] border-red-800'>
-        <div className=' flex items-center justify-center w-[50%]  border-gray-500  bg-[rgb(22,29,41)]'>
+    <div className='flex h-screen bg-white w-[100%] '>
+        <div className=' flex items-center justify-center w-[50%]  border-gray-500  bg-white'>
                 <img
               src="/TestIns.jpg"  // Replace with your actual path
               alt="Descriptive Alt Text"
@@ -15,10 +15,11 @@ export default function TestIns() {
             />
         </div>
    
-     <div className=' bg-[rgb(22,29,41)] h-full flex flex-col items-center w-[50%]'>
+     <div className=' bg-white h-full flex flex-col items-center w-[50%]'>
         <h1 className='text-4xl font-bold mb-6 mt-20 text-white'>Test Instructions</h1>
-          <div className="flex justify-center items-center w-full py-8 px-4">
-             <ul className="list-disc w-4/5 pl-6 space-y-4 text-white text-base leading-relaxed font-medium bg-[rgb(22,29,41)] p-6">
+          <div className="flex flex-col justify-center items-center w-full py-8 px-4 gap-5">
+            <h1 className='text-4xl font-semibold'> Point to be taken care of</h1>
+             <ul className="list-disc w-4/5 pl-6 space-y-4 text-[#09090c] text-base leading-relaxed font-medium bg-white p-6">
                <li className="hover:translate-x-1 transition-all duration-200 ease-in-out">
                  Ensure stable Internet and choose a clean, quiet location
                </li>
@@ -43,7 +44,7 @@ export default function TestIns() {
           <div className="w-[80%] p-2 mt-14 items-center">
             <Link
               href="/permissions"
-              className="w-full block px-8 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 text-center text-lg font-semibold"
+              className="w-full block px-8 py-3 bg-[#5862b2] text-white rounded-lg text-center text-lg font-semibold"
             >Start Now
             </Link>     
         </div>

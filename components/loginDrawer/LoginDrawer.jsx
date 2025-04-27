@@ -96,7 +96,7 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
-            <DrawerTitle>Login</DrawerTitle>
+            <DrawerTitle className="text-[#5862b2] font-bold">Login</DrawerTitle>
             <DrawerDescription>
               Please login again to continue using the application.
             </DrawerDescription>
@@ -112,7 +112,7 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
             </div>
           </form>
           <DrawerFooter>
-            <Button type="submit" onClick={handleSubmit}>
+            <Button type="submit" className="bg-[#5862b2] hover:bg-[#5862b2]" onClick={handleSubmit}>
             {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
                   Logging in <LoaderCircle className="animate-spin" size={16} strokeWidth={2} aria-hidden="true" />

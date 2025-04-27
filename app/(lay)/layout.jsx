@@ -9,7 +9,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { toast } from "sonner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 
@@ -17,7 +16,7 @@ export default function Layout({ children }) {
    const router = useRouter();
   return (
     <div>
-      <nav className="bg-[#161D29] border-b fixed top-0 w-screen z-10">
+      <nav className="bg-[#5762b2] border-b fixed top-0 w-screen z-10">
         <div className="flex items-center justify-between w-screen">
           <div className="text-white text-xl font-bold">
              <img

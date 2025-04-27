@@ -50,7 +50,7 @@ const Slider = React.forwardRef(({ className, showTooltip = false, tooltipConten
   const renderThumb = (value) => {
     const thumb = (
       <SliderPrimitive.Thumb
-        className="block h-5 w-5 rounded-full border-2 border-primary bg-background transition-colors focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-ring/40 data-[disabled]:cursor-not-allowed"
+        className="block h-5 w-5 rounded-full border-2  border-primary bg-background transition-colors focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-ring/40 data-[disabled]:cursor-not-allowed"
         onPointerDown={handlePointerDown} />
     );
 
@@ -61,7 +61,7 @@ const Slider = React.forwardRef(({ className, showTooltip = false, tooltipConten
         <Tooltip open={showTooltipState}>
           <TooltipTrigger asChild>{thumb}</TooltipTrigger>
           <TooltipContent
-            className="px-2 py-1 text-xs"
+            className="px-2 py-1 text-xs "
             sideOffset={8}
             side={props.orientation === "vertical" ? "right" : "top"}>
             <p>{tooltipContent ? tooltipContent(value) : value}</p>

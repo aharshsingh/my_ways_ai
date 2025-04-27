@@ -80,8 +80,7 @@ useEffect(() => {
           <DialogTitle className="border-b border-border px-6 py-4">
           Users who attempted {testname}
           </DialogTitle>
-          <div className="overflow-y-auto w-[100%] ">
-            <DialogDescription asChild>
+          <div className="overflow-y-auto w-full ">
             {isLoading ? (<div className="mx-auto my-2 w-full z-20 max-w-6xl rounded border">
            <div className="flex flex-wrap items-center justify-between gap-4 border-b p-4 md:py-2">
              <Skeleton className="h-6 w-40" /> {/* Test Cluster Title */}
@@ -205,10 +204,10 @@ useEffect(() => {
            </TableBody>
          </Table>
        </div>}
-            </DialogDescription>
+          
             <DialogFooter className="px-6 pb-6 sm:justify-start">
               <DialogClose asChild>
-                <Button type="button">Okay</Button>
+                <Button className="bg-[#5862b2]" type="button">Okay</Button>
               </DialogClose>
             </DialogFooter>
           </div>

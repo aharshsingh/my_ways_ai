@@ -126,7 +126,7 @@ const handleTestClick=(testId)=>{
     </div>) :
     <div className="mx-auto my-16 w-full max-w-6xl rounded border">
     <div className="flex flex-wrap items-center justify-between gap-4 border-b p-4 md:py-2">
-      <h1 className="text-xl font-bold">Test Cluster</h1>
+      <h1 className="text-xl font-bold text-[#5862b2]">Test Cluster</h1>
       <Input
         placeholder="Search tests..."
         value={searchTerm}
