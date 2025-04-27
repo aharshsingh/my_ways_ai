@@ -5,7 +5,7 @@ import Test from "@/lib/models/Test";
 export async function DELETE(req, {params}){
     try {
         await connectToDatabase();
-        const {testId} = params;
+        const {testId} = await params;
         const test = await Test.findOneAndDelete({_id: testId});
         if(!test){
             return NextResponse.json({error: "No test found"}, {status: 404});

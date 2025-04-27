@@ -10,19 +10,15 @@ export async function GET(req, {params}){
         const { testId } = await params;
         let data = [];
         const results = await Result.find({testId});
-        console.log(results)
         const submissions = await Submission.find({testId});4
-        console.log(submissions)
-        const users = await User.find({"attemptedTest.testId": testId}).select("_id");
-        console.log(users)
+        const users = await User.find({"attemptedTest.testId": testId}).select("_id userName email");
         users.forEach((user)=>{
             let userResult = {};
             let index = results.findIndex(result => result.userId.toString() === user._id.toString());
             userResult = {...userResult, ...results[index]._doc};
-            console.log(userResult)
             index = submissions.findIndex(submission => submission.userId.toString() === user._id.toString());
+            console.log(submissions[index].completedAt.toString())
             userResult = {...userResult, startedAt:submissions[index].startedAt , completedAt:submissions[index].completedAt, email: user.email, userId: user._id, userName: user.userName};
-            console.log("this is " + toString(userResult))
             data.push(userResult);
         })
         return NextResponse.json(data, {status: 200});
