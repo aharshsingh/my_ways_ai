@@ -116,7 +116,7 @@ export default function Test() {
                     <div className="flex justify-center mb-4">
                     
                         <video
-                            className="w-1/3 h-1/3 object-cover"
+                            className="w-1/3 h-1/3 object-cover -scale-x-100"
                             src="/Animation.mp4"
                             loop
                             autoPlay
@@ -144,12 +144,12 @@ export default function Test() {
                         autoPlay
                         playsInline
                         muted
-                        className="w-2/4 h-2/3 border-2 border-gray-400 rounded-3xl mb-4"
+                        className="w-3/4 h-3/4 border-2 border-gray-400 rounded-3xl mb-4 -scale-x-100"
                     />
                     <div className="grid place-items-center mt-6">
                         <button
                             onClick={handleNextQuestion}
-                            className="ml-5.5 mt-6 px-6 py-2 bg-purple-500 text-white rounded hover:bg-purple-600"
+                            className="ml-5.5 mt-6 px-6 py-2 bg-[#606dd3] text-white rounded hover:bg-[#5862b2"
                         >
                             Save & Next
                         </button>
