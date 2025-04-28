@@ -81,7 +81,7 @@ export default function Permissions() {
               type="checkbox"
               checked={video}
               onChange={videoPermission}
-              className="w-8 h-8 ml-auto"
+              className="w-8 h-8 ml-auto accent-[#5f6cd3]"
             />
           </div>
         </div>
@@ -95,7 +95,7 @@ export default function Permissions() {
               type="checkbox"
               checked={audio}
               onChange={audioPermission}
-              className="w-8 h-8 ml-auto"
+              className="w-8 h-8 ml-auto accent-[#5f6cd3]"
             />
           </div>
         </div>
@@ -114,7 +114,7 @@ export default function Permissions() {
               </div>
               <input
                 type="checkbox"
-                className="w-8 h-8 ml-auto bg-[#9ea5dc]/20 checked:bg-[#9ea5dc]"
+                className="w-8 h-8 ml-auto accent-[#5f6cd3]"
                 disabled={!canHear}
               />
             </div>
@@ -130,7 +130,7 @@ export default function Permissions() {
               type="checkbox"
               checked={screenShare}
               onChange={screenSharing}
-              className="w-8 h-8 ml-auto bg-[#9ea5dc]/20 checked:bg-[#9ea5dc]"
+              className="w-8 h-8 ml-auto accent-[#5f6cd3]"
             />
           </div>
         </div>
