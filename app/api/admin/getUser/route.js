@@ -5,7 +5,7 @@ import { connectToDatabase } from "@/lib/mongodb";
 export async function GET(req){
     try {
         await connectToDatabase();
-        let users = await User.find().select("userName email attemptedTest createdAT");
+        let users = await User.find().select("userName email attemptedTest createdAt");
         const userInfo = users.map((user) => {
             const plainUser = user.toObject();
             return {
