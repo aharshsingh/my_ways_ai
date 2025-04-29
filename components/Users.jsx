@@ -1,12 +1,13 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useEffect ,useRef} from 'react'
 import { Skeleton } from "@/components/ui/skeleton"
 import axios from "axios";
 import { Toaster } from "@/components/ui/sonner";
+import { Toggle, GooeyFilter } from '@/components/ui/liquid-toggle'
 import { toast } from "sonner";
 import AttemptedUsersDialog from './attemptedUsersDialog/AttemptedUsersDialog';
 import { Trash2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input"
 import {
   Table,
@@ -60,7 +61,59 @@ export default function Users() {
       } catch (err) {
         console.log(err);
       }
-    };
+    };    
+   const handleSuspend = async (userId) => {
+    const res=await axios.post(`http://localhost:3000/api/admin/suspendUser/${userId}`)
+    if(res.status === 200)
+    {
+      toast.success("User Suspended Successfully")
+      fetchUsers()
+    }
+    else{
+      toast.error("Couldn't Suspend User! Try again")
+    }
+   }
+   const handleUnsuspend = async (userId) => {
+    const res=await axios.post(`http://localhost:3000/api/admin/unsuspendUser/${userId}`)
+    if(res.status === 200)
+    {
+      toast.success("User Unsuspended Successfully")
+      fetchUsers()
+    }
+    else{
+      toast.error("Couldn't Unsuspend User! Try again")
+    }
+   }
+   
+      function ToggleWithState({ variant, userId, isSuspended,}) {
+        const [checked, setChecked] = useState(isSuspended)
+
+        useEffect(() => {
+          setChecked(isSuspended)
+        }, [isSuspended])
+      
+        const handleToggle = (newChecked) => {
+          setChecked(newChecked)
+          if (newChecked) {
+            // Toggled ON → suspend user
+            handleSuspend(userId)
+          } else {
+            // Toggled OFF → unsuspend user
+            handleUnsuspend(userId)
+          }
+        }
+      
+      
+        return (
+          <Toggle 
+            variant={variant}
+            checked={checked}
+            onCheckedChange={handleToggle}
+          />
+        )
+      }
+
+    
     useEffect(() => {
       fetchUsers();
     },[]);
@@ -119,10 +172,10 @@ export default function Users() {
            <TableRow >
                <TableHead
                  className="cursor-pointer "
-                 onClick={() => handleSort("testName")}
+                 onClick={() => handleSort("userName")}
                >
                  Username
-                 {sortColumn === "testName" && (
+                 {sortColumn === "userName" && (
                    <span className="ml-1">
                      {sortDirection === "asc" ? "\u2191" : "\u2193"}
                    </span>
@@ -130,10 +183,10 @@ export default function Users() {
                </TableHead>
                <TableHead
                  className="cursor-pointer"
-                 onClick={() => handleSort("keyWord")}
+                 onClick={() => handleSort("email")}
                >
                  Email
-                 {sortColumn === "keyWord" && (
+                 {sortColumn === "email" && (
                    <span className="ml-1">
                      {sortDirection === "asc" ? "\u2191" : "\u2193"}
                    </span>
@@ -156,10 +209,13 @@ export default function Users() {
                    </span>
                  )}
                </TableHead>
+               <TableHead>
+                 Status
+               </TableHead>
                <TableHead
                  className="cursor-pointer"
                >
-                 Actions
+                 Action
                </TableHead>
              </TableRow>
            </TableHeader>
@@ -170,7 +226,6 @@ export default function Users() {
                  <TableCell className="flex flex-wrap">
                      {user.email}
                   </TableCell>
-                 <TableCell > {10}</TableCell>
                  <TableCell>{user.totalTest}</TableCell>
                  <TableCell>
                    {new Date(user.createdAt).toLocaleDateString("en-GB", {
@@ -178,21 +233,24 @@ export default function Users() {
                        month: "2-digit",
                        year: "numeric",
                      })}
-
                  </TableCell>
-                 <TableCell className="gap-2">
-                     <Button variant="ghost" size="icon" onClick={() => handleDelete(user._id)}>
-                       <Trash2  className="size-3.5" />
-                     </Button>
-                     <Button variant="ghost" size="icon" onClick={() => handleDelete(user._id)}>
-                       <Trash2  className="size-3.5" />
-                     </Button>
+                 <TableCell className="gap-2" >
+                  <Badge variant="outline" className={user.isSuspended ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"}>
+                    {user.isSuspended ? "Suspended" : "Active"}
+                  </Badge>
+                  </TableCell>
+                  <TableCell>
+                  <div className="relative">
+                    <GooeyFilter />
+                    <ToggleWithState  variant="danger" 
+                      userId={user._id}
+                      isSuspended={user.isSuspended}/>
+                  </div>
                   </TableCell>
                </TableRow>
              ))}
            </TableBody>
          </Table>
-          {/* {isOpen && <AttemptedUsersDialog  isOpen={isOpen} setIsOpen={setIsOpen} testname={testName} marksBreakup={marksBreakup} /> } */}
        </div>}
        </div>
        </div>
