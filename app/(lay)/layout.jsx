@@ -34,7 +34,7 @@ export default function Layout({ children }) {
               <span><FontAwesomeIcon className='text-[#5862b2] h-6 w-6 mr-5' icon={faUser}/> </span>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="mr-10">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel className="text-[#5862b2]">My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => router.push('/profile')}>Profile</DropdownMenuItem>
               <DropdownMenuItem onClick={() => router.push('/testCluster')}>Tests</DropdownMenuItem>

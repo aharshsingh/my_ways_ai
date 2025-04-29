@@ -68,7 +68,7 @@ export default function Users() {
     <div className='flex flex-col h-screen items-center '>
       <div className='flex items-center justify-between p-4 w-full h-12 mt-2'>
         <h1 className='text-3xl text-[#5862b2] font-bold'>Admin Portal</h1>
-        <h1 className="text-3xl  font-bold text-[#5862b2]">All Users</h1>
+        <h1 className="text-3xl  font-semibold text-[#5862b2]">All Users</h1>
      <img
           src="/intervuLogo2.png" 
           alt="Logo"

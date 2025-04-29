@@ -15,10 +15,9 @@ export default function TestIns() {
             />
         </div>
    
-     <div className=' bg-white h-full flex flex-col items-center w-[50%]'>
-        <h1 className='text-4xl font-bold mb-6 mt-20 text-white'>Test Instructions</h1>
+     <div className=' bg-white h-full flex flex-col items-center justify-center w-[50%]'>
           <div className="flex flex-col justify-center items-center w-full py-8 px-4 gap-5">
-            <h1 className='text-4xl font-semibold'> Point to be taken care of</h1>
+            <h1 className='text-4xl font-semibold text-[#5862b2]'> Point to be taken care of</h1>
              <ul className="list-disc w-4/5 pl-6 space-y-4 text-[#09090c] text-base leading-relaxed font-medium bg-white p-6">
                <li className="hover:translate-x-1 transition-all duration-200 ease-in-out">
                  Ensure stable Internet and choose a clean, quiet location

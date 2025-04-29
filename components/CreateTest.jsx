@@ -201,6 +201,7 @@ const handleKeyDown = (e) => {
     <div className="flex-grow ">
       <div className='flex items-center justify-between p-4 w-full h-10 mt-2'>
         <h1 className='text-3xl font-bold text-[#5862b2]'>Admin Portal</h1>
+        <h1 className='text-3xl font-semibold text-[#5862b2]'>Create Test</h1>
      <img
             src="/intervuLogo2.png" 
             alt="Logo"

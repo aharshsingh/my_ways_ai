@@ -17,7 +17,8 @@ import { Trash2 } from "lucide-react";
 
 const deleteTest=async(fetchTests,testId)=>{
   try {
-    const response = await axios.delete(`https://intervu-ai-beige.vercel.app/api/admin/deletedTest/${testId}`)
+    // const response = await axios.delete(`https://intervu-ai-beige.vercel.app/api/admin/deletedTest/${testId}`)
+    const response = await axios.delete(`http://localhost:3000/api/admin/deletedTest/${testId}`)
     if(response.status === 200)
     {
       toast.success("Test Deleted Successfully");
