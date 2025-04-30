@@ -3,7 +3,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 const styles = {
-  switch: `relative block cursor-pointer h-8 w-[52px]
+  switch: `relative block cursor-pointer h-6 w-[52px]
     [--c-active:#275EFE]
     [--c-success:#10B981]
     [--c-warning:#F59E0B]
@@ -69,8 +69,8 @@ export function Toggle({
         <circle
           className={styles.circle}
           cx="16"
-          cy="16"
-          r="10"
+          cy="12.5"
+          r="8"
           style={{
             transformOrigin: '16px 16px',
             transform: `translateX(${isChecked ? '12px' : '0px'}) scale(${isChecked ? '0' : '1'})`,
@@ -78,8 +78,8 @@ export function Toggle({
         <circle
           className={styles.circle}
           cx="36"
-          cy="16"
-          r="10"
+          cy="12.5"
+          r="8"
           style={{
             transformOrigin: '36px 16px',
             transform: `translateX(${isChecked ? '0px' : '-12px'}) scale(${isChecked ? '1' : '0'})`,

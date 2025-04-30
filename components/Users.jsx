@@ -63,7 +63,8 @@ export default function Users() {
       }
     };    
    const handleSuspend = async (userId) => {
-    const res=await axios.post(`http://localhost:3000/api/admin/suspendUser/${userId}`)
+   // const res = await axios.get(`https://intervu-ai-beige.vercel.app/api/admin/suspendUser/${userId}`)
+    const res=await axios.patch(`http://localhost:3000/api/admin/suspendUser/${userId}`)
     if(res.status === 200)
     {
       toast.success("User Suspended Successfully")
@@ -74,17 +75,18 @@ export default function Users() {
     }
    }
    const handleUnsuspend = async (userId) => {
-    const res=await axios.post(`http://localhost:3000/api/admin/unsuspendUser/${userId}`)
+       // const res = await axios.get(`https://intervu-ai-beige.vercel.app/api/admin/unsuspendUser/${userId}`)
+    const res=await axios.patch(`http://localhost:3000/api/admin/unsuspendUser/${userId}`)
     if(res.status === 200)
     {
-      toast.success("User Unsuspended Successfully")
+      toast.success("User Acticated Successfully")
       fetchUsers()
     }
     else{
       toast.error("Couldn't Unsuspend User! Try again")
     }
    }
-   
+
       function ToggleWithState({ variant, userId, isSuspended,}) {
         const [checked, setChecked] = useState(isSuspended)
 
@@ -95,7 +97,7 @@ export default function Users() {
         const handleToggle = (newChecked) => {
           setChecked(newChecked)
           if (newChecked) {
-            // Toggled ON → suspend user
+            
             handleSuspend(userId)
           } else {
             // Toggled OFF → unsuspend user
@@ -158,8 +160,7 @@ export default function Users() {
          </div>) :
          <div className="mx-auto  my-2 z-30 overflow-auto w-[95%]   max-w-8xl rounded border" >
          <div className="flex flex-wrap items-center justify-between p-4 md:py-2" >
-          
-           <h1 className="text-lg  font-semibold text-[#5862b2]">{"Click on the Test to get Details"}</h1>
+
            <Input
              placeholder="Search Users..."
              value={searchTerm}
@@ -171,7 +172,6 @@ export default function Users() {
            <TableHeader>
            <TableRow >
                <TableHead
-                 className="cursor-pointer "
                  onClick={() => handleSort("userName")}
                >
                  Username
@@ -221,7 +221,7 @@ export default function Users() {
            </TableHeader>
            <TableBody>
              {sortedUsers.map((user) => (
-                 <TableRow key={user._id} className="cursor-pointer">
+                 <TableRow key={user._id} >
                  <TableCell className="font-medium">{user.userName}</TableCell>
                  <TableCell className="flex flex-wrap">
                      {user.email}
@@ -239,7 +239,7 @@ export default function Users() {
                     {user.isSuspended ? "Suspended" : "Active"}
                   </Badge>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="cursor-pointer">
                   <div className="relative">
                     <GooeyFilter />
                     <ToggleWithState  variant="danger" 
