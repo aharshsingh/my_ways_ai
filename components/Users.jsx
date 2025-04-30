@@ -79,7 +79,7 @@ export default function Users() {
     const res=await axios.patch(`http://localhost:3000/api/admin/unsuspendUser/${userId}`)
     if(res.status === 200)
     {
-      toast.success("User Acticated Successfully")
+      toast.success("User Activated Successfully")
       fetchUsers()
     }
     else{

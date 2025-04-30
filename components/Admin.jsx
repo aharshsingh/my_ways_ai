@@ -2,61 +2,46 @@
 import React from "react";
 import { SparklesCore } from "@/components/ui/sparkles"
 import {
-    Activity,
-    Component,
-    HomeIcon,
-    Mail,
-    Package,
-    ScrollText,
-    SunMoon,
-  } from 'lucide-react';
+  HomeIcon,
+  FilePlus,
+  ListChecks,
+  BarChart2,
+  Users,
+} from 'lucide-react';
   import { useRouter } from 'next/navigation';
   
   import { Dock, DockIcon, DockItem, DockLabel } from '@/components/ui/dock';
 
   export default function Admin() {
     const router = useRouter();
-  const data = [
-    {
-      title: 'Home',
-      icon: (
-        <HomeIcon className='h-full w-full text-neutral-600 dark:text-neutral-300' />
-      ),
-      link: '/',
-    },
-    {
-      title: 'Create Test',
-      icon: (
-        <Package className='h-full w-full text-neutral-600 dark:text-neutral-300' />
-      ),
-      link: '/createTest',
-    },
-    {
-      title: 'All Tests',
-      icon: (
-        <Component className='h-full w-full text-neutral-600 dark:text-neutral-300' />
-      ),
-      link: '/allTests',
-    },
-    {
-      title: 'Results',
-      icon: (
-        <Activity className='h-full w-full text-neutral-600 dark:text-neutral-300' />
-      ),
-      link: '/results',
-    },
-    {
-      title: 'Users',
-      icon: (
-        <ScrollText className='h-full w-full text-neutral-600 dark:text-neutral-300' />
-      ),
-      link: '/users',
-    },
-
-  ];
-  
-
-
+    const data = [
+      {
+        title: 'Home',
+        icon: <HomeIcon className='h-full w-full text-neutral-600 dark:text-neutral-300' />,
+        link: '/',
+      },
+      {
+        title: 'Create Test',
+        icon: <FilePlus className='h-full w-full text-neutral-600 dark:text-neutral-300' />,
+        link: '/createTest',
+      },
+      {
+        title: 'All Tests',
+        icon: <ListChecks className='h-full w-full text-neutral-600 dark:text-neutral-300' />,
+        link: '/allTests',
+      },
+      {
+        title: 'Results',
+        icon: <BarChart2 className='h-full w-full text-neutral-600 dark:text-neutral-300' />,
+        link: '/results',
+      },
+      {
+        title: 'Users',
+        icon: <Users className='h-full w-full text-neutral-600 dark:text-neutral-300' />,
+        link: '/users',
+      },
+    ];
+    
   return (
     <>
     <div className="h-screen w-full bg-black flex flex-col items-center justify-between overflow-hidden">
