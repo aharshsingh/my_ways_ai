@@ -16,9 +16,9 @@ export default function TestIns() {
         </div>
    
      <div className=' bg-white h-full flex flex-col items-center justify-center w-[50%]'>
-          <div className="flex flex-col justify-center items-center w-full py-8 px-4 gap-5">
+          <div className="flex flex-col justify-center items-start w-[80%] py-8 px-4 gap-5">
             <h1 className='text-4xl font-semibold text-[#5862b2]'> Point to be taken care of</h1>
-             <ul className="list-disc w-4/5 pl-6 space-y-4 text-[#09090c] text-base leading-relaxed font-medium bg-white p-6">
+             <ul className="list-disc w-full pl-6 space-y-4 text-[#09090c] text-base leading-relaxed font-medium bg-white p-6">
                <li className="hover:translate-x-1 transition-all duration-200 ease-in-out">
                  Ensure stable Internet and choose a clean, quiet location
                </li>
@@ -44,7 +44,7 @@ export default function TestIns() {
             <Link
               href="/permissions"
               className="w-full block px-8 py-3 bg-[#5862b2] text-white rounded-lg text-center text-lg font-semibold"
-            >Start Now
+            >Okay, I Understood
             </Link>     
         </div>
         </div>

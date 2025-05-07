@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef } from "react";
 import Link from "next/link";
-import { PlayIcon, CameraIcon, MicrophoneIcon, ComputerDesktopIcon } from "@heroicons/react/24/outline";
+import { PlayIcon, CameraIcon, MicrophoneIcon, ComputerDesktopIcon, SpeakerWaveIcon } from "@heroicons/react/24/outline";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 
@@ -102,13 +102,13 @@ export default function Permissions() {
     <Toaster richColors position="top-center" />
    
         <div className="w-11/12 p-4 rounded-lg shadow-md flex items-center space-x-4 border border-[#9ea5dc]">
-          <MicrophoneIcon className="w-8 h-8 text-[#5f6cd3] " />
+          <SpeakerWaveIcon className="w-8 h-8 text-[#5f6cd3] " />
           <div className="flex items-center space-x-2 w-full justify-between">
             <span>Check Speaker</span>
             <div className="flex items-center space-x-2">
               <div
                 onClick={handleAudioPlay}
-              className="pl-3 px-1 py-3 text-[#5f6cd3]  rounded-full  cursor-pointer flex items-center"
+              className="pl-3 text-[#5f6cd3]  rounded-full  cursor-pointer flex items-center"
               >
                 <PlayIcon className="w-6 h-6 text-[#5f6cd3]  mr-2" />
               </div>
@@ -144,7 +144,7 @@ export default function Permissions() {
                 : "bg-[#9ea5dc] text-gray-300 cursor-not-allowed"
             }`}
           >
-            Start Interview
+            Proceed to the Interview
           </Link>
         </div>
       </div>

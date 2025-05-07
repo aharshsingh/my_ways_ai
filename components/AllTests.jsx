@@ -30,7 +30,6 @@ export default function AllTests() {
     const [sortColumn, setSortColumn] = useState("title");
     const [sortDirection, setSortDirection] = useState("asc");
     const [isOpen, setIsOpen] = useState(false);
-    // const [isAlertOpen, setIsAlertOpen] = useState(false);
     const [isAlertOpen, setIsAlertOpen] = useState(false);
     const [marksBreakup, setMarksBreakup] = useState({});
     
@@ -79,7 +78,7 @@ const handlePublishTest=async(testId)=>{
 
 
 const fetchTests = async (token) => {
-  //Logic to get no of uswers attepmpted test i will comapre each test id wiht the array of tests attemtpted and then for each will increment the number of users attempted by 1
+  
   try {
     // const response1 = await axios.get("https://intervu-ai-beige.vercel.app/api/test", {
       const response1 = await axios.get("http://localhost:3000/api/test", {
@@ -127,19 +126,17 @@ useEffect(() => {
      <div className=' w-full h-full flex flex-col items-center mt-2 '>
      {isLoading ? (<div className="mx-auto my-2z-20 w-[95%] max-w-8xl rounded border">
            <div className="flex flex-wrap items-center justify-between gap-4 border-b p-4 md:py-2">
-             <Skeleton className="h-6 w-40" /> {/* Test Cluster Title */}
-             <Skeleton className="h-10 w-96" /> {/* Search Input */}
+             <Skeleton className="h-6 w-40" />
+             <Skeleton className="h-10 w-96" /> 
            </div>
      
            <div className="w-full">
-             {/* Table Header Skeleton */}
              <div className="grid grid-cols-7 gap-5 border-b p-4">
                {Array(9).fill("").map((_, index) => (
                  <Skeleton key={index} className="h-6 w-24" />
                ))}
              </div>
      
-             {/* Table Rows Skeleton */}
              <div className="space-y-4 p-4">
                {Array(5).fill("").map((_, rowIndex) => (
                  <div key={rowIndex} className="grid grid-cols-7 gap-2">

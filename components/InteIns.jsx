@@ -11,7 +11,7 @@ export default function InteIns() {
   return (
     <div className="flex flex-col items-center text-[#09090c] py-10 min-h-screen">
       <h1 className="text-3xl font-bold mb-5 mt-5 text-[#5862b2]">Interview Instructions</h1>
-    <p className='text-[#09090c] text-lg'>Your are in a proctered test enviorment. If caught in ant suspicious behaviour, you will be marked <span className='text-red-500'>FAIL!</span></p>
+    <p className='text-[#09090c] text-lg'>Your are in a proctered test enviorment. If caught in any suspicious behaviour, you will be marked <span className='text-red-500'>FAIL!</span></p>
       
       <div className=" mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-4xl px-6">
        
