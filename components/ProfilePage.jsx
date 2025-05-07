@@ -17,9 +17,10 @@ export default function ProfilePage() {
           <p>admin@gmail.com</p>
         </div>
       </div>
-      <div className='w-[70%] h-[100%] bg-white'>
-        <div  className="grid gap-4 grid-cols-3 sm:grid-cols-2">
-        <ProjectStatusCard
+      <div className='w-[70%] bg-white'>
+        <div  className="grid gap-4 grid-cols-1 md:grid-cols-2">
+          <div>
+          <ProjectStatusCard
         title="Design System"
         progress={100}
         dueDate="Dec 31, 2023"
@@ -32,7 +33,9 @@ export default function ProfilePage() {
         bestScore={256}
         timesAttempted={0}
       />
-      <ProjectStatusCard
+          </div>
+        <div>
+        <ProjectStatusCard
         title="Analytics Dashboard"
         progress={45}
         dueDate="Mar 1, 2024"
@@ -45,7 +48,9 @@ export default function ProfilePage() {
         bestScore={256}
         timesAttempted={6}
       />
-       <ProjectStatusCard
+        </div>
+        <div>
+          <ProjectStatusCard
         title="Design System"
         progress={100}
         dueDate="Dec 31, 2023"
@@ -56,22 +61,26 @@ export default function ProfilePage() {
           { title: "Relevance", completed: true }
         ]}
         bestScore={256}
-        timesAttempted={10}
-      />
-      <ProjectStatusCard
-        title="Analytics Dashboard"
-        progress={45}
-        dueDate="Mar 1, 2024"
-        tasks={[
-          { title: "Fluency", completed: true },
-          { title: "Accuracy", completed: true },
-          { title: "To the Point", completed: true },
-          { title: "Relevance", completed: true }
-        ]}
-        bestScore={256}
         timesAttempted={0}
       />
+          </div>
+        <div>
         <ProjectStatusCard
+        title="Analytics Dashboard"
+        progress={45}
+        dueDate="Mar 1, 2024"
+        tasks={[
+          { title: "Fluency", completed: true },
+          { title: "Accuracy", completed: true },
+          { title: "To the Point", completed: true },
+          { title: "Relevance", completed: true }
+        ]}
+        bestScore={256}
+        timesAttempted={6}
+      />
+        </div>
+        <div>
+          <ProjectStatusCard
         title="Design System"
         progress={100}
         dueDate="Dec 31, 2023"
@@ -84,7 +93,9 @@ export default function ProfilePage() {
         bestScore={256}
         timesAttempted={0}
       />
-      <ProjectStatusCard
+          </div>
+        <div>
+        <ProjectStatusCard
         title="Analytics Dashboard"
         progress={45}
         dueDate="Mar 1, 2024"
@@ -95,8 +106,10 @@ export default function ProfilePage() {
           { title: "Relevance", completed: true }
         ]}
         bestScore={256}
-        timesAttempted={0}
+        timesAttempted={6}
       />
+        </div>
+      
         </div>
       </div>
     </div>
