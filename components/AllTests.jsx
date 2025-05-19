@@ -228,7 +228,7 @@ useEffect(() => {
              {sortedTests.map((test) => (
                  <TableRow key={test._id || test.testName}>
                  <TableCell className="font-medium">{test.testName}</TableCell>
-                 <TableCell className="flex flex-wrap gap-1">
+                 <TableCell className="flex flex-wrap gap-1 text-center">
                     {test.keyWord.map((keyword, index) => {
                       // Define color schemes based on index or keyword
                       const colorClass =
@@ -246,7 +246,7 @@ useEffect(() => {
                     })}
                   </TableCell>
                  {/* <TableCell>{bookmark.description}</TableCell> */}
-                 <TableCell >
+                 <TableCell>
                     <Badge variant="outline" className={
                     test.difficulty === "hard"
                       ? "bg-red-100 text-red-800"
@@ -284,7 +284,7 @@ useEffect(() => {
                  </TableCell>
                  <TableCell className="gap-2">
                      <Button variant="ghost" size="icon" onClick={() => handleDelete(test._id)}>
-                       <Trash2  className="size-3.5" />
+                       <Trash2  className="size-4" />
                      </Button>
                   </TableCell>
                </TableRow>

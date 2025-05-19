@@ -173,8 +173,8 @@ useEffect(() => {
              </TableRow>
            </TableHeader>
            <TableBody>
-             {sortedTests.map((test) => (
-                 <TableRow key={test._id} onClick={() => {
+            {sortedTests.length > 0 ? (sortedTests.map((test) => (
+                 <TableRow  key={test._id} onClick={() => {
                   setMarksBreakup({
                     accuracy:test.accuracy,
                     completeness:test.completeness,
@@ -186,7 +186,7 @@ useEffect(() => {
                   setTestId(test._id);
                   setIsOpen(true);
                 }} className="cursor-pointer">
-                 <TableCell className="font-medium">{test.testName}</TableCell>
+                 <TableCell  className="font-medium">{test.testName}</TableCell>
                  <TableCell className="flex flex-wrap gap-1">
                     {test.keyWord.map((keyword, index) => {
       
@@ -215,7 +215,7 @@ useEffect(() => {
                   }> {test.difficulty}</Badge>
                   </TableCell>
                  <TableCell>{test.duration} min</TableCell>
-                 <TableCell  >{test.score}</TableCell>
+                 <TableCell>{test.score}</TableCell>
                  <TableCell>{test.totalAttempts}</TableCell>
                  <TableCell>
                    {new Date(test.createdAt).toLocaleDateString("en-GB", {
@@ -226,7 +226,12 @@ useEffect(() => {
 
                  </TableCell>
                </TableRow>
-             ))}
+             ))) : (<TableRow>
+                             <TableCell colSpan={10} className="text-center py-6 text-lg">
+                               No Results Found.
+                             </TableCell>
+                           </TableRow>)}
+             
            </TableBody>
          </Table>
           {isOpen && <AttemptedUsersDialog testId={testId} isOpen={isOpen} setIsOpen={setIsOpen} testname={testName} marksBreakup={marksBreakup} /> }
