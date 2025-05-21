@@ -114,6 +114,12 @@ const [errors, setErrors] = useState({
               )}
           <BottomGradient />
         </button>
+         <p className="text-center text-sm mt-2 text-muted-foreground">
+          By signing in you agree to our{" "}
+          <a className="underline hover:no-underline" href="#">
+            Privacy Policy
+          </a>.
+        </p>
         <Toaster richColors position="top-center" />
         <div
           className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-3 h-[1px] w-full" />

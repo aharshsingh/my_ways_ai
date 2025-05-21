@@ -1,5 +1,6 @@
 "use Client"
 import React from 'react'
+import { PasswordResetDialog } from '../ui/password-reset-dialog';
 import { Button } from "@/components/ui/button";
 import { LoaderCircle } from "lucide-react";
 import { useRouter } from 'next/navigation';
@@ -16,15 +17,15 @@ import {
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-// import Link from 'next/link';
-import { useAuth } from '@/context/authContext';
-import { set } from 'mongoose';
+
 
 export default function LoginDrawer({ isOpen, setIsOpen }) {
   const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    // const[forgotPassword, setForgotPassword] = .(false); 
     const [errors, setErrors] = useState({
       email: false,
       password: false,
@@ -87,21 +88,22 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
                 return   setIsLoading(false);
             }
           }
-        }
+        } 
        
         };
       
   return (
+ <>
     <Drawer open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
             <DrawerTitle className="text-[#5862b2] font-bold">Login</DrawerTitle>
             <DrawerDescription>
-              Please login again to continue using the application.
+              Please login to continue using the application.
             </DrawerDescription>
           </DrawerHeader>
-          <form className="grid gap-4 p-4" >
+          <form className="grid gap-4 p-2" >
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input required id="email" type="email" autoComplete="username" placeholder="team@mynaui.com" value={email} className={`${errors.email ? "border-red-500" : ""} text-md `} onChange={(e)=>setEmail(e.target.value)} />
@@ -109,6 +111,8 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
             <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
               <Input required id="password" type="password" placeholder="••••••••••" autoComplete="current-password" value={password} className={`${errors.password ? "border-red-500" : ""} text-md `} onChange={(e)=>setPassword(e.target.value)}  />
+           
+            <span className='text-sm cursor-pointer mt-2 font-semibold hover:underline' onClick={()=>setIsDialogOpen(true)}>Forgot Password ?</span>
             </div>
           </form>
           <DrawerFooter>
@@ -128,5 +132,8 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
         </div>
       </DrawerContent>
     </Drawer>
+
+    {isDialogOpen && <PasswordResetDialog isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />}
+    </>
   );
 }
