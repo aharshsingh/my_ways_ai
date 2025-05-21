@@ -5,9 +5,7 @@ import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import axios from "axios";
-import {
-  IconBrandGoogle
-} from "@tabler/icons-react";
+import { PrivacyPolicyPage } from "./privacy-policy-page";
 import { useState } from "react";
 import LoginDrawer from "@/components/loginDrawer/LoginDrawer"
 import { Input } from "@/components/ui/input";
@@ -20,7 +18,7 @@ const [password, setPassword] = useState("");
 const [firstname, setFirstname] = useState("");
 const [lastname, setLastname] = useState("");
 const[confirmPassword, setConfirmPassword] = useState("");
-
+const [showPolicy, setShowPolicy] = useState(false);
 const [errors, setErrors] = useState({
   firstname: false,
   lastname: false,
@@ -116,7 +114,7 @@ const [errors, setErrors] = useState({
         </button>
          <p className="text-center text-sm mt-2 text-muted-foreground">
           By signing in you agree to our{" "}
-          <a className="underline hover:no-underline" href="#">
+          <a className="underline hover:no-underline cursor-pointer" onClick={() => setShowPolicy(true)}>
             Privacy Policy
           </a>.
         </p>
@@ -138,7 +136,7 @@ const [errors, setErrors] = useState({
         </div>
       </form>
       {isOpen && <LoginDrawer isOpen={isOpen} setIsOpen={setIsOpen} /> }
-     
+     {showPolicy && <PrivacyPolicyPage isOpen={showPolicy} setIsOpen={setShowPolicy} />}
     </div>)
   );
 }
