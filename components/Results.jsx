@@ -104,7 +104,7 @@ useEffect(() => {
              </div>
            </div>
          </div>) :
-         <div className="mx-auto  my-2 z-30 overflow-auto w-[95%]   max-w-8xl rounded border" >
+         <div className="mx-auto  my-2 z-30 overflow-auto w-[95%]  max-w-8xl h-[85%] rounded border" >
          <div className="flex flex-wrap items-center justify-between p-4 md:py-2" >
            <h1 className="text-lg  font-semibold text-[#5862b2]">{"Click on the Test to get Details"}</h1>
            <Input
@@ -227,10 +227,10 @@ useEffect(() => {
                  </TableCell>
                </TableRow>
              ))) : (<TableRow>
-                             <TableCell colSpan={10} className="text-center py-6 text-lg">
-                               No Results Found.
-                             </TableCell>
-                           </TableRow>)}
+                      <TableCell colSpan={10} className="text-center py-6 text-lg">
+                        No Results Found.
+                      </TableCell>
+                    </TableRow>)}
              
            </TableBody>
          </Table>

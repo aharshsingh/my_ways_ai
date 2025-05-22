@@ -135,9 +135,13 @@ function Slot(props) {
             Submit
           </Button>
             <p className="text-center text-sm">
-              <a className="underline hover:no-underline" href="#">
+              <p className="hover:underline cursor-pointer" >
                 Resend code
-              </a>
+              </p>
+              
+               <p className="mt-1">
+                Mistyped email? <span className=" hover:underline cursor-pointer"  onClick={()=>{setStep("email") }}>Change it</span>
+              </p>
             </p>
           </div>
       </DialogContent>)}

@@ -89,7 +89,6 @@ useEffect(() => {
 
 const handleTestClick=(testId)=>{
   localStorage.setItem("testId",testId);
-  console.log(`Handle test clicked and test ID is ${testId} `);
   router.push('/testins');
 }
  
@@ -200,7 +199,7 @@ const handleTestClick=(testId)=>{
         </TableRow>
       </TableHeader>
       <TableBody>
-        {sortedTests.map((test) => (
+        {sortedTests.length > 0 ? (sortedTests.map((test) => (
             <TableRow key={test._id}>
             <TableCell className="font-medium">{test.testName}</TableCell>
               <TableCell className="flex flex-wrap gap-1">
@@ -239,7 +238,12 @@ const handleTestClick=(testId)=>{
               Take Test <FontAwesomeIcon icon={faArrowRight} />
             </TableCell>
           </TableRow>
-        ))}
+        ))) :(<TableRow>
+                <TableCell colSpan={10} className="text-center py-6 text-lg">
+                  No Matching Tests Found.
+                </TableCell>
+              </TableRow>)}
+   
       </TableBody>
     </Table>
   </div>}

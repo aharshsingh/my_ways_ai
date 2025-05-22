@@ -7,6 +7,7 @@ import {
   ListChecks,
   BarChart2,
   Users,
+  LogOut
 } from 'lucide-react';
   import { useRouter } from 'next/navigation';
   
@@ -18,7 +19,7 @@ import {
       {
         title: 'Home',
         icon: <HomeIcon className='h-full w-full text-neutral-600 dark:text-neutral-300' />,
-        link: '/',
+        link: '/admin',
       },
       {
         title: 'Create Test',
@@ -40,6 +41,15 @@ import {
         icon: <Users className='h-full w-full text-neutral-600 dark:text-neutral-300' />,
         link: '/users',
       },
+        {
+        title: 'Logout',
+        icon: <LogOut className='h-full w-full text-red-600 dark:text-neutral-300' />,
+        onClick: () => {
+          localStorage.removeItem('token'); // or use cookies/session logic
+          localStorage.removeItem('userId');
+          router.push('/');
+        },
+      },
     ];
     
   return (
@@ -51,7 +61,13 @@ import {
         <DockItem
           key={idx}
           className='aspect-square rounded-full bg-gray-200 dark:bg-neutral-800'
-          onClick={() => router.push(item.link)}
+           onClick={() => {
+              if (item.onClick) {
+                item.onClick(); 
+              } else {
+                router.push(item.link);
+              }
+            }}
         >
           <DockLabel>{item.title}</DockLabel>
           <DockIcon>{item.icon}</DockIcon>

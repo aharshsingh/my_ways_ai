@@ -25,7 +25,6 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    // const[forgotPassword, setForgotPassword] = .(false); 
     const [errors, setErrors] = useState({
       email: false,
       password: false,
