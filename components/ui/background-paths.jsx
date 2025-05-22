@@ -114,7 +114,7 @@ export function BackgroundPaths({
                       p-px rounded-2xl backdrop-blur-lg 
                         overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
                         <Button asChild
-                            variant="ghost"r
+                            variant="ghost"
                             className="rounded-[1.15rem] px-8 py-6 text-lg font-semibold backdrop-blur-md 
                             bg-[#606dd3] hover:bg-[#5862b2]  
                             text-white transition-all duration-300 

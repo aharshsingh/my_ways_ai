@@ -86,7 +86,7 @@ function PrivacyPolicyPage({isOpen, setIsOpen}) {
                         <strong>Intellectual Property</strong>
                       </p>
                       <p>
-                     All content on Intervu.ai, including but not limited to text, logos, AI models, and software, is the intellectual property of Intervu.ai and may not be reproduced or used without permission.
+                       All content on Intervu.ai, including but not limited to text, logos, AI models, and software, is the intellectual property of Intervu.ai and may not be reproduced or used without permission.
                       </p>
                     </div>
 
@@ -95,7 +95,8 @@ function PrivacyPolicyPage({isOpen, setIsOpen}) {
                         <strong>Disclaimer of Warranties</strong>
                       </p>
                       <p>
-                  The Service is provided "as is" and "as available" without warranties of any kind. We do not guarantee the accuracy, completeness, or usefulness of any interview feedback or results provided by the AI system.
+                        The Service is provided &quot;as is&quot; and &quot;as available&quot; without warranties of any kind.
+                        We do not guarantee the accuracy, completeness, or usefulness of any interview feedback or results provided by the AI system.
                       </p>
                     </div>
 
