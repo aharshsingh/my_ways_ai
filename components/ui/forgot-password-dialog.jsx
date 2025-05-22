@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label"
 import { Mail } from "lucide-react";
 import { OTPInput } from "input-otp";
 
-function PasswordResetDialog({isDialogOpen, setIsDialogOpen}) {
+function ForgotPasswordDialog({isDialogOpen, setIsDialogOpen}) {
 function Slot(props) {
   return (
     <div
@@ -183,4 +183,4 @@ function Slot(props) {
   );
 }
 
-export { PasswordResetDialog };
+export { ForgotPasswordDialog };

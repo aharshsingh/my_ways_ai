@@ -11,8 +11,15 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-
+import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 export default function Layout({ children }) {
+  const handleLogout=()=>{
+    localStorage.removeItem("userId");
+    localStorage.removeItem("authToken");
+    toast.success("Logged out Successfully")
+    router.push('/');
+  }
    const router = useRouter();
   return (
     <div>
@@ -38,11 +45,12 @@ export default function Layout({ children }) {
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => router.push('/profile')}>Profile</DropdownMenuItem>
               <DropdownMenuItem onClick={() => router.push('/testCluster')}>Tests</DropdownMenuItem>
-              <DropdownMenuItem className="text-red-700">Logout</DropdownMenuItem>
+              <DropdownMenuItem className="text-red-700" onClick={()=>handleLogout()}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>  
           </div>
         </div>
+         <Toaster richColors position="top-center" />
       </nav>
 
       {/* Main Content */}

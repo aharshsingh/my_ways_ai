@@ -1,6 +1,6 @@
 "use Client"
 import React from 'react'
-import { PasswordResetDialog } from '../ui/password-reset-dialog';
+import { ForgotPasswordDialog } from '../ui/forgot-password-dialog';
 import { Button } from "@/components/ui/button";
 import { LoaderCircle } from "lucide-react";
 import { useRouter } from 'next/navigation';
@@ -133,7 +133,7 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
       </DrawerContent>
     </Drawer>
 
-    {isDialogOpen && <PasswordResetDialog isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />}
+    {isDialogOpen && <ForgotPasswordDialog isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />}
     </>
   );
 }
