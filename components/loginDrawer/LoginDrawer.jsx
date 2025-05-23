@@ -107,11 +107,10 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
               <Label htmlFor="email">Email</Label>
               <Input required id="email" type="email" autoComplete="username" placeholder="team@mynaui.com" value={email} className={`${errors.email ? "border-red-500" : ""} text-md `} onChange={(e)=>setEmail(e.target.value)} />
             </div>
-            <div className="grid gap-2">
+            <div className="flex flex-col gap-2">
               <Label htmlFor="password">Password</Label>
               <Input required id="password" type="password" placeholder="••••••••••" autoComplete="current-password" value={password} className={`${errors.password ? "border-red-500" : ""} text-md `} onChange={(e)=>setPassword(e.target.value)}  />
-           
-            <span className='text-sm cursor-pointer mt-2 font-semibold hover:underline' onClick={()=>setIsDialogOpen(true)}>Forgot Password ?</span>
+            <span className='text-sm mt-2 cursor-pointer font-semibold hover:underline' onClick={()=>setIsDialogOpen(true)}>Forgot Password ?</span>
             </div>
           </form>
           <DrawerFooter>

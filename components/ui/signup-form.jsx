@@ -114,8 +114,8 @@ const [errors, setErrors] = useState({
         </button>
          <p className="text-center text-sm mt-2 text-muted-foreground">
           By signing in you agree to our{" "}
-          <a className="underline hover:no-underline cursor-pointer" onClick={() => setShowPolicy(true)}>
-            Privacy Policy
+          <a className="underline cursor-pointer" onClick={() => setShowPolicy(true)}>
+            Terms and conditions
           </a>.
         </p>
         <Toaster richColors position="top-center" />
