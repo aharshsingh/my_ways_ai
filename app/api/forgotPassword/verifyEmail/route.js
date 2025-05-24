@@ -20,7 +20,7 @@ export async function GET(req) {
   }
 
   try {
-    const OTP = Math.floor(Math.random() * 10000).toString();
+    const OTP = Math.floor(Math.random() * 10000).toString().padStart(4, '0');;
     await redis.set(`otp:${email}`, OTP, { EX: 300 });
     const payload = {
       OTP,
