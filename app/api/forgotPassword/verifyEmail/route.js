@@ -7,12 +7,11 @@ export async function GET(req) {
   await connectToDatabase();
   const { searchParams } = new URL(req.url);
   const email = searchParams.get("email");
-  const exists = await User.findOne({ email });
 
   if (!email) {
     return NextResponse.json({ error: "Email not recieved!" }, { status: 404 });
   }
-
+  const exists = await User.findOne({ email });
   if (!exists) {
     return NextResponse.json(
       { error: "Email not resgistered" },
