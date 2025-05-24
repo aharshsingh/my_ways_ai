@@ -8,12 +8,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import { Loader } from "@/components/ui/loader";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label"
 import { Mail } from "lucide-react";
 import { OTPInput } from "input-otp";
-
+import { toast } from "sonner";
+import axios from "axios";
+import { useRouter } from 'next/navigation';
+  
 function ForgotPasswordDialog({isDialogOpen, setIsDialogOpen}) {
+   const router = useRouter();
 function Slot(props) {
   return (
     <div
@@ -29,6 +34,125 @@ function Slot(props) {
     const [step,setStep] = useState("email");
     const[email, setEmail] = useState("");
     const [value, setValue] = useState("");
+    const [password, setPassword] = useState("");
+    const[confirmPassword, setConfirmPassword] = useState("");
+    const[isLoading, setIsLoading] = useState(false);
+  
+  
+    const handleSendOtp=async()=>{
+      setIsLoading(true);
+      if(email.trim() === "") {
+        toast.error("Please enter your email!");
+        setIsLoading(false);
+        return;
+      }
+        
+         try {
+          const response = await axios.get(`http://localhost:3000/api/forgotPassword/verifyEmail?email=${email}`);
+          if (response.status === 200) {
+            toast.success("OTP sent to your email!");
+            setIsLoading(false);
+            setStep("OTP");
+          }
+        } catch (error) {
+          setIsLoading(false);
+            console.log(error);
+          if (error.response) {
+            const status = error.response.status;
+            if (status === 404) {
+              toast.error("Kindly enter your email!");
+            } else if (status === 400) {
+              toast.error("Email not registered!");
+            } else if (status === 500) {
+              toast.error("Unexpected error occurred. We're on it!");
+            } else {
+              toast.error("Something went wrong, please try again later!");
+            }
+          } else {
+            toast.error("Unable to connect to the server. Check your connection.");
+        }
+    }
+  }
+   const handleOtpCheck=async()=>{
+   const otprecieved = Number(value);
+      setIsLoading(true);
+      if(value.trim() === "") {
+        toast.error("Please enter your OTP!");
+        setIsLoading(false);
+        return;
+      }
+        
+         try {
+          const response = await axios.post("http://localhost:3000/api/forgotPassword/verifyOTP",{
+            email:email,
+            OTP:otprecieved
+          });
+          if (response.status === 200) {
+            setIsLoading(false);
+            toast.success("OTP verified! You can now set a new password.");
+            setStep("password");
+          }
+        } catch (error) {
+          setIsLoading(false);
+            console.log(error);
+          if (error.response) {
+            const status = error.response.status;
+            if (status === 404) {
+              toast.error("Kindly enter your OTP!");
+            } else if (status === 401) {
+              toast.error("Incorrect OTP!");
+            } else if (status === 500) {
+              toast.error("Something went wrong, please try again later!");
+            } else {
+               toast.error("Unexpected error occurred. We're on it!");
+            }
+          } else {
+            toast.error("Unable to connect to the server. Check your connection.");
+        }
+    }
+  }
+
+  const handlePasswordChange=async()=>{
+      setIsLoading(true);
+      if(password.trim() === "" || confirmPassword.trim() === "") {
+        toast.error("Please fill in all fields!");
+        setIsLoading(false);
+        return;
+      }
+      if(password !== confirmPassword) {
+        toast.error("Passwords do not match!");
+        setIsLoading(false);
+        return;
+      }
+         try {
+          const response = await axios.post("http://localhost:3000/api/forgotPassword/resetPassword",{
+            email:email,
+            newPassword:password
+          });
+          if (response.status === 200) {
+            setIsLoading(false);
+            toast.success("password updated successfully!");
+             router.push('/');
+          }
+        } catch (error) {
+          setIsLoading(false);
+            console.log(error);
+          if (error.response) {
+            const status = error.response.status;
+            if (status === 400) {
+              toast.error("Kindly enter your new Password!");
+            } else if (status === 404) {
+              toast.error("Some data is missing try resetting again!");
+            } else if (status === 500) {
+              toast.error("Something went wrong, please try again later!");
+            } else {
+               toast.error("Unexpected error occurred. We're on it!");
+            }
+          } else {
+            toast.error("Unable to connect to the server. Check your connection.");
+        }
+    }
+  }
   return (
     <>
     <Dialog open={isDialogOpen} onOpenChange={(open) => setIsDialogOpen(open)}>
@@ -82,8 +206,8 @@ function Slot(props) {
               </div>
             </div>
           </div>
-          <Button onClick={()=>setStep("OTP")} type="button" className="w-full bg-[#5862b2] hover:bg-[#5862b2]">
-            Get OTP
+          <Button onClick={()=>handleSendOtp()} type="button" className="w-full bg-[#5862b2] hover:bg-[#5862b2]">
+            {isLoading ? <Loader variant="circular" className="border-white border-t-transparent" /> : "Send OTP"}
           </Button>
         </form>
       </DialogContent>)}
@@ -111,7 +235,7 @@ function Slot(props) {
               </svg>
             </div>
           </div>
-          <DialogTitle className="sm:text-center">We’ve sent your secret code to xyz@email.com</DialogTitle>
+          <DialogTitle className="sm:text-center">We’ve sent your secret code to {email}</DialogTitle>
         </DialogHeader>
           <div className="space-y-5 items-center justify-center flex flex-col">
             <div className="flex justify-center">
@@ -128,19 +252,19 @@ function Slot(props) {
                     ))}
                   </div>
                 )}
-                // onComplete={onSubmit}
+                onComplete={handleOtpCheck}
               />
             </div>
-            <Button type="button" className="w-[50%] bg-[#5862b2] hover:bg-[#5862b2]" onClick={()=>{setStep("password") }}>
-            Submit
+            <Button type="button" className="w-[50%] bg-[#5862b2] hover:bg-[#5862b2]" onClick={()=>{handleOtpCheck()}}>
+            {isLoading ? <Loader variant="circular" className="border-white border-t-transparent" /> : "Verify OTP"}
           </Button>
             <p className="text-center text-sm">
-              <p className="hover:underline cursor-pointer" >
+              <p className="hover:underline cursor-pointer" onClick={handleSendOtp}>
                 Resend code
               </p>
               
                <p className="mt-1">
-                Mistyped email? <span className=" hover:underline cursor-pointer"  onClick={()=>{setStep("email") }}>Change it</span>
+                Mistyped email? <span className=" hover:underline cursor-pointer"  onClick={() => setStep("email")}>Change it</span>
               </p>
             </p>
           </div>
@@ -162,8 +286,11 @@ function Slot(props) {
                   </Label>
                   <Input
                     id="password"
+                    type="password"
                     placeholder="*******"
-                 className="w-[70%]"
+                    value={password}
+                    onChange={(e)=>setPassword(e.target.value)}
+                    className="w-[70%]"
                   />
                 </div>
                 <div className="flex items-center gap-4 w-full">
@@ -172,13 +299,18 @@ function Slot(props) {
                   </Label>
                   <Input
                     id="confirm-password"
+                    type="password"
                     placeholder="*******"
+                    value={confirmPassword}
+                    onChange={(e)=>setConfirmPassword(e.target.value)}
                     className="w-[80%]"
                   />
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit" className=" bg-[#5862b2] hover:bg-[#5862b2]">Update Password</Button>
+                <Button type="submit" onClick={handlePasswordChange} className="w-[40%] bg-[#5862b2] hover:bg-[#5862b2]">
+                   {isLoading ? <Loader variant="circular" className="border-white border-t-transparent" /> : "Change Password"}
+                   </Button>
               </DialogFooter>
             </DialogContent>)}
     </Dialog>
