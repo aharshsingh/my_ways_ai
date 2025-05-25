@@ -22,8 +22,6 @@ import { useMemo, useState } from "react"
 
 export default function AllTests() {
     const [tests, setTests] = useState([]);
-    // const [userAttemptedTests, setUserAttemptedTests] = useState([]);
-    // const [userTests, setuserTests] = useState([]);
     const [delTestId,setDelTestId]=useState();
     const [isLoading,setIsLoading]=useState(true);
     const [searchTerm, setSearchTerm] = useState("");
@@ -96,21 +94,6 @@ useEffect(() => {
   const token = localStorage.getItem("authToken");
     if (!token) return;
   fetchTests(token);
-
-  // const fetchAttemptedTests = async () => {
-  //   try {
-  //     // const response2 = await axios.patch("https://intervu-ai-beige.vercel.app/api/user",{
-  //       const response2 = await axios.patch("http://localhost:3000/api/userAttemptedTest",{
-  //       headers: { Authorization: `Bearer ${token}`},
-  //     });
-  //     console.log(response2.data.attemptedTest);  
-  //     setUserAttemptedTests(response2.data.attemptedTest);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // fetchAttemptedTests();
 },[]);
 
   return (

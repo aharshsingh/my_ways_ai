@@ -5,10 +5,16 @@ import { useRouter } from "next/navigation";
 import LoadingScreen from "./LoadingScreen"; 
 
 export default function Test() {
+    const [isAudioPlaying, setIsAudioPlaying] = useState(true);
+    const [isAnswering, setIsAnswering] = useState(false);
+    const [isLoading, setIsLoading] = useState(false); 
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const currentQuestion = questions[currentQuestionIndex];
     const videoRef = useRef(null);
     const streamRef = useRef(null);
     const mediaRecorderRef = useRef(null);
     const recordedChunks = useRef([]); 
+    const totalQuestions = questions.length;
     const router = useRouter();
 
     useEffect(() => {
