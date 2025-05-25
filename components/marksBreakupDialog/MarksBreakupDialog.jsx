@@ -15,7 +15,7 @@ export default function MarksBreakupDialog({ isOpen, setIsOpen , marksBreakup}) 
         <Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle className="text-2xl">Marks Breakup</DialogTitle>
+              <DialogTitle className="text-2xl text-[#5862b2]">Marks Breakup</DialogTitle>
               <DialogDescription>
                 Here is the detailed breakup of the marks for the test
               </DialogDescription>

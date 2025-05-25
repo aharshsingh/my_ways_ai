@@ -22,8 +22,6 @@ import { useMemo, useState } from "react"
 
 export default function AllTests() {
     const [tests, setTests] = useState([]);
-    const [userAttemptedTests, setUserAttemptedTests] = useState([]);
-    const [userTests, setuserTests] = useState([]);
     const [delTestId,setDelTestId]=useState();
     const [isLoading,setIsLoading]=useState(true);
     const [searchTerm, setSearchTerm] = useState("");
@@ -84,6 +82,7 @@ const fetchTests = async (token) => {
       const response1 = await axios.get("http://localhost:3000/api/test", {
       headers: { Authorization: `Bearer ${token}` },
     });
+    console.log(response1.data);
     setTests(response1.data);
     setIsLoading(false);
   } catch (err) {
@@ -95,22 +94,8 @@ useEffect(() => {
   const token = localStorage.getItem("authToken");
     if (!token) return;
   fetchTests(token);
-
-  const fetchAttemptedTests = async () => {
-    try {
-      // const response2 = await axios.patch("https://intervu-ai-beige.vercel.app/api/user",{
-        const response2 = await axios.patch("http://localhost:3000/api/userAttemptedTest",{
-        headers: { Authorization: `Bearer ${token}`},
-      });
-      console.log(response2.data.attemptedTest);  
-      setUserAttemptedTests(response2.data.attemptedTest);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  fetchAttemptedTests();
 },[]);
+
   return (
     <div className='flex flex-col h-screen items-center '>
       <div className='flex items-center justify-between p-4 w-full h-12 mt-2'>
@@ -150,6 +135,7 @@ useEffect(() => {
          </div>) :
          <div className="mx-auto  my-2 z-30 overflow-auto w-[95%]   max-w-8xl  rounded border" >
          <div className="flex flex-wrap items-center justify-between gap-4  p-4 md:py-2" >
+          <p className="text-lg font-semibold text-[#5862b2]">Click on respective Max Score to get details</p>
            <Input
              placeholder="Search tests..."
              value={searchTerm}
@@ -191,6 +177,11 @@ useEffect(() => {
                  className="cursor-pointer"
                >
                  Duration
+               </TableHead>
+               <TableHead
+                 className="cursor-pointer"
+               >
+                Total Questions
                </TableHead>
                <TableHead
                  className="cursor-pointer text-nowrap"
@@ -255,7 +246,8 @@ useEffect(() => {
                       : "bg-green-100 text-green-800"
                   }> {test.difficulty}</Badge>
                   </TableCell>
-                 <TableCell>{test.duration} min</TableCell>
+                 <TableCell>{(test.duration)*(test.numOfQuestion)} min</TableCell>
+                 <TableCell>{test.numOfQuestion}</TableCell>
                  <TableCell  className="cursor-pointer" onClick={()=>
                   {
                     setMarksBreakup({
@@ -268,7 +260,7 @@ useEffect(() => {
                       setIsOpen(true); 
                   } 
                   }>{test.score}</TableCell>
-                 <TableCell>{test.score}</TableCell>
+                 <TableCell>{test.totalAttempts}</TableCell>
                  <TableCell>
                    {new Date(test.createdAt).toLocaleDateString("en-GB", {
                        day: "2-digit",
