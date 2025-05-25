@@ -13,16 +13,20 @@ export default function Test() {
     const [isAudioPlaying, setIsAudioPlaying] = useState(true);
     const [isAnswering, setIsAnswering] = useState(false);
     const [isLoading, setIsLoading] = useState(false); 
+    const[testData,setTestData]=useState();
     const[userReady,setUserReady]=useState(false);
     const videoRef = useRef(null);
     const streamRef = useRef(null);
     const mediaRecorderRef = useRef(null);
     const recordedChunks = useRef([]); 
     const router = useRouter();
-    const testData = JSON.parse(localStorage.getItem('test'));
-    const totalQuestions = testData.numOfQuestion || 0;
-    const duration = testData.duration || 0; 
-    console.log(totalQuestions)
+
+    useEffect(()=>{
+    const testInfo = JSON.parse(localStorage.getItem('test')); 
+    setTestData(testInfo)
+    },[])
+    const totalQuestions = testData?.numOfQuestion || 0;
+    const duration = testData?.duration || 0;
     const handleStartInterview=()=>{
         fetchQuestion();
     }
