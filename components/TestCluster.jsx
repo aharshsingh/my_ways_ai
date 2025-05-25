@@ -23,7 +23,6 @@ export default function TestCluster() {
     const router = useRouter();
     const [tests, setTests] = useState([]);
     const [userAttemptedTests, setUserAttemptedTests] = useState([]);
-    const [userTests, setuserTests] = useState([]);
     const[isLoading,setIsLoading]=useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [sortColumn, setSortColumn] = useState("title");
@@ -156,25 +155,20 @@ const handleTestClick=(testId)=>{
               </span>
             )}
           </TableHead>
+           <TableHead
+            className="cursor-pointer"
+          >
+            Total Ques.
+          </TableHead>
           <TableHead
             className="cursor-pointer"
           >
             Duration
-            {/* {sortColumn === "createdAt" && (
-              <span className="ml-1">
-                {sortDirection === "asc" ? "\u2191" : "\u2193"}
-              </span>
-            )} */}
           </TableHead>
           <TableHead
             className="cursor-pointer"
           >
             Max Score
-            {/* {sortColumn === "createdAt" && (
-              <span className="ml-1">
-                {sortDirection === "asc" ? "\u2191" : "\u2193"}
-              </span>
-            )} */}
           </TableHead>
           <TableHead
             className="cursor-pointer"
@@ -220,7 +214,8 @@ const handleTestClick=(testId)=>{
                 })}
               </TableCell>
             {/* <TableCell>{bookmark.description}</TableCell> */}
-            <TableCell>{test.duration} min</TableCell>
+               <TableCell>{(test.numOfQuestion)}</TableCell>
+            <TableCell>{(test.duration)*(test.numOfQuestion)} min</TableCell>
             <TableCell>{test.score}</TableCell>
             <TableCell>
               {new Date(test.createdAt).toLocaleDateString("en-GB", {
