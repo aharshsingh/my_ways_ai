@@ -22,8 +22,9 @@ export async function POST(req, {params}){
         const revFormData = new FormData();
         revFormData.append("media", audioFile);
         revFormData.append("callback_url", WEBHOOK_URL);
-        revFormData.append("metadata", JSON.stringify({ answerId: res.answerId }));
+        revFormData.append("metadata", JSON.stringify({ answerId: res._id.toString() }));
         console.log("Webhook URL:", WEBHOOK_URL);
+        console.log(revFormData)
         const response = await axios.post("https://api.rev.ai/speechtotext/v1/jobs", revFormData,
             {
             headers: {
