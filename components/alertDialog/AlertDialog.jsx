@@ -15,7 +15,7 @@ import {
 import { buttonVariants } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 
-const deleteTest=async(fetchTests,testId)=>{
+const deleteTest=async(fetchTests,testId,setIsOpen)=>{
   try {
     // const response = await axios.delete(`https://intervu-ai-beige.vercel.app/api/admin/deletedTest/${testId}`)
     const response = await axios.delete(`http://localhost:3000/api/admin/deletedTest/${testId}`)
@@ -55,7 +55,7 @@ return (
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
-            onClick={() => deleteTest(fetchTests,testId)}
+            onClick={() => deleteTest(fetchTests,testId,setIsOpen)}
             className={buttonVariants({ variant: "destructive" })}
           >
             Delete Test

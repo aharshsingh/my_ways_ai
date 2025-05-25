@@ -2,11 +2,24 @@
 import Link from 'next/link';
 import React from 'react';
 import { useRouter } from "next/navigation";
-
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
+import axios from 'axios';
 export default function InteIns() {
     const router = useRouter();
-    const handelClick=()=>{
-        router.push('/test');
+    const handelClick=async()=>{
+      const testId=localStorage.getItem('testId');
+      try {
+        const res= await axios.get(`http://localhost:3000/api/test/${testId}`)
+        if(res.status===200){
+          console.log(res.data);
+          localStorage.setItem('test', JSON.stringify(res.data));
+          router.push(`/test`);
+        }
+      } catch (error) {
+        console.log(error);
+       toast.error("Failed to fetch test details. Please try again.");
+      }
     }
   return (
     <div className="flex flex-col items-center text-[#09090c] py-10 min-h-screen">
@@ -71,6 +84,7 @@ export default function InteIns() {
       <button onClick={handelClick} className="mt-3 px-6 py-3 bg-[#5762b2] text-white rounded-lg text-lg font-semibold">
         I Understand, start the interview
       </button>
+        <Toaster richColors position="top-center" />
     </div>
   );
 }

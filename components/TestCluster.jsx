@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from 'next/navigation';
 import { Badge } from "@/components/ui/badge"
-
 import { Input } from "@/components/ui/input"
 import {
   Table,
