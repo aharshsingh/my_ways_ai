@@ -1,14 +1,13 @@
 "use client"
-import React, { useEffect ,useRef} from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { Skeleton } from "@/components/ui/skeleton"
 import axios from "axios";
 import { Toaster } from "@/components/ui/sonner";
 import { Toggle, GooeyFilter } from '@/components/ui/liquid-toggle'
 import { toast } from "sonner";
-import AttemptedUsersDialog from './attemptedUsersDialog/AttemptedUsersDialog';
-import { Trash2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input"
+import Image from "next/image";
 import {
   Table,
   TableBody,
@@ -17,7 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { useMemo, useState } from "react"
+
 
 export default function Users() {
         const[users,setUsers]=useState([]);
@@ -124,10 +123,12 @@ export default function Users() {
       <div className='flex items-center justify-between p-4 w-full h-12 mt-2'>
         <h1 className='text-3xl text-[#5862b2] font-bold'>Admin Portal</h1>
         <h1 className="text-3xl  font-semibold text-[#5862b2]">All Users</h1>
-     <img
+     <Image
           src="/intervuLogo2.png" 
           alt="Logo"
           className="h-8 w-auto overflow-hidden"
+          width={100}
+          height={40}
         /> 
      </div>
     <Toaster richColors position="top-center" />
