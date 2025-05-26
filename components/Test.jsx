@@ -6,7 +6,8 @@ import LoadingScreen from "./LoadingScreen";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import CountdownTimer from "./ui/timerClock";
-import Orb from './ui/Orb'; // Assuming you have an Orb component for the animation
+import Orb from './ui/Orb'; 
+import { GemniLoader } from "./ui/gemni-loader";
 export default function Test() {
     const [currentQuestion, setCurrentQuestion] = useState({ audioURL: "" , text: "" });
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -15,12 +16,13 @@ export default function Test() {
     const [isLoading, setIsLoading] = useState(false); 
     const[testData,setTestData]=useState();
     const[userReady,setUserReady]=useState(false);
+    const [startAnimation, setStartAnimation] = useState(false);
     const videoRef = useRef(null);
     const streamRef = useRef(null);
     const mediaRecorderRef = useRef(null);
     const recordedChunks = useRef([]); 
     const router = useRouter();
-
+   
     useEffect(()=>{
     const testInfo = JSON.parse(localStorage.getItem('test')); 
     setTestData(testInfo)
@@ -28,6 +30,7 @@ export default function Test() {
     const totalQuestions = testData?.numOfQuestion || 0;
     const duration = testData?.duration || 0;
     const handleStartInterview=()=>{
+        setStartAnimation(true);
         fetchQuestion();
     }
     const fetchQuestion = async () => {
@@ -39,8 +42,9 @@ export default function Test() {
             const res = await axios.get(`http://localhost:3000/api/question/${testId}/${testDescription}/${difficulty} `);
             console.log(res);
             setCurrentQuestion({audioURL: res.data.audioURL, text: res.data.audioURL});
-             setUserReady(true);
+            setUserReady(true);
             setIsAudioPlaying(true);
+            setStartAnimation(false);
             setIsAnswering(false);
         } catch (error) {
             console.error("Error fetching question:", error);
@@ -213,9 +217,9 @@ export default function Test() {
                  
                 </div>
             )}
-        </div>) :( <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/80">
-          <button className="mt-4 border-2 rounded-md p-4 text-lg font-semibold text-gray-700" onClick={handleStartInterview}>Start Interview</button>
-        </div>)}
+        </div>) :(
+                <GemniLoader handleStartInterview={handleStartInterview} />
+    )}
        </>
     );
 }

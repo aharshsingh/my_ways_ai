@@ -1,23 +1,28 @@
 "use client";
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from "next/navigation";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import axios from 'axios';
+import { MessageLoading } from "@/components/ui/message-loading";
 export default function InteIns() {
+  const[isLoading,setIsLoading]=useState(false);
     const router = useRouter();
     const handelClick=async()=>{
+      setIsLoading(true);
       const testId=localStorage.getItem('testId');
       try {
         const res= await axios.get(`http://localhost:3000/api/test/${testId}`)
         if(res.status===200){
-          console.log(res.data);
+          // console.log(res.data);
           localStorage.setItem('test', JSON.stringify(res.data));
+          setIsLoading(false);
           router.push(`/test`);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
+        setIsLoading(false);
        toast.error("Failed to fetch test details. Please try again.");
       }
     }
@@ -81,8 +86,8 @@ export default function InteIns() {
       </div>
       <p className=' mt-7 text-green-500 text-lg'>Stay focused and do your best!.</p>
    
-      <button onClick={handelClick} className="mt-3 px-6 py-3 bg-[#5762b2] text-white rounded-lg text-lg font-semibold">
-        I Understand, start the interview
+      <button  disabled={isLoading}  onClick={handelClick} className={`mt-3 p-3 w-[15%]  bg-[#5762b2] text-white items-center justify-center flex  rounded-lg text-lg font-semibold`}>
+        {isLoading ? <MessageLoading />: "I Understand, Proceed"}
       </button>
         <Toaster richColors position="top-center" />
     </div>
