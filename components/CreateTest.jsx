@@ -196,7 +196,7 @@ const handleKeyDown = (e) => {
 
 // console.log(inputValue);
   return (
-    <RouteAuthCheck>
+    <RouteAuthCheck userRole="admin">
     <>
     <div className={`${isLoading ? 'opacity-50 pointer-events-none blur-sm' : ''}`}>
     <div className="flex-grow ">

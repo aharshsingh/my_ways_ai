@@ -27,7 +27,7 @@ export default function InteIns() {
       }
     }
   return (
-    <RouteAuthCheck>
+    <RouteAuthCheck userRole="user">
     <div className="flex flex-col items-center text-[#09090c] py-10 min-h-screen">
       <h1 className="text-3xl font-bold mb-5 mt-5 text-[#5862b2]">Interview Instructions</h1>
     <p className='text-[#09090c] text-lg'>Your are in a proctered test enviorment. If caught in any suspicious behaviour, you will be marked <span className='text-red-500'>FAIL!</span></p>

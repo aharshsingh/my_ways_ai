@@ -30,6 +30,19 @@ export default function Test() {
     const duration = testData?.duration || 0;
     const userId=localStorage.getItem("userId");
    
+    useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();       // Cancel default refresh
+      event.returnValue = "";       // Chrome requires this to show the prompt
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
     useEffect(()=>{
         const testInfo = JSON.parse(localStorage.getItem('test')); 
         setTestData(testInfo)
@@ -178,7 +191,7 @@ export default function Test() {
     }
 
     return (
-        <RouteAuthCheck>
+        <RouteAuthCheck userRole="user">
             <>
         {userReady ? ( <div className="bg-black h-screen flex flex-col items-center justify-between p-5"> 
           <h1 className="text-white text-4xl">| {testData.testName} |</h1>  

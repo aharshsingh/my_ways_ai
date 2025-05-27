@@ -6,7 +6,7 @@ import Link from 'next/link';
 import RouteAuthCheck from '@/lib/routeAuthCheck';
 export default function TestIns() {
     return (
-      <RouteAuthCheck>
+      <RouteAuthCheck userRole="user">
     <div className='flex h-screen bg-white w-[100%] '>
         <div className=' flex items-center justify-center w-[50%]  border-gray-500  bg-white'>
                 <img

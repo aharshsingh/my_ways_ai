@@ -53,7 +53,7 @@ import {
     ];
     
   return (
-    <RouteAuthCheck>
+    <RouteAuthCheck userRole="admin">
     <>
     <div className="h-screen w-full bg-black flex flex-col items-center justify-between overflow-hidden">
     <div className='flex justify-center items-center max-w-full'>

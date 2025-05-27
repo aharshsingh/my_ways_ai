@@ -6,10 +6,12 @@ import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import axios from "axios";
 import { PrivacyPolicyPage } from "./privacy-policy-page";
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import LoginDrawer from "@/components/loginDrawer/LoginDrawer"
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { jwtDecode } from "jwt-decode";
+import { useRouter } from "next/navigation";
 export function SignupForm() {
 const [isOpen, setIsOpen] = useState(false);
 const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +21,7 @@ const [firstname, setFirstname] = useState("");
 const [lastname, setLastname] = useState("");
 const[confirmPassword, setConfirmPassword] = useState("");
 const [showPolicy, setShowPolicy] = useState(false);
+const router = useRouter();
 const [errors, setErrors] = useState({
   firstname: false,
   lastname: false,
@@ -26,6 +29,31 @@ const [errors, setErrors] = useState({
   password: false,
   confirmPassword: false,
 });
+
+useEffect(() => {
+  const token= localStorage.getItem("authToken");
+  const role=localStorage.getItem("role")
+  if(!token){
+    return
+  }
+    const decodedToken = jwtDecode(token);
+    const currentTime = Date.now() / 1000; 
+   if (decodedToken.exp < currentTime) {
+       toast.error("Last Session expired. Please log in again.");
+       localStorage.clear();
+   } else {
+    if(role === "user"){
+     router.replace("/testCluster");
+    }
+    else if(role === "admin"){
+      router.replace("/admin");
+   }
+   else{
+    return;
+   }
+  }
+},[])
+
 
   const handleSubmit = async(e) => {
     e.preventDefault();

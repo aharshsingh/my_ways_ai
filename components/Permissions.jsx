@@ -55,7 +55,7 @@ export default function Permissions() {
   const allPermissionsGranted = video && audio && screenShare && canHear;
 
   return (
-    <RouteAuthCheck>
+    <RouteAuthCheck userRole="user">
     <div className="flex border-none border-[#9ea5dc]  min-h-screen">
     
       <div className="w-1/2 p-4 flex justify-center items-center border-none border-[#9ea5dc]">

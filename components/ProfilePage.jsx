@@ -4,7 +4,7 @@ import { ProjectStatusCard } from "@/components/ui/expandable-card";
 import RouteAuthCheck from '@/lib/routeAuthCheck';
 export default function ProfilePage() {
   return (
-    <RouteAuthCheck>
+    <RouteAuthCheck userRole="user">
     <div className='w-full h-[100vh] pt-20 flex bg-white'>
       <div className='w-[30%] h-[100%] flex flex-col items-center bg-black-200'>
         <div className='w-[70%] h-[75%] items-center flex flex-col gap-4'>

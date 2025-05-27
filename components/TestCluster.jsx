@@ -60,6 +60,7 @@ useEffect(() => {
         const response1 = await axios.get("http://localhost:3000/api/test", {
         headers: { Authorization: `Bearer ${token}` },
       });
+      console.log("response1 is",response1);
       const publishedTest = response1.data.filter((test)=>test.isPublished === true);
       setTests(publishedTest);
       setIsLoading(false);
@@ -91,7 +92,7 @@ const handleTestClick=(testId)=>{
 }
  
   return (
-    <RouteAuthCheck>
+    <RouteAuthCheck userRole="user">
     <div>
     
     {isLoading ? (<div className="mx-auto my-16 w-[95%]   max-w-8xl  rounded border">
@@ -235,7 +236,7 @@ const handleTestClick=(testId)=>{
           </TableRow>
         ))) :(<TableRow>
                 <TableCell colSpan={10} className="text-center py-6 text-lg">
-                  No Matching Tests Found.
+                  No Tests Found.
                 </TableCell>
               </TableRow>)}
    

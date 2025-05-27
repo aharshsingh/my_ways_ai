@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Analytics } from '@vercel/analytics/next';
 import {
   LayoutDashboard,
@@ -9,7 +9,6 @@ import {
   Users,
   LogOut,
 } from 'lucide-react';
-  
   import { Dock, DockIcon, DockItem, DockLabel } from '@/components/ui/dockAdmin';
   import { useRouter } from 'next/navigation';
     
@@ -45,13 +44,14 @@ export default function Layout({ children }) {
       title: 'Logout',
       icon: <LogOut className='h-full w-full text-red-600 dark:text-neutral-300' />,
       onClick: () => {
-          localStorage.removeItem('token'); // or use cookies/session logic
+          localStorage.removeItem('token'); 
           localStorage.removeItem('userId');
-          router.push('/');
+          router.replace('/');
         },
     },
   ];
-  
+
+
 
   return (
     <div className="flex ">
@@ -63,7 +63,7 @@ export default function Layout({ children }) {
                 className='aspect-square  rounded-full bg-gray-200 dark:bg-neutral-800'
                  onClick={() => {
                   if (item.onClick) {
-                    item.onClick(); // Logout logic
+                    item.onClick();
                   } else {
                     router.push(item.link);
                   }

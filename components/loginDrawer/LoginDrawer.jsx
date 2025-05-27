@@ -59,11 +59,11 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
                 setIsLoading(false);
                 toast.success("Login Successfull!");
                 setIsOpen(false);
-                if(userType === "admin")
+                if(role === "admin")
                 {
                   router.push('/admin');
                 }
-                else if(userType === "user")
+                else if(role === "user")
                 {
                   router.push('/testCluster');
                 }

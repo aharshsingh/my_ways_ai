@@ -1,8 +1,6 @@
 "use client"
 import React from "react";
 import { SignupForm } from "@/components/ui/signup-form";
-import { Import } from "lucide-react";
-import RouteAuthCheck from "@/lib/routeAuthCheck";
 export default function SignupFormDemo() {
   return (
 
