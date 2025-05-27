@@ -16,7 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-
+import RouteAuthCheck from '@/lib/routeAuthCheck';
 
 export default function Users() {
         const[users,setUsers]=useState([]);
@@ -119,6 +119,7 @@ export default function Users() {
       fetchUsers();
     },[]);
   return (
+    <RouteAuthCheck>
     <div className='flex flex-col h-screen items-center '>
       <div className='flex items-center justify-between p-4 w-full h-12 mt-2'>
         <h1 className='text-3xl text-[#5862b2] font-bold'>Admin Portal</h1>
@@ -255,5 +256,6 @@ export default function Users() {
        </div>}
        </div>
        </div>
+       </RouteAuthCheck>
   )
 }

@@ -10,7 +10,7 @@ import {
   LogOut
 } from 'lucide-react';
   import { useRouter } from 'next/navigation';
-  
+  import RouteAuthCheck from "@/lib/routeAuthCheck";
   import { Dock, DockIcon, DockItem, DockLabel } from '@/components/ui/dock';
 
   export default function Admin() {
@@ -53,6 +53,7 @@ import {
     ];
     
   return (
+    <RouteAuthCheck>
     <>
     <div className="h-screen w-full bg-black flex flex-col items-center justify-between overflow-hidden">
     <div className='flex justify-center items-center max-w-full'>
@@ -103,5 +104,6 @@ import {
    
   </div>
   </>
+  </RouteAuthCheck>
   )
 }

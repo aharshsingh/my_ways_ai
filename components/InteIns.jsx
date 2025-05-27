@@ -1,11 +1,11 @@
 "use client";
-import Link from 'next/link';
 import React, { useState } from 'react';
 import { useRouter } from "next/navigation";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import axios from 'axios';
 import { MessageLoading } from "@/components/ui/message-loading";
+import RouteAuthCheck from '@/lib/routeAuthCheck';
 export default function InteIns() {
   const[isLoading,setIsLoading]=useState(false);
     const router = useRouter();
@@ -17,8 +17,8 @@ export default function InteIns() {
         if(res.status===200){
           // console.log(res.data);
           localStorage.setItem('test', JSON.stringify(res.data));
+          router.push(`/test`); 
           setIsLoading(false);
-          router.push(`/test`);
         }
       } catch (error) {
         // console.log(error);
@@ -27,6 +27,7 @@ export default function InteIns() {
       }
     }
   return (
+    <RouteAuthCheck>
     <div className="flex flex-col items-center text-[#09090c] py-10 min-h-screen">
       <h1 className="text-3xl font-bold mb-5 mt-5 text-[#5862b2]">Interview Instructions</h1>
     <p className='text-[#09090c] text-lg'>Your are in a proctered test enviorment. If caught in any suspicious behaviour, you will be marked <span className='text-red-500'>FAIL!</span></p>
@@ -91,5 +92,6 @@ export default function InteIns() {
       </button>
         <Toaster richColors position="top-center" />
     </div>
+    </RouteAuthCheck>
   );
 }

@@ -3,9 +3,10 @@ import React from 'react';
 import{useEffect, useState,useRef} from 'react'
 // import {TestButton} from './Buttons'
 import Link from 'next/link';
-
+import RouteAuthCheck from '@/lib/routeAuthCheck';
 export default function TestIns() {
     return (
+      <RouteAuthCheck>
     <div className='flex h-screen bg-white w-[100%] '>
         <div className=' flex items-center justify-center w-[50%]  border-gray-500  bg-white'>
                 <img
@@ -49,6 +50,7 @@ export default function TestIns() {
         </div>
         </div>
       </div>
+      </RouteAuthCheck>
       )
     
 }

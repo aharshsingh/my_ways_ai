@@ -16,7 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/tableUser"
 import { useMemo, useState } from "react"
-
+import RouteAuthCheck from '@/lib/routeAuthCheck';
 
 export default function TestCluster() {
     const router = useRouter();
@@ -91,6 +91,7 @@ const handleTestClick=(testId)=>{
 }
  
   return (
+    <RouteAuthCheck>
     <div>
     
     {isLoading ? (<div className="mx-auto my-16 w-[95%]   max-w-8xl  rounded border">
@@ -242,6 +243,7 @@ const handleTestClick=(testId)=>{
     </Table>
   </div>}
 </div>
+</RouteAuthCheck>
    )
  }
    

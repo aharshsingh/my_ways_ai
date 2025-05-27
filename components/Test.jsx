@@ -8,6 +8,10 @@ import { ArrowRight } from "lucide-react";
 import CountdownTimer from "./ui/timerClock";
 import Orb from './ui/Orb'; 
 import { GemniLoader } from "./ui/gemni-loader";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
+import dayjs from 'dayjs';
+import RouteAuthCheck from "@/lib/routeAuthCheck";
 export default function Test() {
     const [currentQuestion, setCurrentQuestion] = useState({ audioURL: "" , text: "" });
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -16,24 +20,26 @@ export default function Test() {
     const [isLoading, setIsLoading] = useState(false); 
     const[testData,setTestData]=useState();
     const[userReady,setUserReady]=useState(false);
-    const [startAnimation, setStartAnimation] = useState(false);
+    const[answerParams,setAnswerParams]=useState({submissionId:"", answerId:""});
     const videoRef = useRef(null);
     const streamRef = useRef(null);
     const mediaRecorderRef = useRef(null);
     const recordedChunks = useRef([]); 
     const router = useRouter();
-   
-    useEffect(()=>{
-    const testInfo = JSON.parse(localStorage.getItem('test')); 
-    setTestData(testInfo)
-    },[])
     const totalQuestions = testData?.numOfQuestion || 0;
     const duration = testData?.duration || 0;
+    const userId=localStorage.getItem("userId");
+   
+    useEffect(()=>{
+        const testInfo = JSON.parse(localStorage.getItem('test')); 
+        setTestData(testInfo)
+    },[])
+ 
     const handleStartInterview=()=>{
-        setStartAnimation(true);
+        createSubmission();
         fetchQuestion();
     }
-    const fetchQuestion = async () => {
+        const fetchQuestion = async () => {
         const testId=testData._id;
         const {testDescription, difficulty} = testData;
         console.log(testId, testDescription, difficulty);
@@ -44,12 +50,48 @@ export default function Test() {
             setCurrentQuestion({audioURL: res.data.audioURL, text: res.data.audioURL});
             setUserReady(true);
             setIsAudioPlaying(true);
-            setStartAnimation(false);
             setIsAnswering(false);
         } catch (error) {
             console.error("Error fetching question:", error);
         }
     };
+    const createSubmission= async()=>{
+        try {
+            const formatted = dayjs().format('YYYY-MM-DD HH:mm:ss.SSS');
+            const res=await axios.post(`http://localhost:3000/api/submission`, {
+            testId: testData._id,
+            userId: userId,
+            startedAt: formatted,
+        })
+        if(res.status===200){
+            console.log("Submission created successfully");
+            console.log(res);
+            setAnswerParams({
+                submissionId: res.data._id,
+                questionId: ""
+            });
+        }
+        } catch (error) {
+            toast.error("Something went wrong! try again");
+        }
+
+    }
+
+    const submitTest=async()=>{
+        try {
+            const formatted = dayjs().format('YYYY-MM-DD HH:mm:ss.SSS');
+            const res=await axios.patch(`http://localhost:3000/api/updateSubmission`, {
+                submissionId: answerParams.submissionId,
+                userId: userId,
+                testId: testData._id,
+                completedAt: formatted,
+            });
+        } catch (error) {
+            console.error("Error submitting test:", error);
+        }
+    }
+
+
     
     useEffect(() => {
         if (isAudioPlaying && currentQuestion?.audioURL) {
@@ -112,7 +154,7 @@ export default function Test() {
         formData.append("questionId", currentQuestion._id); // send meta if needed
 
         try {
-            await fetch("https://your-backend.com/api/submit-audio", {
+            await axios.post(`http://localhost:3000/api/answer/${testId}/${testDescription}/${difficulty} `,{
                 method: "POST",
                 body: formData,
             });
@@ -136,7 +178,8 @@ export default function Test() {
     }
 
     return (
-        <>
+        <RouteAuthCheck>
+            <>
         {userReady ? ( <div className="bg-black h-screen flex flex-col items-center justify-between p-5"> 
           <h1 className="text-white text-4xl">| {testData.testName} |</h1>  
             {!isAnswering && (
@@ -163,7 +206,7 @@ export default function Test() {
                         <CountdownTimer initialMinutes={duration} initialSeconds={0} /> 
                     </div>
                    <div className="w-full h-full flex flex-col items-center justify-between mt-24">
-                    <p className="text-white text-xl text-center w-[60%] font-semibold">
+                    <p className="text-white text-xl text-center w-[60%] font-normal">
                         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ullam modi sunt beatae doloribus tenetur cumque libero cum blanditiis, eos sit totam explicabo iure qui nulla a ducimus mollitia sequi. Culpa?
                         {/* {currentQuestion.text} */}
                     </p>
@@ -220,6 +263,8 @@ export default function Test() {
         </div>) :(
                 <GemniLoader handleStartInterview={handleStartInterview} />
     )}
-       </>
+        <Toaster richColors position="top-center" />
+        </>
+       </RouteAuthCheck>
     );
 }

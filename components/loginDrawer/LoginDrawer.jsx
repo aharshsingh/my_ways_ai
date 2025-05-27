@@ -50,9 +50,10 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
             });
             const authToken = response.data.accessToken;
             const userId=response.data.userId;
-            const userType=response.data.role;
+            const role=response.data.role;
             localStorage.setItem("userId",userId);
             localStorage.setItem("authToken", authToken);
+            localStorage.setItem("role", role);
             if (response.status === 200) 
               {
                 setIsLoading(false);

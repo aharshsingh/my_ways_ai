@@ -10,6 +10,7 @@ import { Trash2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import RouteAuthCheck from '@/lib/routeAuthCheck';
 import {
   Table,
   TableBody,
@@ -97,6 +98,7 @@ useEffect(() => {
 },[]);
 
   return (
+<RouteAuthCheck>
     <div className='flex flex-col h-screen items-center '>
       <div className='flex items-center justify-between p-4 w-full h-12 mt-2'>
         <h1 className='text-3xl font-bold text-[#5862b2]'>Admin Portal</h1>
@@ -288,5 +290,6 @@ useEffect(() => {
        </div>}
        </div>
        </div>
+       </RouteAuthCheck>
   )
 }

@@ -1,9 +1,11 @@
 "use client"
 import React from "react";
 import { SignupForm } from "@/components/ui/signup-form";
-
+import { Import } from "lucide-react";
+import RouteAuthCheck from "@/lib/routeAuthCheck";
 export default function SignupFormDemo() {
   return (
+
     <div className="flex items-center justify-center h-screen w-full bg-gray-200">
         <div className='w-[80%] h-[85%] flex justify-center items-center'>
             

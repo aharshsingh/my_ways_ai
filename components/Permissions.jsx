@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PlayIcon, CameraIcon, MicrophoneIcon, ComputerDesktopIcon, SpeakerWaveIcon } from "@heroicons/react/24/outline";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
-
+import RouteAuthCheck from "@/lib/routeAuthCheck";
 export default function Permissions() {
   const [video, setVideo] = useState(false);
   const [audio, setAudio] = useState(false);
@@ -55,6 +55,7 @@ export default function Permissions() {
   const allPermissionsGranted = video && audio && screenShare && canHear;
 
   return (
+    <RouteAuthCheck>
     <div className="flex border-none border-[#9ea5dc]  min-h-screen">
     
       <div className="w-1/2 p-4 flex justify-center items-center border-none border-[#9ea5dc]">
@@ -149,5 +150,6 @@ export default function Permissions() {
         </div>
       </div>
     </div>
+    </RouteAuthCheck>
   );
 }

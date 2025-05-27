@@ -20,10 +20,10 @@ const CountdownTimer = ({ initialMinutes, initialSeconds = 0 }) => {
   }, [minutes, seconds]);
 
   return (
-    <div className="text-white text-3xl rounded-2xl bg-[#606dd3] flex items-center justify-center font-medium w-[15%] border p-2">
-      {`${minutes.toString().padStart(2, "0")}:${seconds
-        .toString()
-        .padStart(2, "0")}`}
+    <div className="text-white text-3xl rounded-2xl bg-[#606dd3] flex items-center justify-center font-medium w-[15%] border px-2 pb-1">
+      <span className="pt-1 px-1">{minutes.toString().padStart(2, "0")}</span>
+    <span>:</span>
+    <span className="pt-1 px-1">{seconds.toString().padStart(2, "0")}</span>
     </div>
   );
 };

@@ -132,7 +132,7 @@ function Slot(props) {
           if (response.status === 200) {
             setIsLoading(false);
             toast.success("password updated successfully!");
-             router.push('/');
+             router.push('/login');
           }
         } catch (error) {
           setIsLoading(false);

@@ -9,14 +9,14 @@ import { NumberTicker } from "@/components/magicui/number-ticker";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import axios from 'axios';
-import { X } from "lucide-react";
+import { Route, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTags } from "@/components/hooks/use-tags";
 import { Button } from "@/components/ui/button";
 import {ChevronRightIcon } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Loader } from "@/components/ui/loader";
-
+import RouteAuthCheck from '@/lib/routeAuthCheck';
 export default function CreateTest() {
 
 const [isCreated, setIsCreated] = useState(false);
@@ -196,6 +196,7 @@ const handleKeyDown = (e) => {
 
 // console.log(inputValue);
   return (
+    <RouteAuthCheck>
     <>
     <div className={`${isLoading ? 'opacity-50 pointer-events-none blur-sm' : ''}`}>
     <div className="flex-grow ">
@@ -493,5 +494,6 @@ const handleKeyDown = (e) => {
         </div>
       )}
     </>
+    </RouteAuthCheck>
   )
 }

@@ -16,7 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useMemo, useState } from "react"
-
+import RouteAuthCheck from '@/lib/routeAuthCheck';
 export default function Results() {
     const [tests, setTests] = useState([]);
     const [isLoading,setIsLoading]=useState(true);
@@ -66,6 +66,7 @@ useEffect(() => {
   fetchTests();
 },[]);
   return (
+    <RouteAuthCheck>
     <div className='flex flex-col h-screen items-center '>
       <div className='flex items-center justify-between p-4 w-full h-12 mt-2'>
         <h1 className='text-3xl text-[#5862b2] font-bold'>Admin Portal</h1>
@@ -238,5 +239,6 @@ useEffect(() => {
        </div>}
        </div>
        </div>
+    </RouteAuthCheck>
   )
 }
