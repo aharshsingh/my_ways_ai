@@ -5,7 +5,7 @@ import Test from "@/lib/models/Test";
 export async function GET(req){
     try {
         await connectToDatabase();
-        const tests = await Test.find();
+        const tests = await Test.find({isDeleted: 'false'});
         if(!tests){
             return NextResponse.json({error: "No test found"}, {status: 404});
         }
