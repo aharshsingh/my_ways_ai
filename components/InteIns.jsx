@@ -80,7 +80,7 @@ export default function InteIns() {
             alt="Instruction 5"
             className="h-25 w-25 mx-auto mb-4" 
           />
-          <p className="text-white text-md">Minimizing the screen will lead to you being kicked out.</p>
+          <p className="text-white text-md">Reloading the screen will result in Test termination.</p>
         </div>
 
        
