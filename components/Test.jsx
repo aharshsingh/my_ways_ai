@@ -51,7 +51,7 @@ export default function Test() {
     if (reloaded === "true") {
       localStorage.removeItem("reloaded");
       submitTest();
-      toast.success("Your test is submitted");
+    //toast.success("Your test is submitted");
       router.replace("/testCluster"); 
     }
   }, []);
@@ -105,11 +105,18 @@ export default function Test() {
         try {
             const formatted = dayjs().format('YYYY-MM-DD HH:mm:ss.SSS');
             const res=await axios.patch(`http://localhost:3000/api/updateSubmission`, {
-                submissionId: answerParams.submissionId,
+                submissionId: submissionId, 
                 userId: userId,
                 testId: testData._id,
                 completedAt: formatted,
             });
+            if(res.status===200){
+                console.log("Test submitted successfully");
+                localStorage.removeItem("testId");
+                localStorage.removeItem("reloaded");
+                toast.success("Test submitted successfully");
+                // router.replace("/testCluster"); 
+            }
         } catch (error) {
             console.error("Error submitting test:", error);
         }

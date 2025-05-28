@@ -6,7 +6,6 @@ export default function SignupFormDemo() {
 
     <div className="flex items-center justify-center h-screen w-full bg-gray-200">
         <div className='w-[80%] h-[85%] flex justify-center items-center'>
-            
             <div className="h-full w-[50%] bg-white overflow-hidden">
             <div className="w-full h-full  mx-auto ">
             <video 

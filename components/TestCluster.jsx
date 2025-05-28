@@ -71,6 +71,7 @@ useEffect(() => {
   fetchTests();
 
 
+
   const fetchAttemptedTests = async () => {
     try {
       // const response2 = await axios.patch("https://intervu-ai-beige.vercel.app/api/user",{
@@ -87,8 +88,16 @@ useEffect(() => {
 }, []);
 
 const handleTestClick=(testId)=>{
-  localStorage.setItem("testId",testId);
+  if(userAttemptedTests.includes(testId))
+  {
+    toast.error("You have already attempted this test.");
+    return;
+  }
+  else{
+localStorage.setItem("testId",testId);
   router.push('/testins');
+  }
+  
 }
  
   return (

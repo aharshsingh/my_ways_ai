@@ -218,7 +218,8 @@ useEffect(() => {
              </TableRow>
            </TableHeader>
            <TableBody>
-             {sortedTests.map((test) => (
+            {sortedTests.length > 0 ? (
+             sortedTests.map((test) => (
                  <TableRow key={test._id || test.testName}>
                  <TableCell className="font-medium">{test.testName}</TableCell>
                  <TableCell className="flex flex-wrap gap-1 text-center">
@@ -238,7 +239,6 @@ useEffect(() => {
                       );
                     })}
                   </TableCell>
-                 {/* <TableCell>{bookmark.description}</TableCell> */}
                  <TableCell>
                     <Badge variant="outline" className={
                     test.difficulty === "hard"
@@ -282,7 +282,11 @@ useEffect(() => {
                      </Button>
                   </TableCell>
                </TableRow>
-             ))}
+             ))) :( <TableRow>
+                    <TableCell colSpan={10} className="text-center py-6 text-lg">
+                      No test Found.
+                    </TableCell>
+                  </TableRow>)}
            </TableBody>
          </Table>
          {isAlertOpen && <AlertDialogBox fetchTests={fetchTests} testId={delTestId} isOpen={isAlertOpen} setIsOpen={setIsAlertOpen} />}
