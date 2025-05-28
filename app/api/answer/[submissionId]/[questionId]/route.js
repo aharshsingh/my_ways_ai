@@ -7,14 +7,7 @@ export async function POST(req, { params }) {
   try {
     await connectToDatabase();
     const { submissionId, questionId } = await params;
-
-    const res = new Answer({
-      submissionId,
-      questionId,
-      answer: "this is temp answer",
-    });
-    await res.save();
-
+    let transcript = null;
     const formData = await req.formData();
     const audioFile = formData.get("audio");
 
@@ -29,10 +22,6 @@ export async function POST(req, { params }) {
 
     const revFormData = new FormData();
     revFormData.append("media", audioFile);
-    revFormData.append(
-      "metadata",
-      JSON.stringify({ answerId: res._id.toString() })
-    );
 
     const response = await axios.post(
       "https://api.rev.ai/speechtotext/v1/jobs",
@@ -52,12 +41,8 @@ export async function POST(req, { params }) {
       interval: 5000,
     };
 
-    let transcript = null;
-
     while (parameters.attempt < parameters.maxAttempts) {
       try {
-        console.log("Polling for transcript...");
-
         const transcriptResponse = await axios.get(
           `https://api.rev.ai/speechtotext/v1/jobs/${jobId}/transcript?format=text`,
           {
@@ -67,7 +52,6 @@ export async function POST(req, { params }) {
             },
           }
         );
-
         transcript = transcriptResponse.data;
         break;
       } catch (error) {
@@ -93,7 +77,13 @@ export async function POST(req, { params }) {
       );
     }
 
-    return NextResponse.json({ jobId, res, transcript }, { status: 200 });
+    const res = new Answer({
+      submissionId,
+      questionId,
+      answer: transcript,
+    });
+    await res.save();
+    return NextResponse.json({ res }, { status: 200 });
   } catch (error) {
     console.error("POST handler error:", error);
     return NextResponse.json(
