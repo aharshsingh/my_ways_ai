@@ -158,11 +158,32 @@ export default function Test() {
             }
          };
 
+         const calcResult=async()=>{
+            console.log("Calculating result");
+            const res=await axios.post(`http://localhost:3000/api/calculateResult/${submissionId}`);
+            if(res.status===200){
+                console.log("Result calculated successfully");
+                console.log(res.data);
+                 localStorage.removeItem("testId");
+                localStorage.removeItem("test");
+                localStorage.removeItem("reloaded");
+                toast.success("Test submitted successfully");
+                setTimeout(() => {
+                    router.replace("/testCluster");
+                }, 2000); 
+            }
+
+            else{
+                console.error("Failed to calculate result:", res.data);
+                setIsAnswering(false);
+                toast.error("Failed to submit test.");
+            }
+         }
         const submitTest=async()=>{
             console.log("Submitting test");
          try {
               setIsAnswering(false);
-              setSendingAnswer(true);
+              setSendingAnswer(true); 
               stopRecording();
               const ques=1;
               mediaRecorderRef.current.onstop = async () => {
@@ -177,13 +198,7 @@ export default function Test() {
             });
             if(res.status===200){
                 console.log("Test submitted successfully");
-                localStorage.removeItem("testId");
-                localStorage.removeItem("test");
-                localStorage.removeItem("reloaded");
-                toast.success("Test submitted successfully");
-                setTimeout(() => {
-                    router.replace("/testCluster");
-                }, 2000); 
+                await calcResult();
             }
         } catch (error) {
         toast.error("Failed to submit test, please try again.");
@@ -203,7 +218,7 @@ export default function Test() {
                 })
                 .catch((error) => {
                     console.error("Error accessing media devices: ", error);
-                    alert("Please grant access to camera and microphone");
+                    toast.error("Please grant access to camera and microphone");
                 });
         }    
     }, [isAnswering]);
