@@ -32,7 +32,32 @@ export default function Test() {
     const totalQuestions = testData?.numOfQuestion || 0;
     const duration = testData?.duration || 0;
     const userId=localStorage.getItem("userId");
-   
+ const [tabSwitchCount, setTabSwitchCount] = useState(0);
+const tabSwitchRef = useRef(0); // for accurate real-time tracking
+
+useEffect(() => {
+    const handleVisibilityChange = () => {
+        if (document.visibilityState === "hidden") {
+            tabSwitchRef.current += 1;
+            setTabSwitchCount(tabSwitchRef.current); // still updates UI if needed
+
+            toast.warning(`Tab switch detected! Test will be autosubmitted`);
+
+            if (tabSwitchRef.current >= 3) {
+                toast.error("You switched tabs multiple times. Submitting test.");
+                submitTest(); // Auto-submit the test
+            }
+        }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+        document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+}, []);
+
+
     useEffect(() => {
     const handleBeforeUnload = (event) => {
       localStorage.setItem("reloaded", "true");

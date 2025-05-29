@@ -7,17 +7,17 @@ export default function ProfilePage() {
 const userInfo=JSON.parse(localStorage.getItem('user'));
 const attemptedTests = userInfo?.attemptedTest || [];
 const attemptedTestId=attemptedTests.map(item => item._id || item._id);
-console.log(attemptedTestId);
   useEffect(()=>{
     fetchTestRes();
   },[])
     const fetchTestRes=async()=>{
     try {
-      const res= await axios.get(`http://localhost:3000/api/attemptedTest/${attemptedTestId}`) 
+      const res= await axios.post(`http://localhost:3000/api/attemptedTest/`,{
+        testIdArray:attemptedTestId
+      }) 
       if(res.status===200){
-        console.log("ypur data")
+        console.log("your data")
         console.log(res.data);
-
       }
     } catch (error) {
       console.error("Error fetching test results:", error);
