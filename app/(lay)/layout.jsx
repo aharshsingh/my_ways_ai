@@ -15,8 +15,7 @@ import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 export default function Layout({ children }) {
   const handleLogout=()=>{
-    localStorage.removeItem("userId");
-    localStorage.removeItem("authToken");
+  localStorage.clear();
     toast.success("Logged out Successfully")
     router.push('/');
   }

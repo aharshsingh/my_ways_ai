@@ -45,9 +45,10 @@ import {
         title: 'Logout',
         icon: <LogOut className='h-full w-full text-red-600 dark:text-neutral-300' />,
         onClick: () => {
-          localStorage.removeItem('token'); // or use cookies/session logic
+          localStorage.removeItem('authToken'); // or use cookies/session logic
           localStorage.removeItem('userId');
-          router.push('/');
+          localStorage.removeItem('role');
+          router.replace('/');
         },
       },
     ];

@@ -12,16 +12,23 @@ export default function InteIns() {
     const handelClick=async()=>{
       setIsLoading(true);
       const testId=localStorage.getItem('testId');
+      const userId=localStorage.getItem('userId');
       try {
         const res= await axios.get(`http://localhost:3000/api/test/${testId}`)
         if(res.status===200){
-          // console.log(res.data);
+          const res2 = await axios.patch(`http://localhost:3000/api/userAttemptedTest`,{
+            testId,
+            userId
+          });
+          if(res2.status===200){
+          console.log("Test ID added successfully");
           localStorage.setItem('test', JSON.stringify(res.data));
-          router.push(`/test`); 
+          router.replace(`/test`); 
           setIsLoading(false);
+          }
         }
       } catch (error) {
-        // console.log(error);
+        toast.error("Error fetching test ,try again");
         setIsLoading(false);
        toast.error("Failed to fetch test details. Please try again.");
       }

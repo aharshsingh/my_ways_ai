@@ -10,8 +10,6 @@ import {
   DialogTitle,
 
 } from "@/components/ui/dialog";
-import { useRef, useState } from "react";
-
 function PrivacyPolicyPage({isOpen, setIsOpen}) {
   
   return (
@@ -19,7 +17,7 @@ function PrivacyPolicyPage({isOpen, setIsOpen}) {
       <DialogContent className="flex flex-col gap-0 p-0 sm:max-h-[min(640px,80vh)] sm:max-w-lg [&>button:last-child]:top-3.5">
         <DialogHeader className="contents space-y-0 text-left">
           <div className="flex justify-center pt-6">
-            <svg
+          <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-16 w-16 text-[#5862b2]"
               fill="none"
@@ -32,7 +30,7 @@ function PrivacyPolicyPage({isOpen, setIsOpen}) {
                 strokeWidth="1.5"
                 d="M9 12h6m-6 4h6M7 20h10a2 2 0 002-2V8l-6-6H7a2 2 0 00-2 2v14a2 2 0 002 2z"
               />
-            </svg>
+            </svg> 
           </div>
 
           <DialogTitle className="border-b border-border flex items-center justify-center px-6 py-4 text-semibold text-xl">  

@@ -12,6 +12,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import dayjs from 'dayjs';
 import RouteAuthCheck from "@/lib/routeAuthCheck";
+import SendingAnswer from "./ui/sendingAnswer";
 export default function Test() {
     const [currentQuestion, setCurrentQuestion] = useState({ audioURL: "" , text: "",questionId:"" });
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -20,9 +21,9 @@ export default function Test() {
     const [isLoading, setIsLoading] = useState(false); 
     const[testData,setTestData]=useState();
     const[userReady,setUserReady]=useState(false);
-    const[submissionId,setSubmissionId]=useState("");
     const [sendingAnswer, setSendingAnswer] = useState(false);
-    // const[answerParams,setAnswerParams]=useState({submissionId:"", answerId:""});
+    const [submissionId, setSubmissionId] = useState(null);
+    const [answerId, setAnswerId] = useState();
     const videoRef = useRef(null);
     const streamRef = useRef(null);
     const mediaRecorderRef = useRef(null);
@@ -46,63 +47,127 @@ export default function Test() {
     };
   }, []);
 
+
+    useEffect(() => {
+      if (isAudioPlaying && currentQuestion?.audioURL) {
+          const audio = new Audio(currentQuestion.audioURL);
+          audio.play();
+          audio.onended = () => {
+              setIsAudioPlaying(false);
+              setIsAnswering(true);
+              startRecording(); 
+          };
+        }
+    }, [isAudioPlaying, currentQuestion]);
+
     useEffect(() => {
     const reloaded = localStorage.getItem("reloaded");
     if (reloaded === "true") {
       localStorage.removeItem("reloaded");
+      localStorage.removeItem("testId");
+      localStorage.removeItem("test");
       submitTest();
     //toast.success("Your test is submitted");
       router.replace("/testCluster"); 
-    }
-  }, []);
+      }
+    }, []);
 
     useEffect(()=>{
         const testInfo = JSON.parse(localStorage.getItem('test')); 
         setTestData(testInfo)
     },[])
- 
+    
     const handleStartInterview=()=>{
         createSubmission();
         fetchQuestion();
     }
-        const fetchQuestion = async (currentQuestionIndex="1") => {
-        const testId=testData._id;
-        const {testDescription, difficulty} = testData;
-        console.log(testId, testDescription, difficulty);
-        try {
-            const res = await axios.get(`http://localhost:3000/api/question/${testId}/${testDescription}/${difficulty}`);
-            console.log(res);
-            setCurrentQuestion({audioURL: res.data.audioURL, text: res.data.question,questionId: res.data.questionId});
-            setSendingAnswer(false);
-            setIsAudioPlaying(true);
-            setUserReady(true);
-            setIsAnswering(false);
-        } catch (error) {
-            console.error("Error fetching question:", error);
-        }
-    };
-
-    const createSubmission= async()=>{
-        try {
+    
+       const createSubmission= async()=>{
+         try {
             const formatted = dayjs().format('YYYY-MM-DD HH:mm:ss.SSS');
             const res=await axios.post(`http://localhost:3000/api/submission`, {
-            testId: testData._id,
-            userId: userId,
-            startedAt: formatted,
-        })
-        if(res.status===200){
-            console.log("Submission created successfully");
-            console.log(res);
-           setSubmissionId(res.data._id);
-        }
-        } catch (error) {
+                testId: testData._id,
+                userId: userId,
+                startedAt: formatted,
+              })
+            if(res.status===200)
+            {
+                console.log("Submission created successfully");
+                console.log(res);
+                setSubmissionId(res.data._id);
+            }
+         }catch (error) {
             toast.error("Something went wrong! try again");
-        }
+          }
+         }
 
-    }
+        const fetchQuestion = async (answerId = null) => {
+            const testId=testData._id;
+            const {testDescription, difficulty} = testData;
+            try {
+              const res = await axios.post(`http://localhost:3000/api/question/${testId}`,{
+                  testDescription,
+                  difficulty,
+                  answerId
+              });
+              if(res.status === 200)
+              {
+                console.log(res);
+                setCurrentQuestion({audioURL: res.data.audioURL, text: res.data.question,questionId: res.data.questionId});
+                setIsAudioPlaying(true);
+                setSendingAnswer(false);
+                setUserReady(true);
+                setIsAnswering(false);
+              }
+           }catch (error){
+            console.error("Error fetching question:", error);
+           }
+          };
 
-    const submitTest=async()=>{
-        try {
+        const sendAudioToBackend = async (Question = null) => {
+            console.log("Sending audio to backend");
+            console.log("currentQuestion",Question);
+            const blob = new Blob(recordedChunks.current, { type: "audio/webm" });
+            const formData = new FormData();
+            formData.append("audio", blob, "response.webm");
+            formData.append("questionId", currentQuestion._id); 
+            try {
+              const res=  await axios.post(`http://localhost:3000/api/answer/${submissionId}/${currentQuestion.questionId}`,
+                formData,{
+                    headers:{
+                        "Content-Type" : "multipart/form-data",
+                    }
+                });
+              if(res.status===200){
+                const ansId=res.data.res._id;
+                console.log("answerData",res);
+                console.log("Audio sent successfully");
+                if(Question === null) {
+                    await fetchQuestion(ansId);
+                }
+                else{
+                    return;
+                }
+                
+             } 
+            }catch(err) {
+                toast.error("Failed to submit answer, Retake test.");
+                router.replace("/test");
+                console.error("Failed to send audio:", err);
+                return;
+            }
+         };
+
+        const submitTest=async()=>{
+            console.log("Submitting test");
+         try {
+              setIsAnswering(false);
+              setSendingAnswer(true);
+              stopRecording();
+              const ques=1;
+              mediaRecorderRef.current.onstop = async () => {
+              await sendAudioToBackend(ques);
+            };
             const formatted = dayjs().format('YYYY-MM-DD HH:mm:ss.SSS');
             const res=await axios.patch(`http://localhost:3000/api/updateSubmission`, {
                 submissionId: submissionId, 
@@ -113,28 +178,21 @@ export default function Test() {
             if(res.status===200){
                 console.log("Test submitted successfully");
                 localStorage.removeItem("testId");
+                localStorage.removeItem("test");
                 localStorage.removeItem("reloaded");
                 toast.success("Test submitted successfully");
-                // router.replace("/testCluster"); 
+                setTimeout(() => {
+                    router.replace("/testCluster");
+                }, 2000); 
             }
         } catch (error) {
+        toast.error("Failed to submit test, please try again.");
+        setIsAnswering(false);
+        setSendingAnswer(false);
             console.error("Error submitting test:", error);
         }
-    }
+      }
     
-    useEffect(() => {
-        if (isAudioPlaying && currentQuestion?.audioURL) {
-            const audio = new Audio(currentQuestion.audioURL);
-            audio.play();
-            audio.onended = () => {
-                setIsAudioPlaying(false);
-                setIsAnswering(true);
-                startRecording(); 
-            };
-        }
-    }, [isAudioPlaying, currentQuestion]);
-
-
     useEffect(() => {
         if (isAnswering && videoRef.current) {
             navigator.mediaDevices.getUserMedia({ video: true, audio: true })
@@ -175,48 +233,24 @@ export default function Test() {
         }
     };
 
-    const sendAudioToBackend = async () => {
-        const blob = new Blob(recordedChunks.current, { type: "audio/webm" });
-        const formData = new FormData();
-        formData.append("audio", blob, "response.webm");
-        formData.append("questionId", currentQuestion._id); 
-        try {
-          const res=  await axios.post(`http://localhost:3000/api/answer/${submissionId}/${currentQuestion.questionId}`,
-                formData,{
-                headers:{
-                    "Content-Type" : "multipart/form-data",
-                }
-            });
-          if(res.status===200){
-            console.log("Audio sent successfully");
-            await fetchQuestion(currentQuestionIndex);
-        } 
-    }catch(err) {
-            toast.error("Failed to submit answer, Retake test.");
-            console.error("Failed to send audio:", err);
-            return;
-        }
-    };
 
     const handleNextQuestion = async () => {
         setIsAnswering(false);
         setSendingAnswer(true);
         stopRecording();
         mediaRecorderRef.current.onstop = async () => {
-        await sendAudioToBackend();
-        if (currentQuestionIndex >= totalQuestions )
+        if (currentQuestionIndex+1 >= totalQuestions )
         { 
             await submitTest(); 
             return;
         }
+        else{
+            await sendAudioToBackend();
             setCurrentQuestionIndex(prev => prev + 1); 
             return;
+        }
         };
     };
-
-    if (isLoading) {
-        return <LoadingScreen />; 
-    }
 
     return (
         <RouteAuthCheck userRole="user">
@@ -224,10 +258,11 @@ export default function Test() {
         {userReady ? ( <div className="bg-black h-screen flex flex-col items-center justify-between p-5"> 
           <h1 className="text-white text-4xl">| {testData.testName} |</h1>  
             {!isAnswering && ( sendingAnswer ? 
-            (<div className="flex items-center justify-center h-full w-full">
-                 <span className="text-xl font-medium">Sending Answer...</span>
-            </div> ) : 
-            (    
+            (<div className="flex flex-col items-center justify-center h-full w-full gap-5">
+                <SendingAnswer />
+                <span className="text-2xl text-white font-semibold ">Evaluating your Answer {"(This may take time)"}</span>
+            </div> ) 
+            :(    
                 <div className=" flex flex-col items-center justify-center h-full w-full p-5">
                     <div className="flex justify-center items-center  h-[50%] w-[50%]">
                         <Orb
@@ -240,7 +275,6 @@ export default function Test() {
                     </div>
                 </div>
             ))
-         
             }
 
           
@@ -250,10 +284,10 @@ export default function Test() {
                     <h2 className="center text-3xl text-white font-bold mb-4">
                         {currentQuestionIndex+1}/<span className="text-[#606dd3]">{totalQuestions}</span>
                     </h2>
-                        <CountdownTimer initialMinutes={duration} initialSeconds={0} /> 
+                        <CountdownTimer handleNextQuestion={handleNextQuestion} initialMinutes={duration} initialSeconds={0} /> 
                     </div>
                    <div className="w-full h-full flex flex-col items-center justify-between mt-24">
-                    <p className="text-white text-xl text-center w-[60%] font-normal">
+                    <p className="text-white text-xl text-center w-[60%] font-normal select-none">
                         {/* Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ullam modi sunt beatae doloribus tenetur cumque libero cum blanditiis, eos sit totam explicabo iure qui nulla a ducimus mollitia sequi. Culpa? */}
                         {currentQuestion.text}
                     </p>
@@ -266,8 +300,9 @@ export default function Test() {
                         className="w-full h-full border-2 border-white-300 rounded-3xl overflow-hidden -scale-x-100"
                     />
                     </div>
-                    <div className="h-6 w-64 flex items-center justify-center gap-0.5">
-                          {[...Array(48)].map((_, i) => (
+                    <div className="flex flex-col items-center justify-center gap-1">
+                        <div className="h-6 w-64 flex items-center justify-center gap-0.5">
+                        {[...Array(48)].map((_, i) => (
                             <div
                               key={i}
                               className=
@@ -281,12 +316,13 @@ export default function Test() {
                             />
                           ))}
                         </div>
-                        <p className="h-4 text-lg text-white/70 ">
+                          <p className="h-4 text-lg text-white/70 ">
                           Listening...
                         </p>
+                        </div>
                     <div className="flex justify-between items-center w-[28%] p-5">
                            <Button
-                            // onClick={handleNextQuestion}
+                            onClick={submitTest}
                             className=" h-full bg-[#606dd3] text-white rounded w-[30%] hover:bg-[#5862b2]"
                         >
                             Finish Test
@@ -306,11 +342,10 @@ export default function Test() {
                    </div>
                  
                 </div>
-            )}
-        </div>) :(
-                <GemniLoader handleStartInterview={handleStartInterview} />
-    )}
-        <Toaster richColors position="top-center" />
+              )}
+          </div>) 
+          :(<GemniLoader handleStartInterview={handleStartInterview} />)}
+          <Toaster richColors position="top-center" />
         </>
        </RouteAuthCheck>
     );

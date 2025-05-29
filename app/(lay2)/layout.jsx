@@ -44,8 +44,10 @@ export default function Layout({ children }) {
       title: 'Logout',
       icon: <LogOut className='h-full w-full text-red-600 dark:text-neutral-300' />,
       onClick: () => {
-          localStorage.removeItem('token'); 
+          localStorage.removeItem('authToken'); // or use cookies/session logic
           localStorage.removeItem('userId');
+          localStorage.removeItem('role');
+          router.push('/');
           router.replace('/');
         },
     },

@@ -1,22 +1,44 @@
 "use client"
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ProjectStatusCard } from "@/components/ui/expandable-card";
 import RouteAuthCheck from '@/lib/routeAuthCheck';
+import axios from "axios";
 export default function ProfilePage() {
+const userInfo=JSON.parse(localStorage.getItem('user'));
+const attemptedTests = userInfo?.attemptedTest || [];
+const attemptedTestId=attemptedTests.map(item => item._id || item._id);
+console.log(attemptedTestId);
+  useEffect(()=>{
+    fetchTestRes();
+  },[])
+    const fetchTestRes=async()=>{
+    try {
+      const res= await axios.get(`http://localhost:3000/api/attemptedTest/${attemptedTestId}`) 
+      if(res.status===200){
+        console.log("ypur data")
+        console.log(res.data);
+
+      }
+    } catch (error) {
+      console.error("Error fetching test results:", error);
+    }
+    }
+    
+
   return (
     <RouteAuthCheck userRole="user">
     <div className='w-full h-[100vh] pt-20 flex bg-white'>
       <div className='w-[30%] h-[100%] flex flex-col items-center bg-black-200'>
         <div className='w-[70%] h-[75%] items-center flex flex-col gap-4'>
-          <div className=' w-[60%] h-[40%] mt-4 border-2 overflow-hidden  rounded-full border-blue-900'>
+          <div className=' w-[60%] h-[40%] mt-4 border-2 overflow-hidden  rounded-full '>
           <img
               src="/profile_img2.png" 
               alt="Logo"
               className="w-full h-full object-contain"
             /> 
           </div>
-          <h2 className='text-lg md:text-xl max-w-[600px]'>ADMIN</h2>
-          <p>admin@gmail.com</p>
+          <h2 className='text-lg md:text-xl max-w-[600px]'>{userInfo.userName}</h2>
+          <p>{userInfo.email}</p>
         </div>
       </div>
       <div className='w-[70%] bg-white'>

@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from 'next/navigation';
 import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
+import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 import {
   Table,
   TableBody,
@@ -60,7 +61,7 @@ useEffect(() => {
         const response1 = await axios.get("http://localhost:3000/api/test", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log("response1 is",response1);
+      // console.log("response1 is",response1);
       const publishedTest = response1.data.filter((test)=>test.isPublished === true);
       setTests(publishedTest);
       setIsLoading(false);
@@ -75,10 +76,16 @@ useEffect(() => {
   const fetchAttemptedTests = async () => {
     try {
       // const response2 = await axios.patch("https://intervu-ai-beige.vercel.app/api/user",{
-        const response2 = await axios.patch("http://localhost:3000/api/user",{
-        headers: { Authorization: `Bearer ${token}` },
+        const response2 = await axios.get("http://localhost:3000/api/user",{
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          userId: localStorage.getItem("userId")},
       });
-      setUserAttemptedTests(response2.data.attemptedTest);
+      console.log(response2);
+      localStorage.setItem('user', JSON.stringify(response2.data.userInfo));
+       const attempts = response2?.data?.userInfo?.attemptedTest || [];
+      const attemptedTestIds = attempts.map((item) => item._id);
+      setUserAttemptedTests(attemptedTestIds);
     } catch (err) {
       console.log(err);
     }
@@ -94,7 +101,7 @@ const handleTestClick=(testId)=>{
     return;
   }
   else{
-localStorage.setItem("testId",testId);
+  localStorage.setItem("testId",testId);
   router.push('/testins');
   }
   
@@ -235,8 +242,8 @@ localStorage.setItem("testId",testId);
                 })}
             </TableCell>
             <TableCell className="flex gap-1">
-            <Badge variant="outline" className={userAttemptedTests.includes(test.id)  ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}>
-            {userAttemptedTests.includes(test.id) ? "Attempted" : "Not Attempted"}
+            <Badge variant="outline" className={userAttemptedTests.includes(test._id)  ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}>
+            {userAttemptedTests.includes(test._id) ? "Attempted" : "Not Attempted"}
                 </Badge>
             </TableCell>
             <TableCell onClick={()=>handleTestClick(test._id)} className="hover:underline cursor-pointer">  
