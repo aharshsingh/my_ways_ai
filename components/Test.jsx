@@ -86,9 +86,10 @@ export default function Test() {
       localStorage.removeItem("reloaded");
       localStorage.removeItem("testId");
       localStorage.removeItem("test");
-      submitTest();
-    //toast.success("Your test is submitted");
-      router.replace("/testCluster"); 
+      handleNextQuestion("1");
+      setTimeout(()=>{
+        router.replace("/testCluster");
+      },1000) 
       }
     }, []);
 

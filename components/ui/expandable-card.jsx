@@ -87,7 +87,7 @@ export function ProjectStatusCard({
                       <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2">
                         <span>{}Your Best</span>
-                          <span>{bestScore}</span>
+                          <span>{bestScore}%</span>
                           <Star className="h-4 w-4 mr-1 text-yellow-400" />
                         </div>
                       </div>

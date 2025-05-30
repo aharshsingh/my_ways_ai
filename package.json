@@ -42,7 +42,6 @@
     "@vercel/analytics": "^1.5.0",
     "axios": "^1.8.1",
     "bcrypt": "^5.1.1",
-    "bullmq": "^5.53.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cors": "^2.8.5",

@@ -3,6 +3,7 @@ const apiKey = process.env.MISTRAL_API_KEY;
 const client = new Mistral({apiKey});
 export async function checkResult(question, answer, test) {
     try {
+        console.log('Checking result for question:', test);
         const chatResponse = await client.chat.complete({
             model: 'mistral-large-latest',
             messages: [
@@ -16,7 +17,6 @@ export async function checkResult(question, answer, test) {
                                                 "explanation": <score>,
                                                 "practicalRelevance": <score>,
                                                 "conciseness": <score>,
-                                                "totalScore": <sum_of_all_scores>
                                             }`},
                 { role: "user", content: `this is question ${question} and this is answer ${answer} and this is test json ${JSON.stringify(test)}. Give only the json nothing else not even a single word like this {
                                             "accuracy": 3,
@@ -24,8 +24,7 @@ export async function checkResult(question, answer, test) {
                                             "explanation": 1.5,
                                             "practicalRelevance": 0.8,
                                             "conciseness": 1,
-                                            "totalScore": 9.3
-                                            }`}
+                                            } please give marks out of ${test.accuracy}, ${test.completeness}, ${test.explanation}, ${test.practicalRelevance}, ${test.conciseness} marks you will give should not exceed the maximum marks i provided`}
             ]
         });
         console.log('Chat:', chatResponse.choices[0].message.content);   

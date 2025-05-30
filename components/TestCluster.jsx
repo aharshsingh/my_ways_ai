@@ -61,7 +61,7 @@ useEffect(() => {
         const response1 = await axios.get("http://localhost:3000/api/test", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      // console.log("response1 is",response1);
+      console.log("response1 is",response1);
       const publishedTest = response1.data.filter((test)=>test.isPublished === true);
       setTests(publishedTest);
       setIsLoading(false);
@@ -179,6 +179,17 @@ const handleTestClick=(testId)=>{
               </span>
             )}
           </TableHead>
+          <TableHead
+            className="cursor-pointer"
+            onClick={() => handleSort("keyWord")}
+          >
+            Difficulty
+            {sortColumn === "keyWord" && (
+              <span className="ml-1">
+                {sortDirection === "asc" ? "\u2191" : "\u2193"}
+              </span>
+            )}
+          </TableHead>
            <TableHead
             className="cursor-pointer"
           >
@@ -237,11 +248,19 @@ const handleTestClick=(testId)=>{
                   );
                 })}
               </TableCell>
-            {/* <TableCell>{bookmark.description}</TableCell> */}
+               <TableCell>
+                <Badge variant="outline" className={
+                test.difficulty === "hard"
+                  ? "bg-red-300 text-red-900"
+                  : test.difficulty === "medium"
+                  ? "bg-orange-100 text-orange-800"
+                  : "bg-green-100 text-green-800"
+              }> {test.difficulty}</Badge>
+              </TableCell>
                <TableCell>{(test.numOfQuestion)}</TableCell>
-            <TableCell>{(test.duration)*(test.numOfQuestion)} min</TableCell>
-            <TableCell>{test.score}</TableCell>
-            <TableCell>
+               <TableCell>{(test.duration)*(test.numOfQuestion)} min</TableCell>
+               <TableCell>{test.score}</TableCell>
+               <TableCell>
               {new Date(test.createdAt).toLocaleDateString("en-GB", {
                   day: "2-digit",
                   month: "2-digit",

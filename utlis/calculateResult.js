@@ -20,8 +20,10 @@ export async function calculateResult(submissionId){
             score: 0
         }
         const submission = await Submission.findById(submissionId).populate("testId").populate("answerId");
+        console.log("question");
         for (const answer of submission.answerId){
             let question = await Question.findById(answer.questionId);
+            
             const response = await checkResult(question.questionText, answer.answer, submission.testId);
             const cleanedResponse = response
                 .replace(/```(?:json)?/g, "")
@@ -39,6 +41,9 @@ export async function calculateResult(submissionId){
             data.conciseness += item.conciseness;
         });
         data.score = data.accuracy + data.completeness + data.explanation + data.practicalRelevance + data.conciseness;
+        // if (data.score > submission.testId.totalMarks) {
+        //     const diff = data.score - submission.testId.totalMarks;
+        // }
         data.result = {...data.result, userId: submission.userId, submissionId: submission._id, testId: submission.testId._id, accuracy: data.accuracy, completeness: data.completeness, explanation: data.explanation, practicalRelevance: data.practicalRelevance, conciseness: data.conciseness, score: data.score}
         const res = new Result(data.result);
         const response = await res.save();    
