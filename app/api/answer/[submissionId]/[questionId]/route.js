@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import axios from "axios";
 import { connectToDatabase } from "@/lib/mongodb";
 import Answer from "@/lib/models/Answer";
+import Submission from "@/lib/models/submission";
 
 export async function POST(req, { params }) {
   try {
@@ -82,6 +83,14 @@ export async function POST(req, { params }) {
       questionId,
       answer: transcript,
     });
+    try {
+          await Submission.findOneAndUpdate(
+              {_id: submissionId},
+              {$addToSet: {answerId: { $each: [res._id] }}},
+          );
+        } catch (error) {
+            return NextResponse.json({error: "Submission not saved"}, { error: 500 });
+        }  
     await res.save();
     return NextResponse.json({ res }, { status: 200 });
   } catch (error) {
