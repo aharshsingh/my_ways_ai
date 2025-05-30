@@ -6,9 +6,11 @@ import axios from "axios";
 import { AvatarPicker } from "@/components/ui/avatar-picker"
 export default function ProfilePage() {
 const [attemptedTestId, setAttemptedTestId] =useState([]);
+const[userInfo,setUserInfo]=useState({});
   useEffect(()=>{
-    const userInfo=JSON.parse(localStorage.getItem('user'));
-const attemptedTests = userInfo?.attemptedTest || [];
+  const userInfoData=JSON.parse(localStorage.getItem('user'));
+  setUserInfo(userInfoData);
+const attemptedTests = userInfoData?.attemptedTest || [];
 const attemptedTestIds=attemptedTests.map(item => item._id || item._id);
 setAttemptedTestId(attemptedTestIds);
     fetchTestRes();
