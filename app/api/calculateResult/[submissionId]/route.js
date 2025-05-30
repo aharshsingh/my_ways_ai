@@ -1,12 +1,20 @@
-import { NextResponse } from "next/server";
-import { resultQueue } from '@/lib/redisQueue'
+import { NextResponse } from 'next/server';
+import { Client } from '@upstash/qstash';
+const qstash = new Client({
+  token: process.env.QSTASH_TOKEN,
+});
 
-export async function POST(req) {
-    try {
-        const submissionId = await params;
-        await resultQueue.add('process-test-result', { submissionId });
-        return NextResponse.json({ message: 'Test submitted. Processing result.' }, { status: 500 });
-    } catch (error) {
-        return NextResponse.json({error: "Internal server error"}, { status: 500 });
-    }
+export async function POST(req, { params }) {
+  try {
+    const { submissionId } = await params;
+
+    await qstash.publishJSON({
+      url: process.env.JOB_HANDLER_URL,
+      body: { submissionId },
+    });
+
+    return NextResponse.json({ message: 'Job enqueued successfully.' });
+  } catch (err) {
+    return NextResponse.json({ error: 'Failed to enqueue job.' }, { status: 500 });
+  }
 }

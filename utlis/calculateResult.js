@@ -1,45 +1,59 @@
 import { connectToDatabase } from "@/lib/mongodb";
-import { checkForSubmission } from "./checkForSubmission";
-import Test from "@/lib/models/Test";
 import { checkResult } from "./AI_Service/checkResult";
 import Result from "@/lib/models/Result";
-import { getQNA } from "./getQNA";
+import Test from '@/lib/models/Test'; 
+import Answer from '@/lib/models/Answer';
+import Submission from "@/lib/models/submission";
+import Question from "@/lib/models/Question";
 
-export async function calculateResult(){
+export async function calculateResult(submissionId){
     await connectToDatabase();
-    const submissions = await checkForSubmission();
-    for (const submission of submissions) {
-        let result = {};
-        let accuracy = 0;
-        let completeness = 0;
-        let explanation = 0;
-        let practicalRelevance = 0;
-        let conciseness = 0;
-        let totalScore = [];
-        const test = await Test.findOne({_id: submission.testId});
-        const answerIdArray = submission.answerId;
-        const qna = await getQNA(answerIdArray);
-        for (const item of qna) {
-            const response = await checkResult(item.question, item.answer, test);
-            const cleanedResponse = response.trim();
-            const validJson = cleanedResponse.replace(/^.*?({.*}).*?$/, "$1");
-            // console.log(validJson)
-            const score = JSON.parse(validJson);
-            // console.log(score)
-            totalScore.push(score);
+    try {
+        let data = {
+            result: {},
+            accuracy: 0,
+            completeness: 0,
+            explanation: 0,
+            practicalRelevance: 0,
+            conciseness: 0,
+            totalScore: [],
+            score: 0
         }
-        totalScore.forEach((item) =>{
-            accuracy += item.accuracy;
-            completeness += item.completeness;
-            explanation += item.explanation;
-            practicalRelevance += item.practicalRelevance;
-            conciseness += item.conciseness;
+        const submission = await Submission.findById(submissionId).populate("testId").populate("answerId");
+        for (const answer of submission.answerId){
+            let question = await Question.findById(answer.questionId);
+            const response = await checkResult(question.questionText, answer.answer, submission.testId);
+            const cleanedResponse = response
+                .replace(/```(?:json)?/g, "")
+                .replace(/^Chat:\s*/, "")
+                .trim();
+            const validJson = cleanedResponse.replace(/^.*?({.*}).*?$/, "$1");
+            const score = JSON.parse(validJson);
+            data.totalScore.push(score);
+        }
+         data.totalScore.forEach((item) =>{
+            data.accuracy += item.accuracy;
+            data.completeness += item.completeness;
+            data.explanation += item.explanation;
+            data.practicalRelevance += item.practicalRelevance;
+            data.conciseness += item.conciseness;
         });
-        
-        let score = accuracy+completeness+explanation+practicalRelevance+conciseness;
-        result = {...result, userId: submission.userId, submissionId: submission._id, testId: submission.testId, accuracy, completeness, explanation, practicalRelevance, conciseness, score}
-        const res = new Result(result);
-        const response = await res.save();      
+        data.score = data.accuracy + data.completeness + data.explanation + data.practicalRelevance + data.conciseness;
+        data.result = {...data.result, userId: submission.userId, submissionId: submission._id, testId: submission.testId._id, accuracy: data.accuracy, completeness: data.completeness, explanation: data.explanation, practicalRelevance: data.practicalRelevance, conciseness: data.conciseness, score: data.score}
+        const res = new Result(data.result);
+        const response = await res.save();    
+        try {
+            await Submission.findOneAndUpdate(
+                {_id: submissionId},
+                {$set: {checked: true}},
+            );
+        } catch (error) {
+            console.error("Error in submission:", error);
+            throw error;
+        }  
         return response;
+    } catch (error) {
+        console.error("Error in calculateResult:", error);
+        throw error;
     }
 }

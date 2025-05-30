@@ -7,7 +7,6 @@ export async function POST(req){
     try {
         await connectToDatabase();
         const body = await req.json();
-        console.log(body);
         const {error} = testSchema.validate(body);
         if(error){
             return NextResponse.json({error}, {status:400})
