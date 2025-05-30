@@ -1,9 +1,9 @@
 import React from 'react'
-import Final from '@/components/Final'
+import FinalPage from '@/components/FinalPage'
 export default function page() {
   return (
     <div>
-      <Final/>
+      <FinalPage/>
     </div>
   )
 }

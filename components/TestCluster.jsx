@@ -65,14 +65,13 @@ useEffect(() => {
       const publishedTest = response1.data.filter((test)=>test.isPublished === true);
       setTests(publishedTest);
       setIsLoading(false);
-    } catch (err) {
+    } catch (err){
       console.log(err);
     }
-  };
+   };
   fetchTests();
-
-
-
+  
+  
   const fetchAttemptedTests = async () => {
     try {
       // const response2 = await axios.patch("https://intervu-ai-beige.vercel.app/api/user",{
@@ -101,8 +100,16 @@ const handleTestClick=(testId)=>{
     return;
   }
   else{
+  const isSuspended = JSON.parse(localStorage.getItem("user")).isSuspended;
+  if(isSuspended)
+  {
+    toast.warning("Your account is suspended you can not take test. Please contact support.");
+    return;
+  }
+  else{
   localStorage.setItem("testId",testId);
   router.push('/testins');
+  }
   }
   
 }
@@ -185,7 +192,7 @@ const handleTestClick=(testId)=>{
           <TableHead
             className="cursor-pointer"
           >
-            Max Score
+            Max Marks
           </TableHead>
           <TableHead
             className="cursor-pointer"

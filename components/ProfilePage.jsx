@@ -1,13 +1,18 @@
 "use client"
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { ProjectStatusCard } from "@/components/ui/expandable-card";
 import RouteAuthCheck from '@/lib/routeAuthCheck';
 import axios from "axios";
+import { AvatarPicker } from "@/components/ui/avatar-picker"
 export default function ProfilePage() {
-const userInfo=JSON.parse(localStorage.getItem('user'));
-const attemptedTests = userInfo?.attemptedTest || [];
-const attemptedTestId=attemptedTests.map(item => item._id || item._id);
+const [attemptedTestId, setAttemptedTestId] =useState([]);
+const[userInfo,setUserInfo]=useState({});
   useEffect(()=>{
+  const userInfoData=JSON.parse(localStorage.getItem('user'));
+  setUserInfo(userInfoData);
+const attemptedTests = userInfoData?.attemptedTest || [];
+const attemptedTestIds=attemptedTests.map(item => item._id || item._id);
+setAttemptedTestId(attemptedTestIds);
     fetchTestRes();
   },[])
     const fetchTestRes=async()=>{
@@ -29,16 +34,8 @@ const attemptedTestId=attemptedTests.map(item => item._id || item._id);
     <RouteAuthCheck userRole="user">
     <div className='w-full h-[100vh] pt-20 flex bg-white'>
       <div className='w-[30%] h-[100%] flex flex-col items-center bg-black-200'>
-        <div className='w-[70%] h-[75%] items-center flex flex-col gap-4'>
-          <div className=' w-[60%] h-[40%] mt-4 border-2 overflow-hidden  rounded-full '>
-          <img
-              src="/profile_img2.png" 
-              alt="Logo"
-              className="w-full h-full object-contain"
-            /> 
-          </div>
-          <h2 className='text-lg md:text-xl max-w-[600px]'>{userInfo.userName}</h2>
-          <p>{userInfo.email}</p>
+        <div className='w-[70%] h-[75%] items-center flex flex-col gap-4'>  
+              <AvatarPicker username={userInfo.userName} email={userInfo.email}/>
         </div>
       </div>
       <div className='w-[70%] bg-white'>
