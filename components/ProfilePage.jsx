@@ -1,14 +1,16 @@
 "use client"
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { ProjectStatusCard } from "@/components/ui/expandable-card";
 import RouteAuthCheck from '@/lib/routeAuthCheck';
 import axios from "axios";
 import { AvatarPicker } from "@/components/ui/avatar-picker"
 export default function ProfilePage() {
-const userInfo=JSON.parse(localStorage.getItem('user'));
-const attemptedTests = userInfo?.attemptedTest || [];
-const attemptedTestId=attemptedTests.map(item => item._id || item._id);
+const [attemptedTestId, setAttemptedTestId] =useState([]);
   useEffect(()=>{
+    const userInfo=JSON.parse(localStorage.getItem('user'));
+const attemptedTests = userInfo?.attemptedTest || [];
+const attemptedTestIds=attemptedTests.map(item => item._id || item._id);
+setAttemptedTestId(attemptedTestIds);
     fetchTestRes();
   },[])
     const fetchTestRes=async()=>{
