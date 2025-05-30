@@ -30,7 +30,6 @@ export default function Test() {
     const router = useRouter();
     const totalQuestions = testData?.numOfQuestion || 0;
     const duration = testData?.duration || 0;
-    const userId=localStorage.getItem("userId");
     const [tabSwitchCount, setTabSwitchCount] = useState(0);
     const tabSwitchRef = useRef(0); // for accurate real-time tracking
 
@@ -108,7 +107,7 @@ export default function Test() {
             const formatted = dayjs().format('YYYY-MM-DD HH:mm:ss.SSS');
             const res=await axios.post(`http://localhost:3000/api/submission`, {
                 testId: testData._id,
-                userId: userId,
+                userId: localStorage.getItem("userId"),
                 startedAt: formatted,
               })
             if(res.status===200)
@@ -214,7 +213,7 @@ export default function Test() {
             const formatted = dayjs().format('YYYY-MM-DD HH:mm:ss.SSS');
             const res=await axios.patch(`http://localhost:3000/api/updateSubmission`, {
                 submissionId: submissionId, 
-                userId: userId,
+                userId: localStorage.getItem("userId"),
                 testId: testData._id,
                 completedAt: formatted,
             });
