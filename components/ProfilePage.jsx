@@ -43,16 +43,17 @@ setAttemptedTestId(attemptedTestIds);
           <div>
           <ProjectStatusCard
         title="Design System"
-        progress={100}
-        dueDate="Dec 31, 2023"
-        tasks={[
-          { title: "Fluency", completed: true },
-          { title: "Accuracy", completed: true },
-          { title: "To the Point", completed: true },
-          { title: "Relevance", completed: true }
-        ]}
-        bestScore={256}
-        timesAttempted={0}
+        // progress={100}
+        // dueDate="Dec 31, 2023"
+        // tasks={[
+        //   { title: "Fluency", completed: true,score :10  },
+        //   { title: "Accuracy", completed: true,score:10 },
+        //   { title: "Completeness", completed: true, score:10  },
+        //   { title: "Practical Relevance", completed: true, score:10  },
+        //   { title: "Explaination", completed: true, score:10 }
+        // ]}
+        // bestScore={50}
+        // timesAttempted={0}
       />
           </div>
         <div>
@@ -61,7 +62,7 @@ setAttemptedTestId(attemptedTestIds);
         progress={45}
         dueDate="Mar 1, 2024"
         tasks={[
-          { title: "Fluency", completed: true },
+          { title: "Fluency", completed: true ,},
           { title: "Accuracy", completed: true },
           { title: "To the Point", completed: true },
           { title: "Relevance", completed: true }

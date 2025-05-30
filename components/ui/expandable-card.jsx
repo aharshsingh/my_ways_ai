@@ -1,7 +1,7 @@
 "use client";;
 import React, { useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Clock, MessageSquare, Star, Users, CheckCircle2 } from "lucide-react";
+import { Clock, MessageSquare, Star, } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -10,17 +10,23 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress as ProgressBar } from "@/components/ui/progress";
 import { useExpandable } from "@/components/hooks/use-expandable";
 
 export function ProjectStatusCard({
-  title,
-  progress,
-  dueDate,
-  tasks,
-  bestScore,
-  timesAttempted
+  title ,
+  progress =0,
+  dueDate =0,
+  tasks =[
+          { title: "Fluency", completed: true,score :0  },
+          { title: "Accuracy", completed: true,score:0 },
+          { title: "Completeness", completed: true, score:0  },
+          { title: "Practical Relevance", completed: true, score:0  },
+          { title: "Explaination", completed: true, score:0 }
+        ],
+  bestScore =0,
+  timesAttempted = 0,
+  lastAttempted = 0,
 }) {
   const { isExpanded, toggleExpand, animatedHeight } = useExpandable();
   const contentRef = useRef(null);
@@ -33,7 +39,7 @@ export function ProjectStatusCard({
 
   return (
     (<Card
-      className="w-[97%] ml-3  max-w-md cursor-pointer transition-all duration-300 hover:shadow-lg"
+      className="w-[97%] ml-3 max-w-md cursor-pointer transition-all duration-300 hover:shadow-lg"
       onClick={toggleExpand}>
       <CardHeader className="space-y-1">
         <div className="flex justify-between items-start w-full">
@@ -41,11 +47,9 @@ export function ProjectStatusCard({
             <Badge
               variant="secondary"
               className={
-                progress === 100
-                  ? "bg-green-100 text-green-600"
-                  : "bg-blue-100 text-blue-600"
+                 "bg-green-100 text-green-600"
               }>
-              {progress === 100 ? "Attempted" : "Not Attempted"}
+              {"Attempted"}
             </Badge>
             <h3 className="text-2xl font-semibold">{title}</h3>
           </div>
@@ -53,6 +57,8 @@ export function ProjectStatusCard({
       </CardHeader>
       <CardContent>
         <div className="space-y-4  ">
+          {progress === 0 ? (  <Badge variant="secondary" className="text-sm bg-yellow-100 text-yellow-600">Result Yet to be Declared</Badge>) :
+          (<>
           <div className="space-y-2">
             <div className="flex justify-between text-sm text-gray-600">
               <span>Performance</span>
@@ -76,7 +82,7 @@ export function ProjectStatusCard({
                     <div className="flex items-center justify-between text-sm text-gray-600">
                       <div className="flex items-center">
                         <Clock className="h-4 w-4 mr-2" />
-                        <span>Created on: {dueDate}</span>
+                        <span>Attempted on: {dueDate}</span>
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2">
@@ -84,55 +90,18 @@ export function ProjectStatusCard({
                           <span>{bestScore}</span>
                           <Star className="h-4 w-4 mr-1 text-yellow-400" />
                         </div>
-                        {/* <div className="flex items-center">
-                          <GitBranch className="h-4 w-4 mr-1" />
-                          <span>{openIssues}Your Best</span>
-                        </div> */}
                       </div>
                     </div>
-
-                    {/* <div className="space-y-2 border-2">
-                      <h4 className="font-medium text-sm flex items-center">
-                        <Users className="h-4 w-4 mr-2" />
-                        Contributors
-                      </h4>
-                      <div className="flex -space-x-2">
-                        {contributors.map((contributor, index) => (
-                          <TooltipProvider key={index}>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Avatar className=" border-white">
-                                  <AvatarImage
-                                    src={
-                                      contributor.image ||
-                                      `/placeholder.svg?height=32&width=32&text=${contributor.name[0]}`
-                                    }
-                                    alt={contributor.name} />
-                                  <AvatarFallback>
-                                    {contributor.name[0]}
-                                  </AvatarFallback>
-                                </Avatar>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>{contributor.name}</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        ))}
-                      </div>
-                    </div> */}
-
                    
                       <h4 className="font-medium text-sm">Parameters </h4>
-                      <div className="w-auto flex flex-col ">
+                      <div className="w-auto flex flex-col  h-auto">
                       {tasks.map((task, index) => (
                         <div key={index} className="flex items-center justify-between text-sm">
                           <span className="text-gray-600 flex-1">{task.title}</span>
                           {task.completed && (
-                            // <CheckCircle2 className="h-4 w-4 text-green-500" />
-                            <ProgressBar value={progress} className="h-2 w-[50%] flex" />
+                            <ProgressBar value={task.score} className="h-2 w-[50%] flex" />
                           )}
-                          <span className="px-2">{progress}%</span>
+                          <span className="px-2">{task.score}%</span>
                         </div>
                       ))}
                       </div>
@@ -149,12 +118,13 @@ export function ProjectStatusCard({
               </AnimatePresence>
             </div>
           </motion.div>
+          </>)}
         </div>
       </CardContent>
       <CardFooter>
         <div
           className="flex items-center justify-between w-full text-sm text-gray-600">
-          <span>Last Attempted: 2 hours ago</span>
+          <span>Last Attempted: {lastAttempted} hours ago</span>
           <span>{timesAttempted} Times Attempted</span>
         </div>
       </CardFooter>

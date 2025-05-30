@@ -42,7 +42,7 @@ export default function Test() {
 
             if (tabSwitchRef.current >= 3) {
                 toast.error("You switched tabs multiple times. Submitting test.");
-                await submitTest(); // Auto-submit the test
+                await handleNextQuestion("1"); // Auto-submit the test
             }
         }
     };
@@ -145,9 +145,9 @@ export default function Test() {
            }
           };
 
-        const sendAudioToBackend = async (Question = null) => {
+        const sendAudioToBackend = async (ques = null) => {
             console.log("Sending audio to backend");
-            console.log("currentQuestion",Question);
+            console.log("currentQuestion",ques);
             const blob = new Blob(recordedChunks.current, { type: "audio/webm" });
             const formData = new FormData();
             formData.append("audio", blob, "response.webm");
@@ -163,10 +163,11 @@ export default function Test() {
                 const ansId=res.data.res._id;
                 console.log("answerData",res);
                 console.log("Audio sent successfully");
-                if(Question === null) {
+                if(ques === null) {
                     await fetchQuestion(ansId);
                 }
                 else{
+                    submitTest();
                     return;
                 }             
              } 
@@ -202,14 +203,11 @@ export default function Test() {
          }
         const submitTest=async()=>{
             console.log("Submitting test");
-         try {
               setIsAnswering(false);
               setSendingAnswer(true); 
               stopRecording();
-              const ques=1;
-              mediaRecorderRef.current.onstop = async () => {
-              await sendAudioToBackend(ques);
-            };
+             
+         try {
             const formatted = dayjs().format('YYYY-MM-DD HH:mm:ss.SSS');
             const res=await axios.patch(`http://localhost:3000/api/updateSubmission`, {
                 submissionId: submissionId, 
@@ -270,14 +268,14 @@ export default function Test() {
     };
 
 
-    const handleNextQuestion = async () => {
+    const handleNextQuestion = async (ques = null) => {
         setIsAnswering(false);
         setSendingAnswer(true);
         stopRecording();
         mediaRecorderRef.current.onstop = async () => {
-        if (currentQuestionIndex+1 >= totalQuestions )
+        if (currentQuestionIndex+1 >= totalQuestions || ques === 1) 
         { 
-            await submitTest(); 
+            await sendAudioToBackend("1");
             return;
         }
         else{
@@ -358,7 +356,7 @@ export default function Test() {
                         </div>
                     <div className="flex justify-between items-center w-[28%] p-5">
                            <Button
-                            onClick={submitTest}
+                            onClick={()=>handleNextQuestion("1")}
                             className=" h-full bg-[#606dd3] text-white rounded w-[30%] hover:bg-[#5862b2]"
                         >
                             Finish Test
