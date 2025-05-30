@@ -346,9 +346,8 @@ export const GradientCard = () => {
             <br></br>
             <br></br>
             <span className="mt-14">Check back in Profile to see how you did!</span>
-            
+          
             </motion.p>
-
             {/* Learn More with arrow - matching the image */}
             <motion.a
               onClick={()=>router.replace('/testCluster')}
