@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import LoadingScreen from "./LoadingScreen"; 
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import CountdownTimer from "./ui/timerClock";
@@ -32,26 +31,23 @@ export default function Test() {
     const totalQuestions = testData?.numOfQuestion || 0;
     const duration = testData?.duration || 0;
     const userId=localStorage.getItem("userId");
- const [tabSwitchCount, setTabSwitchCount] = useState(0);
-const tabSwitchRef = useRef(0); // for accurate real-time tracking
+    const [tabSwitchCount, setTabSwitchCount] = useState(0);
+    const tabSwitchRef = useRef(0); // for accurate real-time tracking
 
-useEffect(() => {
-    const handleVisibilityChange = () => {
+    useEffect(() => {
+      const handleVisibilityChange = async() => {
         if (document.visibilityState === "hidden") {
             tabSwitchRef.current += 1;
             setTabSwitchCount(tabSwitchRef.current); // still updates UI if needed
-
-            toast.warning(`Tab switch detected! Test will be autosubmitted`);
+            toast.warning(`Tab switch detected!`);
 
             if (tabSwitchRef.current >= 3) {
                 toast.error("You switched tabs multiple times. Submitting test.");
-                submitTest(); // Auto-submit the test
+                await submitTest(); // Auto-submit the test
             }
         }
     };
-
     document.addEventListener("visibilitychange", handleVisibilityChange);
-
     return () => {
         document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
@@ -145,6 +141,7 @@ useEffect(() => {
                 setIsAnswering(false);
               }
            }catch (error){
+            toast.error("Error in fetching question");
             console.error("Error fetching question:", error);
            }
           };
@@ -172,12 +169,13 @@ useEffect(() => {
                 }
                 else{
                     return;
-                }
-                
+                }             
              } 
             }catch(err) {
                 toast.error("Failed to submit answer, Retake test.");
-                router.replace("/test");
+                setTimeout(()=>{
+                 router.replace("/testCluster");
+                },1500)
                 console.error("Failed to send audio:", err);
                 return;
             }
@@ -189,12 +187,11 @@ useEffect(() => {
             if(res.status===200){
                 console.log("Result calculated successfully");
                 console.log(res.data);
-                 localStorage.removeItem("testId");
+                localStorage.removeItem("testId");
                 localStorage.removeItem("test");
                 localStorage.removeItem("reloaded");
-                toast.success("Test submitted successfully");
                 setTimeout(() => {
-                    router.replace("/testCluster");
+                    router.replace("/final");
                 }, 2000); 
             }
 
