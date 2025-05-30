@@ -192,7 +192,7 @@ const handleTestClick=(testId)=>{
           <TableHead
             className="cursor-pointer"
           >
-            Max Score
+            Max Marks
           </TableHead>
           <TableHead
             className="cursor-pointer"
