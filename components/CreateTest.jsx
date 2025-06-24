@@ -77,8 +77,8 @@ const handleCreateTest= async(testInfo,marks,difficulty,tag)=>{
    
     try {
       setIsLoading(true);
-      // const response = await axios.post("https://intervu-ai-beige.vercel.app/api/admin/addTest",{
-        const response = await axios.post("http://localhost:3000/api/admin/addTest",{
+      const response = await axios.post("https://intervu-ai-beige.vercel.app/api/admin/addTest",{
+        // const response = await axios.post("http://localhost:3000/api/admin/addTest",{
         testName: testInfo.testName,
         testDescription: testInfo.description,
         difficulty:difficulty,
@@ -121,8 +121,8 @@ const handlePublishTest =async(testId)=>{
   }
   try {
     setIsPublishing(true);
-    //  const response = await axios.patch(`https://intervu-ai-beige.vercel.app/api/admin/publishTest/${testId}`)
-    const response = await axios.patch(`http://localhost:3000/api/admin/publishTest/${testId}`)
+     const response = await axios.patch(`https://intervu-ai-beige.vercel.app/api/admin/publishTest/${testId}`)
+    // const response = await axios.patch(`http://localhost:3000/api/admin/publishTest/${testId}`)
      if(response.status === 200)
      {
         setIsPublished(true);

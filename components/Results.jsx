@@ -51,8 +51,8 @@ export default function Results() {
 
 const fetchTests = async (token) => {
   try {
-    // const response1 = await axios.get("https://intervu-ai-beige.vercel.app/api/test", {
-      const response1 = await axios.get("http://localhost:3000/api/test", {
+    const response1 = await axios.get("https://intervu-ai-beige.vercel.app/api/test", {
+      // const response1 = await axios.get("http://localhost:3000/api/test", {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log(response1.data);

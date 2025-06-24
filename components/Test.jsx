@@ -31,18 +31,18 @@ export default function Test() {
     const totalQuestions = testData?.numOfQuestion || 0;
     const duration = testData?.duration || 0;
     const [tabSwitchCount, setTabSwitchCount] = useState(0);
-    const tabSwitchRef = useRef(0); // for accurate real-time tracking
+    const tabSwitchRef = useRef(0); 
 
     useEffect(() => {
       const handleVisibilityChange = async() => {
         if (document.visibilityState === "hidden") {
             tabSwitchRef.current += 1;
-            setTabSwitchCount(tabSwitchRef.current); // still updates UI if needed
+            setTabSwitchCount(tabSwitchRef.current);
             toast.warning(`Tab switch detected!`);
 
             if (tabSwitchRef.current >= 3) {
                 toast.error("You switched tabs multiple times. Submitting test.");
-                await handleNextQuestion("1"); // Auto-submit the test
+                await handleNextQuestion("1"); 
             }
         }
     };
@@ -67,19 +67,6 @@ export default function Test() {
     };
   }, []);
 
-
-    useEffect(() => {
-      if (isAudioPlaying && currentQuestion?.audioURL) {
-          const audio = new Audio(currentQuestion.audioURL);
-          audio.play();
-          audio.onended = () => {
-              setIsAudioPlaying(false);
-              setIsAnswering(true);
-              startRecording(); 
-          };
-        }
-    }, [isAudioPlaying, currentQuestion]);
-
     useEffect(() => {
     const reloaded = localStorage.getItem("reloaded");
     if (reloaded === "true") {
@@ -92,6 +79,20 @@ export default function Test() {
       },1000) 
       }
     }, []);
+    
+    useEffect(() => {
+      if (isAudioPlaying && currentQuestion?.audioURL) {
+          const audio = new Audio(currentQuestion.audioURL);
+          audio.play();
+          audio.onended = () => {
+              setIsAudioPlaying(false);
+              setIsAnswering(true);
+              startRecording(); 
+          };
+        }
+    }, [isAudioPlaying, currentQuestion]);
+
+
 
     useEffect(()=>{
         const testInfo = JSON.parse(localStorage.getItem('test')); 
@@ -106,7 +107,8 @@ export default function Test() {
        const createSubmission= async()=>{
          try {
             const formatted = dayjs().format('YYYY-MM-DD HH:mm:ss.SSS');
-            const res=await axios.post(`http://localhost:3000/api/submission`, {
+            const res=await axios.post(`https://intervu-ai-beige.vercel.app/api/submission`, {
+            // const res=await axios.post(`http://localhost:3000/api/submission`, {
                 testId: testData._id,
                 userId: localStorage.getItem("userId"),
                 startedAt: formatted,
@@ -126,7 +128,8 @@ export default function Test() {
             const testId=testData._id;
             const {testDescription, difficulty} = testData;
             try {
-              const res = await axios.post(`http://localhost:3000/api/question/${testId}`,{
+                const res = await axios.post(`https://intervu-ai-beige.vercel.app/api/question/${testId}`,{
+            //   const res = await axios.post(`http://localhost:3000/api/question/${testId}`,{
                   testDescription,
                   difficulty,
                   answerId
@@ -154,7 +157,8 @@ export default function Test() {
             formData.append("audio", blob, "response.webm");
             formData.append("questionId", currentQuestion._id); 
             try {
-              const res=  await axios.post(`http://localhost:3000/api/answer/${submissionId}/${currentQuestion.questionId}`,
+              const res=  await axios.post(`https://intervu-ai-beige.vercel.app/api/answer/${submissionId}/${currentQuestion.questionId}`,              
+            //   const res=  await axios.post(`http://localhost:3000/api/answer/${submissionId}/${currentQuestion.questionId}`,
                 formData,{
                     headers:{
                         "Content-Type" : "multipart/form-data",
@@ -184,7 +188,8 @@ export default function Test() {
 
          const calcResult=async()=>{
             console.log("Calculating result");
-            const res=await axios.post(`http://localhost:3000/api/calculateResult/${submissionId}`);
+            const res=await axios.post(`https://intervu-ai-beige.vercel.app/api/calculateResult/${submissionId}`);
+            // const res=await axios.post(`http://localhost:3000/api/calculateResult/${submissionId}`);
             if(res.status===200){
                 console.log("Result calculated successfully");
                 console.log(res.data);
@@ -210,7 +215,8 @@ export default function Test() {
              
          try {
             const formatted = dayjs().format('YYYY-MM-DD HH:mm:ss.SSS');
-            const res=await axios.patch(`http://localhost:3000/api/updateSubmission`, {
+            const res=await axios.patch(`https://intervu-ai-beige.vercel.app/api/updateSubmission`, {
+            // const res=await axios.patch(`http://localhost:3000/api/updateSubmission`, {
                 submissionId: submissionId, 
                 userId: localStorage.getItem("userId"),
                 testId: testData._id,

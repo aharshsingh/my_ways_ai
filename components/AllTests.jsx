@@ -61,8 +61,8 @@ const handleDelete=(testId)=>{
 
 const handlePublishTest=async(testId)=>{
   try {
-    // const response = await axios.patch(`https://intervu-ai-beige.vercel.app/api/admin/publishTest/${testId}`)
-    const response = await axios.patch(`http://localhost:3000/api/admin/publishTest/${testId}`)
+    const response = await axios.patch(`https://intervu-ai-beige.vercel.app/api/admin/publishTest/${testId}`)
+    // const response = await axios.patch(`http://localhost:3000/api/admin/publishTest/${testId}`)
     if(response.status === 200)
     {
       toast.success("Test Published")
@@ -79,8 +79,8 @@ const handlePublishTest=async(testId)=>{
 const fetchTests = async (token) => {
   
   try {
-    // const response1 = await axios.get("https://intervu-ai-beige.vercel.app/api/test", {
-      const response1 = await axios.get("http://localhost:3000/api/test", {
+    const response1 = await axios.get("https://intervu-ai-beige.vercel.app/api/test", {
+      // const response1 = await axios.get("http://localhost:3000/api/test", {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log(response1.data);

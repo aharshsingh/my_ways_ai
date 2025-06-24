@@ -107,12 +107,12 @@ export function ProjectStatusCard({
                       </div>
                    
 
-                    <div className="space-y-2">
+                    {/* <div className="space-y-2">
                       <Button className="w-full">
                         <MessageSquare className="h-4 w-4 mr-2" />
                         Retake Test
                       </Button>
-                    </div>
+                    </div> */}
                   </motion.div>
                 )}
               </AnimatePresence>

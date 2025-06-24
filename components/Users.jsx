@@ -49,8 +49,8 @@ export default function Users() {
     
     const fetchUsers = async (token) => {
       try {
-        // const response1 = await axios.get("https://intervu-ai-beige.vercel.app/api/test", {
-          const response = await axios.get("http://localhost:3000/api/admin/getUser", {
+        const response1 = await axios.get("https://intervu-ai-beige.vercel.app/api/test", {
+          // const response = await axios.get("http://localhost:3000/api/admin/getUser", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -62,8 +62,8 @@ export default function Users() {
       }
     };    
    const handleSuspend = async (userId) => {
-   // const res = await axios.get(`https://intervu-ai-beige.vercel.app/api/admin/suspendUser/${userId}`)
-    const res=await axios.patch(`http://localhost:3000/api/admin/suspendUser/${userId}`)
+   const res = await axios.get(`https://intervu-ai-beige.vercel.app/api/admin/suspendUser/${userId}`)
+    // const res=await axios.patch(`http://localhost:3000/api/admin/suspendUser/${userId}`)
     if(res.status === 200)
     {
       toast.success("User Suspended Successfully")
@@ -74,8 +74,8 @@ export default function Users() {
     }
    }
    const handleUnsuspend = async (userId) => {
-       // const res = await axios.get(`https://intervu-ai-beige.vercel.app/api/admin/unsuspendUser/${userId}`)
-    const res=await axios.patch(`http://localhost:3000/api/admin/unsuspendUser/${userId}`)
+       const res = await axios.get(`https://intervu-ai-beige.vercel.app/api/admin/unsuspendUser/${userId}`)
+    // const res=await axios.patch(`http://localhost:3000/api/admin/unsuspendUser/${userId}`)
     if(res.status === 200)
     {
       toast.success("User Activated Successfully")

@@ -57,8 +57,8 @@ useEffect(() => {
     if (!token) return;
   const fetchTests = async () => {
     try {
-      // const response1 = await axios.get("https://intervu-ai-beige.vercel.app/api/test", {
-        const response1 = await axios.get("http://localhost:3000/api/test", {
+      const response1 = await axios.get("https://intervu-ai-beige.vercel.app/api/test", {
+        // const response1 = await axios.get("http://localhost:3000/api/test", {
         headers: { Authorization: `Bearer ${token}` },
       });
       console.log("response1 is",response1);
@@ -74,8 +74,8 @@ useEffect(() => {
   
   const fetchAttemptedTests = async () => {
     try {
-      // const response2 = await axios.patch("https://intervu-ai-beige.vercel.app/api/user",{
-        const response2 = await axios.get("http://localhost:3000/api/user",{
+      const response2 = await axios.patch("https://intervu-ai-beige.vercel.app/api/user",{
+        // const response2 = await axios.get("http://localhost:3000/api/user",{
         headers: { 
           Authorization: `Bearer ${token}`,
           userId: localStorage.getItem("userId")},

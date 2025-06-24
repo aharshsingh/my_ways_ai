@@ -54,8 +54,8 @@ export default function AttemptedUsersDialog({isOpen,setIsOpen,testname,marksBre
 const fetchUsers = async (token) => {
   //Logic to get no of uswers attepmpted test i will comapre each test id wiht the array of tests attemtpted and then for each will increment the number of users attempted by 1
   try {
-    // const response1 = await axios.get(`https://intervu-ai-beige.vercel.app/api/admin/getResult/${testId}`, {
-      const response1 = await axios.get(`http://localhost:3000/api/admin/getResult/${testId}`, {
+    const response1 = await axios.get(`https://intervu-ai-beige.vercel.app/api/admin/getResult/${testId}`, {
+      // const response1 = await axios.get(`http://localhost:3000/api/admin/getResult/${testId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log(response1.data);

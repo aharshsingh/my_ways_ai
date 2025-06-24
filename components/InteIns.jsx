@@ -14,9 +14,12 @@ export default function InteIns() {
       const testId=localStorage.getItem('testId');
       const userId=localStorage.getItem('userId');
       try {
-        const res= await axios.get(`http://localhost:3000/api/test/${testId}`)
+        // 
+        const res= await axios.get(`https://intervu-ai-beige.vercel.app/api/test/${testId}`)
+        // const res= await axios.get(`http://localhost:3000/api/test/${testId}`)
         if(res.status===200){
-          const res2 = await axios.patch(`http://localhost:3000/api/userAttemptedTest`,{
+           const res2 = await axios.patch(`https://intervu-ai-beige.vercel.app/api/userAttemptedTest`,{
+          // const res2 = await axios.patch(`http://localhost:3000/api/userAttemptedTest`,{
             testId,
             userId
           });

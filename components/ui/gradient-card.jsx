@@ -341,7 +341,7 @@ export const GradientCard = () => {
                 transition: { duration: 1.2, delay: 0.4 }
               }}>
             Our smart system is now reviewing everything — give it a few minutes to work its magic.
-            Sit tight! Results will be ready in approx. 5 minutes
+            Sit tight! Results will be ready in approx. 10 minutes
             <br></br>
             <br></br>
             <br></br>
