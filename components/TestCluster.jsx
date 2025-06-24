@@ -74,7 +74,7 @@ useEffect(() => {
   
   const fetchAttemptedTests = async () => {
     try {
-      const response2 = await axios.patch("https://intervu-ai-beige.vercel.app/api/user",{
+      const response2 = await axios.get("https://intervu-ai-beige.vercel.app/api/user",{
         // const response2 = await axios.get("http://localhost:3000/api/user",{
         headers: { 
           Authorization: `Bearer ${token}`,

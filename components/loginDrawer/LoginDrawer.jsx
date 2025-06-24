@@ -48,6 +48,7 @@ export default function LoginDrawer({ isOpen, setIsOpen }) {
                 email,
                 password
             });
+            console.log("Response:", response);
             const authToken = response.data.accessToken;
             const userId=response.data.userId;
             const role=response.data.role;
