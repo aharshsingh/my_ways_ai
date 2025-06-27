@@ -48,7 +48,8 @@ function Slot(props) {
       }
         
          try {
-          const response = await axios.get(`http://localhost:3000/api/forgotPassword/verifyEmail?email=${email}`);
+          // const response = await axios.get(`http://localhost:3000/api/forgotPassword/verifyEmail?email=${email}`);
+            const response = await axios.get(`https://intervu-ai-beige.vercel.app/api/forgotPassword/verifyEmail?email=${email}`);
           if (response.status === 200) {
             toast.success("OTP sent to your email!");
             setIsLoading(false);
@@ -83,7 +84,8 @@ function Slot(props) {
       }
         
          try {
-          const response = await axios.post("http://localhost:3000/api/forgotPassword/verifyOTP",{
+          // const response = await axios.post("http://localhost:3000/api/forgotPassword/verifyOTP",{
+           const response = await axios.post("https://intervu-ai-beige.vercel.app/api/forgotPassword/verifyOTP",{
             email:email,
             OTP:otprecieved
           });
@@ -125,7 +127,8 @@ function Slot(props) {
         return;
       }
          try {
-          const response = await axios.post("http://localhost:3000/api/forgotPassword/resetPassword",{
+          // const response = await axios.post("http://localhost:3000/api/forgotPassword/resetPassword",{
+          const response = await axios.post("  https://intervu-ai-beige.vercel.app/api/forgotPassword/resetPassword",{
             email:email,
             newPassword:password
           });
